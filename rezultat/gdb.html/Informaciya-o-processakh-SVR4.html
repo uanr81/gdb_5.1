@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Информация о процессах SVR4 (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Информация о процессах SVR4 (Отладка с помощью GDB)">
+<meta name="keywords" content="Информация о процессах SVR4 (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Chistaya.html" rel="up" title="Чистая">
+<link href="Vstroennaya-OS.html" rel="next" title="Встроенная ОС">
+<link href="HP_002dUX.html" rel="prev" title="HP-UX">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0418_043d_0444_043e_0440_043c_0430_0446_0438_044f-_043e-_043f_0440_043e_0446_0435_0441_0441_0430_0445-SVR4"></span><div class="header">
+<p>
+Previous: <a href="HP_002dUX.html" accesskey="p" rel="prev">HP-UX</a>, Up: <a href="Chistaya.html" accesskey="u" rel="up">Чистая</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Informaciya-o-processakh-SVR4"></span><h4 class="subsection">14.1.2 Информация о процессах SVR4</h4>
+
+<span id="index-_002fproc"></span>
+<span id="index-obraz-processa"></span>
+
+<p>Многие версии SVR4 предоставляют средства, называемые
+&lsquo;<samp>/proc</samp>&rsquo;, которые могут быть использованы для исследования образа
+выполняемого процесса, задействуя подпрограммы файловой системы.  Если
+GDB сконфигурирован для операционной системы, поддерживающей
+эти средства, команда <code>info proc</code> доступна для получения отчета
+по некоторым видам информации о процессе, выполняющем вашу программу.
+<code>info proc</code> работает только на системах SVR4, которые включают код
+<code>procfs</code>.  Среди этих систем: OSF/1 (Digital Unix), Solaris,
+Irix и Unixware, но не HP-UX или Linux, к примеру.
+</p>
+<dl compact="compact">
+<dd><span id="index-info-proc"></span>
+</dd>
+<dt><code>info proc</code></dt>
+<dd><p>Выдает доступную суммарную информацию о процессе.
+</p>
+<span id="index-info-proc-mappings"></span>
+</dd>
+<dt><code>info proc mappings</code></dt>
+<dd><p>Сообщает диапазоны адресов, доступных в программе, с информацией, может ли
+ваша программа читать, записывать или исполнять каждый из диапазонов.
+</p>
+<span id="index-info-proc-times"></span>
+</dd>
+<dt><code>info proc times</code></dt>
+<dd><p>Время запуска, время пользовательского и системного ЦП для вашей
+программы и ее потомков.
+</p>
+<span id="index-info-proc-id"></span>
+</dd>
+<dt><code>info proc id</code></dt>
+<dd><p>Сообщает информацию об идентификаторах процессов, относящихся к вашей
+программе: ее собственный идентификатор, идентификатор ее родителя,
+группы процесса и сеанса.
+</p>
+<span id="index-info-proc-status"></span>
+</dd>
+<dt><code>info proc status</code></dt>
+<dd><p>Общая информация о состоянии процесса.  Если процесс остановлен, то этот
+отчет включает причину останова и любые полученные сигналы.
+</p>
+</dd>
+<dt><code>info proc all</code></dt>
+<dd><p>Показывает всю вышеперечисленную информацию о процессе.
+</p></dd>
+</dl>
+
+
+
+
+</body>
+</html>

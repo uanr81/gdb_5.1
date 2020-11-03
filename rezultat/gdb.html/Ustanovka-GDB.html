@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Установка GDB (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Установка GDB (Отладка с помощью GDB)">
+<meta name="keywords" content="Установка GDB (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="index.html" rel="up" title="Top">
+<link href="Otdelxnyi-obwektnyi-katalog.html" rel="next" title="Отдельный объектный каталог">
+<link href="Formatirovanie-dokumentacii.html" rel="prev" title="Форматирование документации">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0423_0441_0442_0430_043d_043e_0432_043a_0430-GDB"></span><div class="header">
+<p>
+Next: <a href="Alfavitnyi-ukazatelx.html" accesskey="n" rel="next">Алфавитный указатель</a>, Previous: <a href="Formatirovanie-dokumentacii.html" accesskey="p" rel="prev">Форматирование документации</a>, Up: <a href="index.html" accesskey="u" rel="up">Top</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Ustanovka-GDB"></span><h2 class="appendix">Appendix B Установка GDB</h2>
+<span id="index-konfiguraciya-GDB"></span>
+<span id="index-ustanovka"></span>
+
+<p>GDB поставляется вместе со сценарием <code>configure</code>, который
+автоматизирует процесс подготовки GDB к установке; затем вы можете
+использовать <code>make</code> для построения программы <code>gdb</code>.
+</p>
+<p>Дистрибутив GDB включает весь исходный код, который вам
+понадобится для GDB, в одном каталоге, имя которого обычно
+составляется добавлением номера версии к &lsquo;<samp>gdb</samp>&rsquo;.
+</p>
+<p>Например, дистрибутив GDB версии 5.0 находится в каталоге
+<samp>gdb-5.0</samp>.  Этот каталог содержит:
+</p>
+<dl compact="compact">
+<dt><code>gdb-5.0/configure <span class="roman">(и файлы поддержки)</span></code></dt>
+<dd><p>сценарий для конфигурации GDB и всех поддерживаемых библиотек
+</p>
+</dd>
+<dt><code>gdb-5.0/gdb</code></dt>
+<dd><p>исходные тексты, специфичные для самого GDB
+</p>
+</dd>
+<dt><code>gdb-5.0/bfd</code></dt>
+<dd><p>исходные тексты для библиотеки описания двоичных файлов (Binary File
+Descriptor)
+</p>
+</dd>
+<dt><code>gdb-5.0/include</code></dt>
+<dd><p>включаемые файлы <small>GNU</small>
+</p>
+</dd>
+<dt><code>gdb-5.0/libiberty</code></dt>
+<dd><p>исходные тексты для библиотеки свободного программного обеспечения
+&lsquo;<samp>-liberty</samp>&rsquo;
+</p>
+</dd>
+<dt><code>gdb-5.0/opcodes</code></dt>
+<dd><p>исходные тексты библиотеки таблиц кодов операций и дисассемблеров
+</p>
+</dd>
+<dt><code>gdb-5.0/readline</code></dt>
+<dd><p>исходные тексты интерфейса командной строки <small>GNU</small>
+</p>
+</dd>
+<dt><code>gdb-5.0/glob</code></dt>
+<dd><p>исходные тексты подпрограммы <small>GNU</small> сопоставления с образцом имени
+файла
+</p>
+</dd>
+<dt><code>gdb-5.0/mmalloc</code></dt>
+<dd><p>исходные тексты пакета <small>GNU</small> для выделения памяти
+</p></dd>
+</dl>
+
+<p>Простейший способ сконфигурировать и собрать GDB состоит в
+выполнении <code>configure</code> из исходного каталога
+<samp>gdb-<var>номер-версии</var></samp>, который в этом примере есть
+<samp>gdb-5.0</samp>.
+</p>
+<p>Сперва перейдите в исходный каталог <samp>gdb-<var>номер-версии</var></samp>, если вы
+еще не находитесь в нем; затем запустите <code>configure</code>.  Передайте в
+качестве аргумента идентификатор платформы, на которой будет выполняться
+GDB.
+</p>
+<p>Например:
+</p>
+<div class="example">
+<pre class="example">cd gdb-5.0
+./configure <var>платформа</var>
+make
+</pre></div>
+
+<p>где <var>платформа</var> &mdash; идентификатор, такой как &lsquo;<samp>sun4</samp>&rsquo; или
+&lsquo;<samp>decstation</samp>&rsquo;, задающий платформу, на которой будет выполняться
+GDB.  (Часто вы
+можете опустить <var>платформу</var>; <code>configure</code> пытается определить
+корректное значение, изучая вашу систему.)
+</p>
+<p>Выполнение &lsquo;<samp>configure <var>платформа</var></samp>&rsquo; и затем <code>make</code> строит
+библиотеки <samp>bfd</samp>, <samp>readline</samp>, <samp>mmalloc</samp> и
+<samp>libiberty</samp>, а затем сам <code>gdb</code>.  Сконфигурированные исходные
+файлы, а также двоичные файлы, остаются в соответствующих исходных
+каталогах.
+</p>
+<p><code>configure</code> является сценарием оболочки Bourne (<code>/bin/sh</code>); если
+ваша система не распознает это автоматически, когда вы находитесь в
+другой оболочке, вам может потребоваться выполнить <code>sh</code> явно:
+</p>
+<div class="example">
+<pre class="example">sh configure <var>платформа</var>
+</pre></div>
+
+<p>Если вы выполните <code>configure</code> из каталога, содержащего исходные
+каталоги для нескольких библиотек или программ, например
+<samp>gdb-5.0</samp> для версии 5.0, <code>configure</code>
+создает файлы конфигурации для всех подкаталогов низшего уровня (если вы не
+велите ему не этого делать ключом &lsquo;<samp>--norecursion</samp>&rsquo;).
+</p>
+<p>Вы можете выполнить сценарий <code>configure</code> из любого подкаталога из
+поставки GDB, если вы хотите сконфигурировать только этот
+подкаталог, но убедитесь, что указали путь к нему.
+</p>
+<p>Например, для версии 5.0, чтобы сконфигурировать только подкаталог
+<code>bfd</code>, введите:
+</p>
+<div class="example">
+<pre class="example">cd gdb-5.0/bfd
+../configure <var>платформа</var>
+</pre></div>
+
+<p>Вы можете установить <code>gdb</code> куда угодно; он не имеет никаких
+жестко заданных путей.  Однако, вы должны удостовериться, что ваша оболочка
+(определяемая переменной среды &lsquo;<samp>SHELL</samp>&rsquo;) доступна всем для чтения.
+Помните, что GDB использует оболочку для запуска вашей
+программы &mdash; некоторые системы не позволяют GDB отлаживать
+дочерние процессы, чьи программы недоступны для чтения.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Otdelxnyi-obwektnyi-katalog.html" accesskey="1">Отдельный объектный каталог</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Компиляция GDB в другом каталоге
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Imena-konfiguracii.html" accesskey="2">Имена конфигураций</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Определение имен рабочих и целевых машин
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Kliuchi-configure.html" accesskey="3">Ключи configure</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Обзор ключей для configure
+</td></tr>
+</table>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Alfavitnyi-ukazatelx.html" accesskey="n" rel="next">Алфавитный указатель</a>, Previous: <a href="Formatirovanie-dokumentacii.html" accesskey="p" rel="prev">Форматирование документации</a>, Up: <a href="index.html" accesskey="u" rel="up">Top</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

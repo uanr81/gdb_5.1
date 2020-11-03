@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Точки останова (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Точки останова (Отладка с помощью GDB)">
+<meta name="keywords" content="Точки останова (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Ostanovka.html" rel="up" title="Остановка">
+<link href="Ustanovka-tochek-ostanova.html" rel="next" title="Установка точек останова">
+<link href="Ostanovka.html" rel="prev" title="Остановка">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0422_043e_0447_043a_0438-_043e_0441_0442_0430_043d_043e_0432_0430"></span><div class="header">
+<p>
+Next: <a href="Prodolzhenie-i-poshagovoe-vypolnenie.html" accesskey="n" rel="next">Продолжение и пошаговое выполнение</a>, Up: <a href="Ostanovka.html" accesskey="u" rel="up">Остановка</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Tochki-ostanova_002c-tochki-nabliudeniya-i-tochki-perekhvata"></span><h3 class="section">5.1 Точки останова, точки наблюдения и точки перехвата</h3>
+
+<span id="index-tochki-ostanova"></span>
+<p><em>Точка останова</em> останавливает вашу программу всякий раз, когда ее
+выполнение достигает определенного места.  Для каждой точки останова вы
+можете добавлять условия для лучшего управления условиями остановки.
+Вы можете устанавливать точки останова командой
+<code>break</code> и ее вариантами (see <a href="Ustanovka-tochek-ostanova.html">Установка точек останова</a>), чтобы задать место, где должна остановиться
+ваша программа, по номеру строки, имени функции или точному адресу.
+</p>
+<p>В конфигурациях HP-UX, SunOS 4.x, SVR4 и Alpha OSF/1, вы можете устанавливать
+точки останова в разделяемых библиотеках до запуска выполняемого файла.
+В системах HP-UX существует небольшое ограничение: вы должны подождать,
+пока программа не перестанет выполняться, для установки точек
+останова в подпрограммах из разделяемой библиотеки, которые не
+вызываются напрямую из программы (например, подпрограммах, являющихся
+аргументами вызова <code>pthread_create</code>).
+</p>
+<span id="index-tochki-nabliudeniya"></span>
+<span id="index-trassirovka-pamyati"></span>
+<span id="index-tochka-ostanova-po-adresu-pamyati"></span>
+<span id="index-tochka-ostanova-po-izmeneniiu-peremennoi"></span>
+<p><em>Точка наблюдения</em> &mdash; это специальная точка останова, которая
+останавливает вашу программу при изменении значения выражения.  Вы
+должны использовать другую команду для установки точки наблюдения
+(see <a href="Ustanovka-tochek-nabliudeniya.html">Установка точек наблюдения</a>), но
+помимо этого, вы можете обращаться с ней так же, как с любой
+другой точкой останова: вы включаете, отключаете и удаляете точки
+останова и точки наблюдения при помощи одних и тех же команд.
+</p>
+<p>Вы можете сделать так, чтобы при каждой остановке в точке останова
+автоматически отображались некоторые значения из вашей программы.
+See <a href="Avtomaticheskoe-otobrazhenie.html">Автоматическое отображение</a>.
+</p>
+<span id="index-tochki-perekhvata"></span>
+<span id="index-tochka-ostanova-po-sobytiiu"></span>
+<p><em>Точка перехвата</em> &mdash; это другая специализированная точка останова,
+которая останавливает вашу программу при возникновении события
+определенного типа, такого как выбрасывание исключения в Си++ или
+загрузка библиотеки.  Так же, как с точками наблюдения, вы используете
+другую команду для установки точки перехвата, (see <a href="Ustanovka-tochek-perekhvata.html">Установка точек перехвата</a>), но помимо этого, вы можете
+обращаться с ней так же, как с любой другой точкой останова.  (Для
+остановки, когда ваша программа получает сигнал, используйте команду
+<code>handle</code>; смотрите <a href="Signaly.html">Сигналы</a>.)
+</p>
+<span id="index-nomera-tochek-ostanova"></span>
+<span id="index-nomera-dlya-tochek-ostanova"></span>
+<p>Когда вы создаете точку останова, наблюдения или перехвата, GDB
+присваивает ей номер; эти номера являются последовательными
+целыми числами, начинающимися с единицы.  Во многих командах для
+управления различными возможностями точек останова вы используете эти
+номера для указания точки останова, которую вы хотите изменить.  Каждая
+точка останова может быть <em>включена</em> или <em>отключена</em>; если точка
+останова отключена, она не оказывает никакого влияния на вашу программу,
+пока вы снова не включите ее.
+</p>
+<span id="index-diapazony-tochek-ostanova"></span>
+<span id="index-diapazony-dlya-tochek-ostanova"></span>
+<p>Некоторые команды GDB допускают в качестве указания точек
+останова, на которые они действуют, их диапазоны.  Диапазон точек
+останова &mdash; это или номер одной точки, например &lsquo;<samp>5</samp>&rsquo;, или два таких
+номера, в порядке увеличения, разделенные дефисом, например &lsquo;<samp>5-7</samp>&rsquo;.
+Когда команде задается диапазон точек останова, она действует на все
+точки останова в этом диапазоне.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Ustanovka-tochek-ostanova.html" accesskey="1">Установка точек останова</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Установка точек останова
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Ustanovka-tochek-nabliudeniya.html" accesskey="2">Установка точек наблюдения</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Установка точек наблюдения
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Ustanovka-tochek-perekhvata.html" accesskey="3">Установка точек перехвата</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Установка точек перехвата
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Udalenie-tochek-ostanova.html" accesskey="4">Удаление точек останова</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Удаление точек останова
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Otkliuchenie.html" accesskey="5">Отключение</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Отключение точек останова
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Usloviya.html" accesskey="6">Условия</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Условия останова
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Komandy-ostanova.html" accesskey="7">Команды останова</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Команды точки останова
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Meniu-tochki-ostanova.html" accesskey="8">Меню точки останова</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Меню точки останова
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Oshibki-v-tochkakh-ostanova.html" accesskey="9">Ошибки в точках останова</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">&ldquo;Не удается поместить точки останова&rdquo;
+</td></tr>
+</table>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Prodolzhenie-i-poshagovoe-vypolnenie.html" accesskey="n" rel="next">Продолжение и пошаговое выполнение</a>, Up: <a href="Ostanovka.html" accesskey="u" rel="up">Остановка</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

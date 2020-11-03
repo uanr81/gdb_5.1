@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Отображение объектов ядра (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Отображение объектов ядра (Отладка с помощью GDB)">
+<meta name="keywords" content="Отображение объектов ядра (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Otladochnye-celi.html" rel="up" title="Отладочные цели">
+<link href="Konfiguracii.html" rel="next" title="Конфигурации">
+<link href="NetWare.html" rel="prev" title="NetWare">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_041e_0442_043e_0431_0440_0430_0436_0435_043d_0438_0435-_043e_0431_044a_0435_043a_0442_043e_0432-_044f_0434_0440_0430"></span><div class="header">
+<p>
+Previous: <a href="Udalennaya-otladka.html" accesskey="p" rel="prev">Удаленная отладка</a>, Up: <a href="Otladochnye-celi.html" accesskey="u" rel="up">Отладочные цели</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Otobrazhenie-obwektov-yadra"></span><h3 class="section">13.5 Отображение объектов ядра</h3>
+
+<span id="index-otobrazhenie-obwektov-yadra"></span>
+<span id="index-obwekt-yadra"></span>
+
+<p>Некоторые цели поддерживают отображение объектов ядра.  При помощи этих
+возможностей, GDB взаимодействует непосредственно с
+операционной системой и может выводить информацию об объектах уровня
+операционной системы, например, о блокировках
+и других объектах синхронизации.  Какие именно объекты могут быть
+отображены, определяется в зависимости от конкретной ОС.
+</p>
+<p>Используйте команду <code>set os</code>, чтобы установить тип операционной
+системы.  Это говорит GDB, какой модуль отображения объектов
+ядра инициализировать:
+</p>
+<div class="example">
+<pre class="example">(gdb) set os cisco
+</pre></div>
+
+<p>Если команда <code>set os</code> выполнится успешно, GDB выведет
+некоторую информацию об операционной системе и создаст новую команду
+<code>info</code>, которая может быть использована для посылки запросов на
+целевую машину.  Название команды <code>info</code> выбирается в зависимости
+от операционной системы:
+</p>
+<div class="example">
+<pre class="example">(gdb) info cisco
+List of Cisco Kernel Objects
+Object     Description
+any        Any and all objects
+</pre></div>
+
+<p>Дальнейшие подкоманды могут использоваться для запросов о конкретных
+объектах, информация о которых есть в ядре.
+</p>
+<p>В настоящее время не существует другого способа определить,
+поддерживается та или иная операционная система, кроме как попробовать.
+</p>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Размер экрана (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Размер экрана (Отладка с помощью GDB)">
+<meta name="keywords" content="Размер экрана (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Upravlenie-GDB.html" rel="up" title="Управление GDB">
+<link href="Chisla.html" rel="next" title="Числа">
+<link href="Istoriya.html" rel="prev" title="История">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0420_0430_0437_043c_0435_0440-_044d_043a_0440_0430_043d_0430"></span><div class="header">
+<p>
+Next: <a href="Chisla.html" accesskey="n" rel="next">Числа</a>, Previous: <a href="Istoriya.html" accesskey="p" rel="prev">История</a>, Up: <a href="Upravlenie-GDB.html" accesskey="u" rel="up">Управление GDB</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Razmer-ekrana"></span><h3 class="section">15.4 Размер экрана</h3>
+<span id="index-razmer-ekrana"></span>
+<span id="index-pauzy-pri-vyvode"></span>
+
+<p>Определенные команды GDB могут выводить большое количество информации
+на экран.  Чтобы помочь вам всю ее прочитать, GDB приостанавливает вывод и
+запрашивает ввод в конце каждой страницы вывода.  Нажмите <tt class="key">RET</tt>, когда вы
+хотите продолжить вывод, или <kbd>q</kbd> для уничтожения оставшегося вывода.
+Также, установка ширины экрана определяет, когда переносить строки
+вывода.  В зависимости от того, что выводится, GDB пытается
+разбить строку в удобочитаемом месте, вместо того чтобы просто
+продолжить ее на следующую строчку.
+</p>
+<p>Обычно GDB узнает размер экрана из программы драйвера
+терминала.  Например, в Unix GDB использует базу данных
+termcap, вместе со значением переменной среды <code>TERM</code> и
+установками <code>stty rows</code> и <code>stty cols</code>.  Если это неправильно,
+вы можете заменить эти установки командами <code>set height</code> и
+<code>set width</code>:
+</p>
+<dl compact="compact">
+<dd><span id="index-set-height"></span>
+<span id="index-set-width"></span>
+<span id="index-show-wight"></span>
+<span id="index-show-width"></span>
+</dd>
+<dt><code>set height <var>lpp</var></code></dt>
+<dt><code>show height</code></dt>
+<dt><code>set width <var>cpl</var></code></dt>
+<dt><code>show width</code></dt>
+<dd><p>Эти команды <code>set</code> определяют высоту экрана в <var>lpp</var> строк и ширину
+в <var>cpl</var> знаков.  Соответствующие команды <code>show</code> отображают
+текущие установки.
+</p>
+<p>Если вы определите высоту в ноль строк, GDB не будет
+останавливаться при выводе, независимо от того, насколько он длинный.
+Это полезно, если вывод осуществляется в файл или буфер редактора.
+</p>
+<p>Аналогично, вы можете определить &lsquo;<samp>set width 0</samp>&rsquo;, чтобы запретить
+GDB переносить строки вывода.
+</p></dd>
+</dl>
+
+
+
+
+</body>
+</html>

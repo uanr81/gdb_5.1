@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Выражения Си++ (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Выражения Си++ (Отладка с помощью GDB)">
+<meta name="keywords" content="Выражения Си++ (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Si.html" rel="up" title="Си">
+<link href="Znacheniya-Si-po-umolchaniiu.html" rel="next" title="Значения Си по умолчанию">
+<link href="Konstanty-Si.html" rel="prev" title="Константы Си">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0412_044b_0440_0430_0436_0435_043d_0438_044f-_0421_0438_002b_002b"></span><div class="header">
+<p>
+Next: <a href="Znacheniya-Si-po-umolchaniiu.html" accesskey="n" rel="next">Значения Си по умолчанию</a>, Previous: <a href="Konstanty-Si.html" accesskey="p" rel="prev">Константы Си</a>, Up: <a href="Si.html" accesskey="u" rel="up">Си</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Vyrazheniya-Si_002b_002b"></span><h4 class="subsubsection">9.4.1.3 Выражения Си++</h4>
+
+<span id="index-vyrazheniya-v-Si_002b_002b"></span>
+<p>Обработчик выражений GDB может интерпретировать большинство
+выражений Си++.
+</p>
+<span id="index-podderzhka-Si_002b_002b_002c-bez-COFF"></span>
+<span id="index-COFF-i-Si_002b_002b"></span>
+<span id="index-Si_002b_002b-i-obwektnye-formaty"></span>
+<span id="index-obwektnye-formaty-i-Si_002b_002b"></span>
+<span id="index-a_002eout-i-Si_002b_002b"></span>
+<span id="index-ECOFF-i-Si_002b_002b"></span>
+<span id="index-XCOFF-i-Si_002b_002b"></span>
+<span id="index-ELF_002fstabs-i-Si_002b_002b"></span>
+<span id="index-ELF_002fDWARF-i-Si_002b_002b"></span>
+<blockquote>
+<p><em>Предупреждение:</em> GDB может отлаживать программы на Си++,
+только если вы используете подходящий компилятор.  Обычно
+отладка Си++ зависит от использования дополнительной отладочной информации в
+таблице символов и, таким образом, требует специальной поддержки.
+В частности, если ваш компилятор генерирует a.out, MIPS <small>ECOFF</small>,
+RS/6000 <small>XCOFF</small> или <small>ELF</small> с расширениями stabs к таблице
+символов, все эти средства доступны.  (С <small>GNU</small> CC вы можете
+использовать ключ &lsquo;<samp>-gstabs</samp>&rsquo;, чтобы явно запросить расширения
+отладки stabs).  С другой стороны, если формат объектного
+кода &mdash; стандартный <small>COFF</small> или <small>DWARF</small> в <small>ELF</small>, значительная часть
+поддержки Си++ в GDB <em>не</em> работает.
+</p></blockquote>
+
+<ol>
+<li> <span id="index-funkcii_002dchleny"></span>
+Допускаются вызовы функций-членов; вы можете использовать выражения типа
+
+<div class="example">
+<pre class="example">count = aml-&gt;GetOriginal(x, y)
+</pre></div>
+
+</li><li> <span id="index-this_002c-vnutri-funkcii_002dchlenov-Si_002b_002b"></span>
+<span id="index-prostranstvo-imen-v-Si_002b_002b"></span>
+Пока функция-член активна (в выбранном кадре стека), вашим выражениям
+доступно то же пространство имен, что и функции-члену; то есть
+GDB допускает неявные ссылки на указатель
+экземпляра класса <code>this</code> по тем же правилам, что и Си++.
+
+</li><li> <span id="index-vyzov-peregruzhennykh-funkcii"></span>
+<span id="index-peregruzhennye-funkcii_002c-vyzov"></span>
+<span id="index-preobrazovanie-tipov-v-Si_002b_002b"></span>
+Вы можете вызывать перегруженные функции; GDB производит вызов
+функции с правильным определением, но с некоторыми ограничениями.
+GDB не совершает преобразования, для выполнения которых требуются
+преобразования типов, определенные пользователем, вызовы конструкторов
+или конкретизации не существующих в программе шаблонов.  Он также не
+может обрабатывать списки с неопределенным числом аргументов
+или аргументы со значениями по умолчанию.
+
+<p>Он производит преобразования и расширения целочисленных типов,
+расширения типов с плавающей точкой, арифметические преобразования,
+преобразования указателей, преобразования класса объекта в базовые
+классы и стандартные преобразования, например функции или массива к
+указателю; это требует точного совпадения числа аргументов функции.
+</p>
+<p>Разрешение перегруженных имен производится всегда, если не
+указано <code>set overload-resolution off</code>.  See <a href="Otladka-Si_002b_002b.html">Возможности GDB для Си++</a>.
+</p>
+<p>Вы должны указать <code>set overload-resolution off</code>, чтобы задать
+функцию явно при вызове перегруженной функции, как в примере
+</p>
+<div class="example">
+<pre class="example">p 'foo(char,int)'('x', 13)
+</pre></div>
+
+<p>Возможности GDB для завершения команд могут упростить это;
+смотрите <a href="Zavershenie.html">Завершение команд</a>.
+</p>
+</li><li> <span id="index-obwyavlenie-ssylok"></span>
+GDB понимает переменные, объявленные как ссылки Си++; вы можете
+использовать их в выражениях, точно как вы делаете в исходном тексте
+Си++ &mdash; они автоматически разыменовываются.
+
+<p>В списке параметров, показываемом GDB при отображении кадра
+стека, значения переменных-ссылок не отображаются (в отличие от
+других переменных); это позволяет избежать неудобств из-за того, что ссылки
+часто используются для больших структур.  <em>Адрес</em>
+переменной-ссылки всегда выводится, если только вы не установили
+&lsquo;<samp>set print address off</samp>&rsquo;.
+</p>
+</li><li> GDB поддерживает оператор Си++ определения области видимости имени
+<code>::</code> &mdash; ваши выражения могут использовать его так же, как в вашей
+программе.  Так как одна область видимости может быть определена
+внутри другой, вы можете при необходимости неоднократно использовать
+<code>::</code>, например, в выражении типа
+&lsquo;<samp><var>обл1</var>::<var>обл2</var>::<var>имя</var></samp>&rsquo;.  GDB также
+позволяет определить область видимости имени путем ссылки на исходный
+файл, при отладке как Си, так и Си++ (see <a href="Peremennye.html">Переменные
+программы</a>).
+</li></ol>
+
+<p>Кроме того, при использовании с компилятором HP Си++, GDB
+правильно поддерживает вызов виртуальных функций, вывод виртуальных баз
+объектов, вызов функций в базовом подобъекте, приведение объектов и
+выполнение операторов, определенных пользователем.
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Znacheniya-Si-po-umolchaniiu.html" accesskey="n" rel="next">Значения Си по умолчанию</a>, Previous: <a href="Konstanty-Si.html" accesskey="p" rel="prev">Константы Си</a>, Up: <a href="Si.html" accesskey="u" rel="up">Си</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

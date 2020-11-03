@@ -1,0 +1,735 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Управление данными GDB/MI (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Управление данными GDB/MI (Отладка с помощью GDB)">
+<meta name="keywords" content="Управление данными GDB/MI (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="GDB_002fMI.html" rel="up" title="GDB/MI">
+<link href="Upravlenie-programmoi-GDB_002fMI.html" rel="next" title="Управление программой GDB/MI">
+<link href="Komandy-GDB_002fMI-dlya-tablicy-tochek-ostanova.html" rel="prev" title="Команды GDB/MI для таблицы точек останова">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0423_043f_0440_0430_0432_043b_0435_043d_0438_0435-_0434_0430_043d_043d_044b_043c_0438-GDB_002fMI"></span><div class="header">
+<p>
+Next: <a href="Upravlenie-programmoi-GDB_002fMI.html" accesskey="n" rel="next">Управление программой GDB/MI</a>, Previous: <a href="Komandy-GDB_002fMI-dlya-tablicy-tochek-ostanova.html" accesskey="p" rel="prev">Команды GDB/MI для таблицы точек останова</a>, Up: <a href="GDB_002fMI.html" accesskey="u" rel="up">GDB/MI</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Upravlenie-dannymi-GDB_002fMI"></span><h3 class="section">19.6 Управление данными <small>GDB/MI</small></h3>
+
+<span id="index-upravlenie-dannymi_002c-v-GDB_002fMI"></span>
+<span id="index-GDB_002fMI_002c-upravlenie-dannymi"></span>
+<p>Этот раздел описывает команды <small>GDB/MI</small> для управления данными:
+исследование памяти и регистров, вычисление выражений и так далее.
+</p>
+
+<span id="Komanda-_002ddata_002ddisassemble"></span><h4 class="subheading">Команда <code>-data-disassemble</code></h4>
+<span id="index-_002ddata_002ddisassemble"></span>
+
+<span id="Kratkoe-opisanie-10"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -data-disassemble
+    [ -s <var>нач-адр</var> -e <var>кон-адр</var> ]
+  | [ -f <var>имя-файла</var> -l <var>ном-строки</var> [ -n <var>ст</var> ] ]
+  -- <var>режим</var>
+</pre></div>
+
+<p>Где:
+</p>
+<dl compact="compact">
+<dt>&lsquo;<samp><var>нач-адр</var></samp>&rsquo;</dt>
+<dd><p>начальный адрес (или <code>$pc</code>)
+</p></dd>
+<dt>&lsquo;<samp><var>кон-адр</var></samp>&rsquo;</dt>
+<dd><p>конечный адрес
+</p></dd>
+<dt>&lsquo;<samp><var>имя-файла</var></samp>&rsquo;</dt>
+<dd><p>имя файла для дисассемблирования
+</p></dd>
+<dt>&lsquo;<samp><var>ном-строки</var></samp>&rsquo;</dt>
+<dd><p>номер строки, в районе которой проводить дисассемблирование
+</p></dd>
+<dt>&lsquo;<samp><var>ст</var></samp>&rsquo;</dt>
+<dd><p>число строк дисассемблирования, которое необходимо произвести.  Если
+равно -1 и <var>кон-адр</var> не указан, то будет дисассемблирована целая
+функция.  Если <var>кон-адр</var> указан и не равен нулю, и
+<var>ст</var> меньше, чем количество строк дисассемблирования между
+<var>нач-адр</var> и <var>кон-адр</var>, отображаются только <var>ст</var> строк.
+Если <var>ст</var> больше, чем число строк между <var>нач-адр</var> и
+<var>кон-адр</var>, отображаются только строки до <var>кон-адр</var>.
+</p></dd>
+<dt>&lsquo;<samp><var>режим</var></samp>&rsquo;</dt>
+<dd><p>либо 0 (означает только результат дисассемблирования), либо 1 (означает
+смесь исходного текста и результата дисассемблирования).
+</p></dd>
+</dl>
+
+<span id="Rezulxtat-2"></span><h4 class="subsubheading">Результат</h4>
+
+<p>Вывод для каждой инструкции состоит из четырех полей:
+</p>
+<ul>
+<li> Адрес
+</li><li> Имя-Функции
+</li><li> Смещение
+</li><li> Инструкция
+</li></ul>
+
+<p>Заметьте, что то, что включено в поле инструкции, не обрабатывается
+непосредственно <small>GDB/MI</small>, то есть изменить его формат невозможно.
+</p>
+<span id="Komanda-GDB-9"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Непосредственного отображения этой команды в CLI нет.
+</p>
+<span id="Primer-10"></span><h4 class="subsubheading">Пример</h4>
+
+<p>Дисассемблирование от текущего значения <code>$pc</code> до <code>$pc + 20</code>:
+</p>
+<div class="example">
+<pre class="example">(gdb)
+-data-disassemble -s $pc -e &quot;$pc + 20&quot; -- 0
+^done,
+asm_insns=[
+{address=&quot;0x000107c0&quot;,func-name=&quot;main&quot;,offset=&quot;4&quot;,
+inst=&quot;mov  2, %o0&quot;},
+{address=&quot;0x000107c4&quot;,func-name=&quot;main&quot;,offset=&quot;8&quot;,
+inst=&quot;sethi  %hi(0x11800), %o2&quot;},
+{address=&quot;0x000107c8&quot;,func-name=&quot;main&quot;,offset=&quot;12&quot;,
+inst=&quot;or  %o2, 0x140, %o1\t! 0x11940 &lt;_lib_version+8&gt;&quot;},
+{address=&quot;0x000107cc&quot;,func-name=&quot;main&quot;,offset=&quot;16&quot;,
+inst=&quot;sethi  %hi(0x11800), %o2&quot;},
+{address=&quot;0x000107d0&quot;,func-name=&quot;main&quot;,offset=&quot;20&quot;,
+inst=&quot;or  %o2, 0x168, %o4\t! 0x11968 &lt;_lib_version+48&gt;&quot;}]
+(gdb)
+</pre></div>
+
+<p>Дисассемблирование всей функции <code>main</code>.  Строка 32 является частью
+<code>main</code>.
+</p>
+<div class="example">
+<pre class="example">-data-disassemble -f basics.c -l 32 -- 0
+^done,asm_insns=[
+{address=&quot;0x000107bc&quot;,func-name=&quot;main&quot;,offset=&quot;0&quot;,
+inst=&quot;save  %sp, -112, %sp&quot;},
+{address=&quot;0x000107c0&quot;,func-name=&quot;main&quot;,offset=&quot;4&quot;,
+inst=&quot;mov   2, %o0&quot;},
+{address=&quot;0x000107c4&quot;,func-name=&quot;main&quot;,offset=&quot;8&quot;,
+inst=&quot;sethi %hi(0x11800), %o2&quot;},
+[&hellip;]
+{address=&quot;0x0001081c&quot;,func-name=&quot;main&quot;,offset=&quot;96&quot;,inst=&quot;ret &quot;},
+{address=&quot;0x00010820&quot;,func-name=&quot;main&quot;,offset=&quot;100&quot;,inst=&quot;restore &quot;}]
+(gdb)
+</pre></div>
+
+<p>Дисассемблирование 3 инструкций от начала <code>main</code>:
+</p>
+<div class="example">
+<pre class="example">(gdb)
+-data-disassemble -f basics.c -l 32 -n 3 -- 0
+^done,asm_insns=[
+{address=&quot;0x000107bc&quot;,func-name=&quot;main&quot;,offset=&quot;0&quot;,
+inst=&quot;save  %sp, -112, %sp&quot;},
+{address=&quot;0x000107c0&quot;,func-name=&quot;main&quot;,offset=&quot;4&quot;,
+inst=&quot;mov  2, %o0&quot;},
+{address=&quot;0x000107c4&quot;,func-name=&quot;main&quot;,offset=&quot;8&quot;,
+inst=&quot;sethi  %hi(0x11800), %o2&quot;}]
+(gdb)
+</pre></div>
+
+<p>Дисассемблирование 3 инструкций от начала <code>main</code> в смешаном режиме:
+</p>
+<div class="example">
+<pre class="example">(gdb)
+-data-disassemble -f basics.c -l 32 -n 3 -- 1
+^done,asm_insns=[
+src_and_asm_line={line=&quot;31&quot;,
+file=&quot;/kwikemart/marge/ezannoni/flathead-dev/devo/gdb/ \
+  testsuite/gdb.mi/basics.c&quot;,line_asm_insn=[
+{address=&quot;0x000107bc&quot;,func-name=&quot;main&quot;,offset=&quot;0&quot;,
+inst=&quot;save  %sp, -112, %sp&quot;}]},
+src_and_asm_line={line=&quot;32&quot;,
+file=&quot;/kwikemart/marge/ezannoni/flathead-dev/devo/gdb/ \
+  testsuite/gdb.mi/basics.c&quot;,line_asm_insn=[
+{address=&quot;0x000107c0&quot;,func-name=&quot;main&quot;,offset=&quot;4&quot;,
+inst=&quot;mov  2, %o0&quot;},
+{address=&quot;0x000107c4&quot;,func-name=&quot;main&quot;,offset=&quot;8&quot;,
+inst=&quot;sethi  %hi(0x11800), %o2&quot;}]}]
+(gdb)
+</pre></div>
+
+
+<span id="Komanda-_002ddata_002devaluate_002dexpression"></span><h4 class="subheading">Команда <code>-data-evaluate-expression</code></h4>
+<span id="index-_002ddata_002devaluate_002dexpression"></span>
+
+<span id="Kratkoe-opisanie-11"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -data-evaluate-expression <var>выраж</var>
+</pre></div>
+
+<p>Вычислить выражение <var>выраж</var>.  Выражение может содержать подчиненный
+вызов функции.  Вызов функции будет выполнен синхронно.  Если выражение
+содержит пробелы, оно должно быть заключено в двойные кавычки.
+</p>
+<span id="Komanda-GDB-10"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующими командами GDB являются &lsquo;<samp>print</samp>&rsquo;,
+&lsquo;<samp>output</samp>&rsquo; и &lsquo;<samp>call</samp>&rsquo;.  В <code>gdbtk</code> есть
+соответствующая команда &lsquo;<samp>gdb_eval</samp>&rsquo;.
+</p>
+<span id="Primer-11"></span><h4 class="subsubheading">Пример</h4>
+
+<p>В следующем примере числа, предшествующие командам, суть <em>лексемы</em>.
+Для их описания, см. <a href="Sintaksis-komand-GDB_002fMI.html">Синтаксис команд
+<small>GDB/MI</small></a>.  Обратите внимание на то, как <small>GDB/MI</small> возвращает
+те же лексемы в своем выводе.
+</p>
+<div class="example">
+<pre class="example">211-data-evaluate-expression A
+211^done,value=&quot;1&quot;
+(gdb)
+311-data-evaluate-expression &amp;A
+311^done,value=&quot;0xefffeb7c&quot;
+(gdb)
+411-data-evaluate-expression A+3
+411^done,value=&quot;4&quot;
+(gdb)
+511-data-evaluate-expression &quot;A + 3&quot;
+511^done,value=&quot;4&quot;
+(gdb)
+</pre></div>
+
+
+<span id="Komanda-_002ddata_002dlist_002dchanged_002dregisters"></span><h4 class="subheading">Команда <code>-data-list-changed-registers</code></h4>
+<span id="index-_002ddata_002dlist_002dchanged_002dregisters"></span>
+
+<span id="Kratkoe-opisanie-12"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -data-list-changed-registers
+</pre></div>
+
+<p>Выводит список регистров, которые изменились.
+</p>
+<span id="Komanda-GDB-11"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>GDB не имеет прямого аналога этой команды; соответствующей
+командой <code>gdbtk</code> является &lsquo;<samp>gdb_changed_register_list</samp>&rsquo;.
+</p>
+<span id="Primer-12"></span><h4 class="subsubheading">Пример</h4>
+
+<p>На плате PPC MBX:
+</p>
+<div class="example">
+<pre class="example">(gdb)
+-exec-continue
+^running
+
+(gdb)
+*stopped,reason=&quot;breakpoint-hit&quot;,bkptno=&quot;1&quot;,frame={func=&quot;main&quot;,
+args=[],file=&quot;try.c&quot;,line=&quot;5&quot;}
+(gdb)
+-data-list-changed-registers
+^done,changed-registers=[&quot;0&quot;,&quot;1&quot;,&quot;2&quot;,&quot;4&quot;,&quot;5&quot;,&quot;6&quot;,&quot;7&quot;,&quot;8&quot;,&quot;9&quot;,
+&quot;10&quot;,&quot;11&quot;,&quot;13&quot;,&quot;14&quot;,&quot;15&quot;,&quot;16&quot;,&quot;17&quot;,&quot;18&quot;,&quot;19&quot;,&quot;20&quot;,&quot;21&quot;,&quot;22&quot;,&quot;23&quot;,
+&quot;24&quot;,&quot;25&quot;,&quot;26&quot;,&quot;27&quot;,&quot;28&quot;,&quot;30&quot;,&quot;31&quot;,&quot;64&quot;,&quot;65&quot;,&quot;66&quot;,&quot;67&quot;,&quot;69&quot;]
+(gdb)
+</pre></div>
+
+
+<span id="Komanda-_002ddata_002dlist_002dregister_002dnames"></span><h4 class="subheading">Команда <code>-data-list-register-names</code></h4>
+<span id="index-_002ddata_002dlist_002dregister_002dnames"></span>
+
+<span id="Kratkoe-opisanie-13"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -data-list-register-names [ ( <var>ном-рег</var> )+ ]
+</pre></div>
+
+<p>Показать список имен регистров текущей цели.  Если аргументы не заданы,
+показывается список имен всех регистров.  Если в качестве аргументов
+заданы целые числа, команда напечатает список имен регистров,
+соответствующих аргументам.  Чтобы гарантировать согласованность имен
+регистров и их номеров, выводимый список может содержать имена пустых
+регистров.
+</p>
+<span id="Komanda-GDB-12"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>В GDB нет команды, которая соответствует
+&lsquo;<samp>-data-list-register-names</samp>&rsquo;.  В <code>gdbtk</code> соответствующей
+командой является &lsquo;<samp>gdb_regnames</samp>&rsquo;.
+</p>
+<span id="Primer-13"></span><h4 class="subsubheading">Пример</h4>
+
+<p>Для платы PPC MBX:
+</p><div class="example">
+<pre class="example">(gdb)
+-data-list-register-names
+^done,register-names=[&quot;r0&quot;,&quot;r1&quot;,&quot;r2&quot;,&quot;r3&quot;,&quot;r4&quot;,&quot;r5&quot;,&quot;r6&quot;,&quot;r7&quot;,
+&quot;r8&quot;,&quot;r9&quot;,&quot;r10&quot;,&quot;r11&quot;,&quot;r12&quot;,&quot;r13&quot;,&quot;r14&quot;,&quot;r15&quot;,&quot;r16&quot;,&quot;r17&quot;,&quot;r18&quot;,
+&quot;r19&quot;,&quot;r20&quot;,&quot;r21&quot;,&quot;r22&quot;,&quot;r23&quot;,&quot;r24&quot;,&quot;r25&quot;,&quot;r26&quot;,&quot;r27&quot;,&quot;r28&quot;,&quot;r29&quot;,
+&quot;r30&quot;,&quot;r31&quot;,&quot;f0&quot;,&quot;f1&quot;,&quot;f2&quot;,&quot;f3&quot;,&quot;f4&quot;,&quot;f5&quot;,&quot;f6&quot;,&quot;f7&quot;,&quot;f8&quot;,&quot;f9&quot;,
+&quot;f10&quot;,&quot;f11&quot;,&quot;f12&quot;,&quot;f13&quot;,&quot;f14&quot;,&quot;f15&quot;,&quot;f16&quot;,&quot;f17&quot;,&quot;f18&quot;,&quot;f19&quot;,&quot;f20&quot;,
+&quot;f21&quot;,&quot;f22&quot;,&quot;f23&quot;,&quot;f24&quot;,&quot;f25&quot;,&quot;f26&quot;,&quot;f27&quot;,&quot;f28&quot;,&quot;f29&quot;,&quot;f30&quot;,&quot;f31&quot;,
+&quot;&quot;, &quot;pc&quot;,&quot;ps&quot;,&quot;cr&quot;,&quot;lr&quot;,&quot;ctr&quot;,&quot;xer&quot;]
+(gdb)
+-data-list-register-names 1 2 3
+^done,register-names=[&quot;r1&quot;,&quot;r2&quot;,&quot;r3&quot;]
+(gdb)
+</pre></div>
+
+<span id="Komanda-_002ddata_002dlist_002dregister_002dvalues"></span><h4 class="subheading">Команда <code>-data-list-register-values</code></h4>
+<span id="index-_002ddata_002dlist_002dregister_002dvalues"></span>
+
+<span id="Kratkoe-opisanie-14"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -data-list-register-values <var>фмт</var> [ ( <var>ном-рег</var> )*]
+</pre></div>
+
+<p>Отобразить содержимое регистров.  <var>Фмт</var> является форматом, в
+соответствии с которым должно быть возвращено содержимое регистров, за
+которым следует необязательный список чисел, указывающих регистры,
+подлежащие отображению.  Отсутствие списка чисел означает, что должно быть
+возвращено содержимое всех регистров.
+</p>
+<p>Вот допустимые форматы для <var>фмт</var>:
+</p>
+<dl compact="compact">
+<dt><code>x</code></dt>
+<dd><p>Шестнадцатеричный
+</p></dd>
+<dt><code>o</code></dt>
+<dd><p>Восьмеричный
+</p></dd>
+<dt><code>t</code></dt>
+<dd><p>Двоичный
+</p></dd>
+<dt><code>d</code></dt>
+<dd><p>Десятичный
+</p></dd>
+<dt><code>r</code></dt>
+<dd><p>Без преобразования
+</p></dd>
+<dt><code>N</code></dt>
+<dd><p>Натуральный
+</p></dd>
+</dl>
+
+<span id="Komanda-GDB-13"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующими командами GDB являются &lsquo;<samp>info reg</samp>&rsquo;,
+&lsquo;<samp>info all-reg</samp>&rsquo; и (в <code>gdbtk</code>) &lsquo;<samp>gdb_fetch_registers</samp>&rsquo;.
+</p>
+<span id="Primer-14"></span><h4 class="subsubheading">Пример</h4>
+
+<p>Для платы PPC MBX (имейте ввиду: переносы строк даны только для удобства
+чтения, они не появляются в реальном выводе):
+</p>
+<div class="example">
+<pre class="example">(gdb)
+-data-list-register-values r 64 65
+^done,register-values=[{number=&quot;64&quot;,value=&quot;0xfe00a300&quot;},
+{number=&quot;65&quot;,value=&quot;0x00029002&quot;}]
+(gdb)
+-data-list-register-values x
+^done,register-values=[{number=&quot;0&quot;,value=&quot;0xfe0043c8&quot;},
+{number=&quot;1&quot;,value=&quot;0x3fff88&quot;},{number=&quot;2&quot;,value=&quot;0xfffffffe&quot;},
+{number=&quot;3&quot;,value=&quot;0x0&quot;},{number=&quot;4&quot;,value=&quot;0xa&quot;},
+{number=&quot;5&quot;,value=&quot;0x3fff68&quot;},{number=&quot;6&quot;,value=&quot;0x3fff58&quot;},
+{number=&quot;7&quot;,value=&quot;0xfe011e98&quot;},{number=&quot;8&quot;,value=&quot;0x2&quot;},
+{number=&quot;9&quot;,value=&quot;0xfa202820&quot;},{number=&quot;10&quot;,value=&quot;0xfa202808&quot;},
+{number=&quot;11&quot;,value=&quot;0x1&quot;},{number=&quot;12&quot;,value=&quot;0x0&quot;},
+{number=&quot;13&quot;,value=&quot;0x4544&quot;},{number=&quot;14&quot;,value=&quot;0xffdfffff&quot;},
+{number=&quot;15&quot;,value=&quot;0xffffffff&quot;},{number=&quot;16&quot;,value=&quot;0xfffffeff&quot;},
+{number=&quot;17&quot;,value=&quot;0xefffffed&quot;},{number=&quot;18&quot;,value=&quot;0xfffffffe&quot;},
+{number=&quot;19&quot;,value=&quot;0xffffffff&quot;},{number=&quot;20&quot;,value=&quot;0xffffffff&quot;},
+{number=&quot;21&quot;,value=&quot;0xffffffff&quot;},{number=&quot;22&quot;,value=&quot;0xfffffff7&quot;},
+{number=&quot;23&quot;,value=&quot;0xffffffff&quot;},{number=&quot;24&quot;,value=&quot;0xffffffff&quot;},
+{number=&quot;25&quot;,value=&quot;0xffffffff&quot;},{number=&quot;26&quot;,value=&quot;0xfffffffb&quot;},
+{number=&quot;27&quot;,value=&quot;0xffffffff&quot;},{number=&quot;28&quot;,value=&quot;0xf7bfffff&quot;},
+{number=&quot;29&quot;,value=&quot;0x0&quot;},{number=&quot;30&quot;,value=&quot;0xfe010000&quot;},
+{number=&quot;31&quot;,value=&quot;0x0&quot;},{number=&quot;32&quot;,value=&quot;0x0&quot;},
+{number=&quot;33&quot;,value=&quot;0x0&quot;},{number=&quot;34&quot;,value=&quot;0x0&quot;},
+{number=&quot;35&quot;,value=&quot;0x0&quot;},{number=&quot;36&quot;,value=&quot;0x0&quot;},
+{number=&quot;37&quot;,value=&quot;0x0&quot;},{number=&quot;38&quot;,value=&quot;0x0&quot;},
+{number=&quot;39&quot;,value=&quot;0x0&quot;},{number=&quot;40&quot;,value=&quot;0x0&quot;},
+{number=&quot;41&quot;,value=&quot;0x0&quot;},{number=&quot;42&quot;,value=&quot;0x0&quot;},
+{number=&quot;43&quot;,value=&quot;0x0&quot;},{number=&quot;44&quot;,value=&quot;0x0&quot;},
+{number=&quot;45&quot;,value=&quot;0x0&quot;},{number=&quot;46&quot;,value=&quot;0x0&quot;},
+{number=&quot;47&quot;,value=&quot;0x0&quot;},{number=&quot;48&quot;,value=&quot;0x0&quot;},
+{number=&quot;49&quot;,value=&quot;0x0&quot;},{number=&quot;50&quot;,value=&quot;0x0&quot;},
+{number=&quot;51&quot;,value=&quot;0x0&quot;},{number=&quot;52&quot;,value=&quot;0x0&quot;},
+{number=&quot;53&quot;,value=&quot;0x0&quot;},{number=&quot;54&quot;,value=&quot;0x0&quot;},
+{number=&quot;55&quot;,value=&quot;0x0&quot;},{number=&quot;56&quot;,value=&quot;0x0&quot;},
+{number=&quot;57&quot;,value=&quot;0x0&quot;},{number=&quot;58&quot;,value=&quot;0x0&quot;},
+{number=&quot;59&quot;,value=&quot;0x0&quot;},{number=&quot;60&quot;,value=&quot;0x0&quot;},
+{number=&quot;61&quot;,value=&quot;0x0&quot;},{number=&quot;62&quot;,value=&quot;0x0&quot;},
+{number=&quot;63&quot;,value=&quot;0x0&quot;},{number=&quot;64&quot;,value=&quot;0xfe00a300&quot;},
+{number=&quot;65&quot;,value=&quot;0x29002&quot;},{number=&quot;66&quot;,value=&quot;0x202f04b5&quot;},
+{number=&quot;67&quot;,value=&quot;0xfe0043b0&quot;},{number=&quot;68&quot;,value=&quot;0xfe00b3e4&quot;},
+{number=&quot;69&quot;,value=&quot;0x20002b03&quot;}]
+(gdb)
+</pre></div>
+
+
+<span id="Komanda-_002ddata_002dread_002dmemory"></span><h4 class="subheading">Команда <code>-data-read-memory</code></h4>
+<span id="index-_002ddata_002dread_002dmemory"></span>
+
+<span id="Kratkoe-opisanie-15"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -data-read-memory [ -o <var>смещение</var> ]
+   <var>адрес</var> <var>формат-слова</var> <var>размер-слова</var>
+   <var>число-строк</var> <var>число-колонок</var> [ <var>asзнак</var> ]
+</pre></div>
+
+<p>где:
+</p>
+<dl compact="compact">
+<dt>&lsquo;<samp><var>адрес</var></samp>&rsquo;</dt>
+<dd><p>Выражение, определяющее адрес в памяти первого слова, которое надо
+прочитать.  Сложные выражения, содержащие пробельные знаки, должны
+заключаться в кавычки с использованием соглашений Си.
+</p>
+</dd>
+<dt>&lsquo;<samp><var>формат-слова</var></samp>&rsquo;</dt>
+<dd><p>Формат, который должен быть использован для печати слов памяти.
+Обозначения те же, что и для команды GDB <code>print</code>
+(see <a href="Formaty-vyvoda.html">Форматы вывода</a>).
+</p>
+</dd>
+<dt>&lsquo;<samp><var>размер-слова</var></samp>&rsquo;</dt>
+<dd><p>Размер в байтах каждого слова в памяти.
+</p>
+</dd>
+<dt>&lsquo;<samp><var>число-строк</var></samp>&rsquo;</dt>
+<dd><p>Число строк в выходной таблице.
+</p>
+</dd>
+<dt>&lsquo;<samp><var>число-колонок</var></samp>&rsquo;</dt>
+<dd><p>Число колонок в выходной таблице.
+</p>
+</dd>
+<dt>&lsquo;<samp><var>asзнак</var></samp>&rsquo;</dt>
+<dd><p>В настоящее время означает, что каждая строка должна включать
+<small>ASCII</small>-дамп.  Значение <var>asзнак</var> используется в качестве
+заполняющего знака, когда байт не является элементом набора печатных
+знаков <small>ASCII</small> (печатные знаки <small>ASCII</small> это те знаки, чьи коды
+находятся между 32 и 126 включительно).
+</p>
+</dd>
+<dt>&lsquo;<samp><var>смещение</var></samp>&rsquo;</dt>
+<dd><p>Смещение, которое надо добавить к <var>адресу</var> перед тем, как начать
+извлечение из памяти.
+</p></dd>
+</dl>
+
+<p>Эта команда отображает содержимое памяти в виде таблицы из
+<var>число-строк</var> на <var>число-колонок</var> слов, причем каждое слово
+занимает <var>размер-слова</var> байт.  В общей сложности считывается
+<code><var>число-строк</var> * <var>число-колонок</var> * <var>размер-слова</var></code>
+байт (возвращается как &lsquo;<samp>total-bytes</samp>&rsquo;).  Если цель должна возвратить
+меньше запрошенного числа байт, отсутствующие слова идентифицируются при
+помощи &lsquo;<samp>N/A</samp>&rsquo;.  Число байт, прочитанное с цели, возвращается в
+&lsquo;<samp>nr-bytes</samp>&rsquo;, а начальный адрес, использованный для чтении памяти, в
+&lsquo;<samp>addr</samp>&rsquo;.
+</p>
+<p>Адрес следующей/предыдущей строки или страницы доступен в
+&lsquo;<samp>next-row</samp>&rsquo; и &lsquo;<samp>prev-row</samp>&rsquo;, &lsquo;<samp>next-page</samp>&rsquo; и &lsquo;<samp>prev-page</samp>&rsquo;.
+</p>
+<span id="Komanda-GDB-14"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>x</samp>&rsquo;.  <code>gdbtk</code>
+имеет команду чтения памяти &lsquo;<samp>gdb_get_mem</samp>&rsquo;.
+</p>
+<span id="Primer-15"></span><h4 class="subsubheading">Пример</h4>
+
+<p>Прочитать шесть байт памяти, начиная с <code>bytes+6</code>, но сместиться на
+<code>-6</code> байт.  Форматировать в три ряда по две колонки.  Один байт на
+слово.  Отображать каждое слово в шестнадцатеричном виде.
+</p>
+<div class="example">
+<pre class="example">(gdb)
+9-data-read-memory -o -6 -- bytes+6 x 1 3 2
+9^done,addr=&quot;0x00001390&quot;,nr-bytes=&quot;6&quot;,total-bytes=&quot;6&quot;,
+next-row=&quot;0x00001396&quot;,prev-row=&quot;0x0000138e&quot;,next-page=&quot;0x00001396&quot;,
+prev-page=&quot;0x0000138a&quot;,memory=[
+{addr=&quot;0x00001390&quot;,data=[&quot;0x00&quot;,&quot;0x01&quot;]},
+{addr=&quot;0x00001392&quot;,data=[&quot;0x02&quot;,&quot;0x03&quot;]},
+{addr=&quot;0x00001394&quot;,data=[&quot;0x04&quot;,&quot;0x05&quot;]}]
+(gdb)
+</pre></div>
+
+<p>Прочитать два байта памяти, начиная с адреса <code>shorts + 64</code> и
+отобразить в виде одного слова в десятичном виде.
+</p>
+<div class="example">
+<pre class="example">(gdb)
+5-data-read-memory shorts+64 d 2 1 1
+5^done,addr=&quot;0x00001510&quot;,nr-bytes=&quot;2&quot;,total-bytes=&quot;2&quot;,
+next-row=&quot;0x00001512&quot;,prev-row=&quot;0x0000150e&quot;,
+next-page=&quot;0x00001512&quot;,prev-page=&quot;0x0000150e&quot;,memory=[
+{addr=&quot;0x00001510&quot;,data=[&quot;128&quot;]}]
+(gdb)
+</pre></div>
+
+<p>Прочитать тридцать два байта памяти, начиная с <code>bytes+16</code>, и
+форматировать на восемь рядов по четыре колонки.  Включить строку,
+закодированную с использованием &lsquo;<samp>x</samp>&rsquo; в качестве непечатного знака.
+</p>
+<div class="example">
+<pre class="example">(gdb)
+4-data-read-memory bytes+16 x 1 8 4 x
+4^done,addr=&quot;0x000013a0&quot;,nr-bytes=&quot;32&quot;,total-bytes=&quot;32&quot;,
+next-row=&quot;0x000013c0&quot;,prev-row=&quot;0x0000139c&quot;,
+next-page=&quot;0x000013c0&quot;,prev-page=&quot;0x00001380&quot;,memory=[
+{addr=&quot;0x000013a0&quot;,data=[&quot;0x10&quot;,&quot;0x11&quot;,&quot;0x12&quot;,&quot;0x13&quot;],ascii=&quot;xxxx&quot;},
+{addr=&quot;0x000013a4&quot;,data=[&quot;0x14&quot;,&quot;0x15&quot;,&quot;0x16&quot;,&quot;0x17&quot;],ascii=&quot;xxxx&quot;},
+{addr=&quot;0x000013a8&quot;,data=[&quot;0x18&quot;,&quot;0x19&quot;,&quot;0x1a&quot;,&quot;0x1b&quot;],ascii=&quot;xxxx&quot;},
+{addr=&quot;0x000013ac&quot;,data=[&quot;0x1c&quot;,&quot;0x1d&quot;,&quot;0x1e&quot;,&quot;0x1f&quot;],ascii=&quot;xxxx&quot;},
+{addr=&quot;0x000013b0&quot;,data=[&quot;0x20&quot;,&quot;0x21&quot;,&quot;0x22&quot;,&quot;0x23&quot;],ascii=&quot; !\&quot;#&quot;},
+{addr=&quot;0x000013b4&quot;,data=[&quot;0x24&quot;,&quot;0x25&quot;,&quot;0x26&quot;,&quot;0x27&quot;],ascii=&quot;$%&amp;'&quot;},
+{addr=&quot;0x000013b8&quot;,data=[&quot;0x28&quot;,&quot;0x29&quot;,&quot;0x2a&quot;,&quot;0x2b&quot;],ascii=&quot;()*+&quot;},
+{addr=&quot;0x000013bc&quot;,data=[&quot;0x2c&quot;,&quot;0x2d&quot;,&quot;0x2e&quot;,&quot;0x2f&quot;],ascii=&quot;,-./&quot;}]
+(gdb)
+</pre></div>
+
+<span id="Komanda-_002ddisplay_002ddelete"></span><h4 class="subheading">Команда <code>-display-delete</code></h4>
+<span id="index-_002ddisplay_002ddelete"></span>
+
+<span id="Kratkoe-opisanie-16"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -display-delete <var>номер</var>
+</pre></div>
+
+<p>Удалить элемент с указанным <var>номером</var> из списка выражений, подлежащих
+отображению.
+</p>
+<span id="Komanda-GDB-15"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>delete display</samp>&rsquo;.
+</p>
+<span id="Primer-16"></span><h4 class="subsubheading">Пример</h4>
+<p>Н.П.
+</p>
+
+<span id="Komanda-_002ddisplay_002ddisable"></span><h4 class="subheading">Команда <code>-display-disable</code></h4>
+<span id="index-_002ddisplay_002ddisable"></span>
+
+<span id="Kratkoe-opisanie-17"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -display-disable <var>номер</var>
+</pre></div>
+
+<p>Отключить элемент списка выражений с указанным <var>номером</var>.
+</p>
+<span id="Komanda-GDB-16"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>disable display</samp>&rsquo;.
+</p>
+<span id="Primer-17"></span><h4 class="subsubheading">Пример</h4>
+<p>Н.П.
+</p>
+
+<span id="Komanda-_002ddisplay_002denable"></span><h4 class="subheading">Команда <code>-display-enable</code></h4>
+<span id="index-_002ddisplay_002denable"></span>
+
+<span id="Kratkoe-opisanie-18"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -display-enable <var>номер</var>
+</pre></div>
+
+<p>Включить элемент списка выражений с указанным <var>номером</var>.
+</p>
+<span id="Komanda-GDB-17"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>enable display</samp>&rsquo;.
+</p>
+<span id="Primer-18"></span><h4 class="subsubheading">Пример</h4>
+<p>Н.П.
+</p>
+
+<span id="Komanda-_002ddisplay_002dinsert"></span><h4 class="subheading">Команда <code>-display-insert</code></h4>
+<span id="index-_002ddisplay_002dinsert"></span>
+
+<span id="Kratkoe-opisanie-19"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -display-insert <var>выражение</var>
+</pre></div>
+
+<p>Отображать <var>выражение</var> всякий раз, когда программа останавливается.
+</p>
+<span id="Komanda-GDB-18"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>display</samp>&rsquo;.
+</p>
+<span id="Primer-19"></span><h4 class="subsubheading">Пример</h4>
+<p>Н.П.
+</p>
+
+<span id="Komanda-_002ddisplay_002dlist"></span><h4 class="subheading">Команда <code>-display-list</code></h4>
+<span id="index-_002ddisplay_002dlist"></span>
+
+<span id="Kratkoe-opisanie-20"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -display-list
+</pre></div>
+
+<p>Перечислить элементы списка выражений, подлежащих автоматическому
+отображению.  Текущие значения не показывать.
+</p>
+<span id="Komanda-GDB-19"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>info display</samp>&rsquo;.
+</p>
+<span id="Primer-20"></span><h4 class="subsubheading">Пример</h4>
+<p>Н.П.
+</p>
+
+<span id="Komanda-_002denvironment_002dcd"></span><h4 class="subheading">Команда <code>-environment-cd</code></h4>
+<span id="index-_002denvironment_002dcd"></span>
+
+<span id="Kratkoe-opisanie-21"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -environment-cd <var>кат</var>
+</pre></div>
+
+<p>Установить рабочий каталог GDB.
+</p>
+<span id="Komanda-GDB-20"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>cd</samp>&rsquo;.
+</p>
+<span id="Primer-21"></span><h4 class="subsubheading">Пример</h4>
+
+<div class="example">
+<pre class="example">(gdb)
+-environment-cd /kwikemart/marge/ezannoni/flathead-dev/devo/gdb
+^done
+(gdb)
+</pre></div>
+
+
+<span id="Komanda-_002denvironment_002ddirectory"></span><h4 class="subheading">Команда <code>-environment-directory</code></h4>
+<span id="index-_002denvironment_002ddirectory"></span>
+
+<span id="Kratkoe-opisanie-22"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -environment-directory <var>кат</var>
+</pre></div>
+
+<p>Добавить каталог <var>кат</var> в начало пути поиска исходных файлов.
+</p>
+<span id="Komanda-GDB-21"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>dir</samp>&rsquo;.
+</p>
+<span id="Primer-22"></span><h4 class="subsubheading">Пример</h4>
+
+<div class="example">
+<pre class="example">(gdb)
+-environment-directory /kwikemart/marge/ezannoni/flathead-dev/devo/gdb
+^done
+(gdb)
+</pre></div>
+
+
+<span id="Komanda-_002denvironment_002dpath"></span><h4 class="subheading">Команда <code>-environment-path</code></h4>
+<span id="index-_002denvironment_002dpath"></span>
+
+<span id="Kratkoe-opisanie-23"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -environment-path ( <var>кат</var> )+
+</pre></div>
+
+<p>Добавить каталоги <var>кат</var> в начало пути поиска объектных файлов.
+</p>
+<span id="Komanda-GDB-22"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>path</samp>&rsquo;.
+</p>
+<span id="Primer-23"></span><h4 class="subsubheading">Пример</h4>
+
+<div class="example">
+<pre class="example">(gdb)
+-environment-path /kwikemart/marge/ezannoni/flathead-dev/ppc-eabi/gdb
+^done
+(gdb)
+</pre></div>
+
+
+<span id="Komanda-_002denvironment_002dpwd"></span><h4 class="subheading">Команда <code>-environment-pwd</code></h4>
+<span id="index-_002denvironment_002dpwd"></span>
+
+<span id="Kratkoe-opisanie-24"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -environment-pwd
+</pre></div>
+
+<p>Показать текущий рабочий каталог.
+</p>
+<span id="Komanda-GDB-23"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>pwd</samp>&rsquo;.
+</p>
+<span id="Primer-24"></span><h4 class="subsubheading">Пример</h4>
+
+<div class="example">
+<pre class="example">(gdb)
+-environment-pwd
+~Working directory /kwikemart/marge/ezannoni/flathead-dev/devo/gdb.
+^done
+(gdb)
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Upravlenie-programmoi-GDB_002fMI.html" accesskey="n" rel="next">Управление программой GDB/MI</a>, Previous: <a href="Komandy-GDB_002fMI-dlya-tablicy-tochek-ostanova.html" accesskey="p" rel="prev">Команды GDB/MI для таблицы точек останова</a>, Up: <a href="GDB_002fMI.html" accesskey="u" rel="up">GDB/MI</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

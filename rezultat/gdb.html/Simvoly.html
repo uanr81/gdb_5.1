@@ -1,0 +1,282 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Символы (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Символы (Отладка с помощью GDB)">
+<meta name="keywords" content="Символы (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="index.html" rel="up" title="Top">
+<link href="Izmeneniya.html" rel="next" title="Изменения">
+<link href="Ustanovki-po-umolchaniiu-Chill.html" rel="prev" title="Установки по умолчанию Chill">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0421_0438_043c_0432_043e_043b_044b"></span><div class="header">
+<p>
+Next: <a href="Izmeneniya.html" accesskey="n" rel="next">Изменения</a>, Previous: <a href="YAzyki.html" accesskey="p" rel="prev">Языки</a>, Up: <a href="index.html" accesskey="u" rel="up">Top</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Issledovanie-tablicy-simvolov"></span><h2 class="chapter">10 Исследование таблицы символов</h2>
+
+<p>Команды, описанные в этой главе, позволяют вам получить информацию
+о символах (именах переменных, функций и типов), определенных в вашей
+программе.  Эта информация присуща тексту вашей программы и не изменяется при
+ее выполнении.  GDB находит эту информацию в таблице символов
+вашей программы, в файле, определенном при его вызове (see <a href="Parametry-failov.html">Выбор файлов</a>), или посредством одной из команд управления
+файлами (see <a href="Faily.html">Команды для задания файлов</a>).
+</p>
+<span id="index-imena-simvolov"></span>
+<span id="index-imena-v-kavychkakh"></span>
+<p>Иногда вам может потребоваться сослаться на символы, содержащие
+необычные знаки, которые GDB обычно трактует как разделители
+слов.  Наиболее часто это встречается при ссылках на статические
+переменные в других исходных файлах (see <a href="Peremennye.html">Переменные
+программы</a>).  Имена файлов записаны в объектных файлах как отладочные
+символы, но GDB обычно производит разбор типичного имени файла, например
+<samp>foo.c</samp>, как три слова: &lsquo;<samp>foo</samp>&rsquo; <code>.</code> <code>c</code>.  Чтобы GDB
+идентифицировал &lsquo;<samp>foo.c</samp>&rsquo; как одно слово, заключите его в одинарные
+кавычки; например,
+</p>
+<div class="example">
+<pre class="example">p 'foo.c'::x
+</pre></div>
+
+<p>ищет значение <code>x</code> в области видимости файла <samp>foo.c</samp>.
+</p>
+<dl compact="compact">
+<dd><span id="index-info-address"></span>
+</dd>
+<dt><code>info address <var>символ</var></code></dt>
+<dd><p>Описывает, где хранятся данные для <var>символа</var>.  Для регистровой
+переменной сообщается, в каком регистре она содержится.  Для
+нерегистровой локальной переменной печатается смещение в
+кадре стека, по которому переменная всегда хранится.
+</p>
+<p>Заметьте отличие от команды &lsquo;<samp>print &amp;<var>символ</var></samp>&rsquo;, которая вообще
+не работает для регистровых переменных, а для локальной
+переменной из стека печатает точный адрес текущего экземпляра переменной.
+</p>
+<span id="index-whatis"></span>
+</dd>
+<dt><code>whatis <var>выраж</var></code></dt>
+<dd><p>Напечатать тип данных выражения <var>выраж</var>.  На самом деле <var>выраж</var> не
+вычисляется, и присутствующие в нем побочные операции (такие как присваивания
+или вызовы функций) не выполняются.  See <a href="Vyrazheniya.html">Выражения</a>.
+</p>
+</dd>
+<dt><code>whatis</code></dt>
+<dd><p>Вывести тип данных <code>$</code>, последней записи в истории значений.
+</p>
+<span id="index-ptype"></span>
+</dd>
+<dt><code>ptype <var>имя-типа</var></code></dt>
+<dd><p>Вывести описание типа данных <var>имя-типа</var>.  <var>Имя-типа</var> может быть именем
+типа или, для кода Си, может иметь форму &lsquo;<samp>class <var>имя-класса</var></samp>&rsquo;,
+&lsquo;<samp>struct <var>тег-структуры</var></samp>&rsquo;, &lsquo;<samp>union <var>тег-объединения</var></samp>&rsquo;
+или &lsquo;<samp>enum <var>тег-перечисления</var></samp>&rsquo;.
+</p>
+</dd>
+<dt><code>ptype <var>выраж</var></code></dt>
+<dt><code>ptype</code></dt>
+<dd><p>Вывести описание типа выражения <var>выраж</var>.  <code>ptype</code> отличается от
+<code>whatis</code> тем, что выводится детальное описание, а не только имя
+типа.
+</p>
+<p>Например, для такого описания переменной:
+</p>
+<div class="example">
+<pre class="example">struct complex {double real; double imag;} v;
+</pre></div>
+
+<p>эти две команды выведут следующее:
+</p>
+<div class="example">
+<pre class="example">(gdb) whatis v
+type = struct complex
+(gdb) ptype v
+type = struct complex {
+    double real;
+    double imag;
+}
+</pre></div>
+
+<p>Как и <code>whatis</code>, использование <code>ptype</code> без параметра относится
+к типу <code>$</code>, последней записи в истории значений.
+</p>
+<span id="index-info-types"></span>
+</dd>
+<dt><code>info types <var>рег-выр</var></code></dt>
+<dt><code>info types</code></dt>
+<dd><p>Вывести краткое описание всех типов, имена которых соответствуют
+регулярному выражению
+<var>рег-выр</var> (или всех типов вашей программы, если вы используете эту
+команду без параметра).  Каждое полное имя типа сопоставляется так, как
+если бы оно было полной строкой; таким образом, &lsquo;<samp>i type value</samp>&rsquo;
+выдает информацию обо всех типах в вашей программе, чьи имена
+включают строку <code>value</code>, а &lsquo;<samp>i type ^value$</samp>&rsquo; выдает информацию
+только о типах с полным именем <code>value</code>.
+</p>
+<p>Эта команда отличается от <code>ptype</code> следующим: во-первых, как и
+<code>whatis</code>, она не выводит детального описания; во-вторых, она
+перечисляет все исходные файлы, где определен тип.
+</p>
+<span id="index-info-source"></span>
+</dd>
+<dt><code>info source</code></dt>
+<dd><p>Показать имя текущего исходного файла &mdash; то есть исходного файла для функции,
+содержащей текущую точку выполнения, и язык, на котором она написана.
+</p>
+<span id="index-info-sources"></span>
+</dd>
+<dt><code>info sources</code></dt>
+<dd><p>Вывести имена всех исходных файлов вашей программы, для которых
+имеется отладочная информация, организуя их в два списка: файлы с
+уже прочитанными символами, и файлы, символы которых будут
+прочитаны, когда потребуется.
+</p>
+<span id="index-info-functions"></span>
+</dd>
+<dt><code>info functions</code></dt>
+<dd><p>Вывести имена и типы данных всех определенных функций.
+</p>
+</dd>
+<dt><code>info functions <var>рег-выр</var></code></dt>
+<dd><p>Вывести имена и типы данных всех определенных функций, чьи имена
+удовлетворяют регулярному выражению <var>рег-выр</var>.  Так, &lsquo;<samp>info
+fun step</samp>&rsquo; находит все функции, имена которых содержат <code>step</code>;
+&lsquo;<samp>info fun ^step</samp>&rsquo; находит функции с именами, начинающимися со <code>step</code>.
+</p>
+<span id="index-info-variables"></span>
+</dd>
+<dt><code>info variables</code></dt>
+<dd><p>Напечатать имена и типы данных всех переменных, объявленных вне функций
+(то есть исключая локальные переменные).
+</p>
+</dd>
+<dt><code>info variables <var>рег-выр</var></code></dt>
+<dd><p>Вывести имена и типы данных всех переменных (кpоме локальных), имена
+которых удовлетворяют регулярному выражению <var>рег-выр</var>.
+</p>
+<span id="index-povtornaya-zagruzka-simvolov"></span>
+<p>Некоторые системы допускают замещение отдельных объектных файлов,
+составляющих вашу программу, без ее остановки и перезапуска.
+Например, в VxWorks вы можете просто перекомпилировать дефектный
+объектный файл и продолжить выполнение.  Если вы работаете в одной из
+таких систем, вы можете позволить GDB перезагрузить символы для
+автоматически пересобранных модулей:
+</p>
+<dl compact="compact">
+<dd><span id="index-set-symbol_002dreloading"></span>
+</dd>
+<dt><code>set symbol-reloading on</code></dt>
+<dd><p>Заменить определения символов для соответствующего исходного
+файла, когда объектный файл с определенным именем снова доступен.
+</p>
+</dd>
+<dt><code>set symbol-reloading off</code></dt>
+<dd><p>Не заменять определения символов при встрече объектного файла с таким же
+именем более одного раза.  Это состояние по умолчанию; если вы не
+работаете в системе, допускающей автоматическое пересобирание модулей,
+вы должны оставить <code>symbol-reloading</code> в состоянии <code>off</code>, так как
+иначе GDB может уничтожить символы пpи сборке больших программ,
+которые могут содеpжать несколько модулей с одинаковым именем (из разных
+каталогов или библиотек).
+</p>
+<span id="index-show-symbol_002dreloading"></span>
+</dd>
+<dt><code>show symbol-reloading</code></dt>
+<dd><p>Показать текущую установку <code>on</code> или <code>off</code>.
+</p></dd>
+</dl>
+
+<span id="index-set-opaque_002dtype_002dresolution"></span>
+</dd>
+<dt><code>set opaque-type-resolution on</code></dt>
+<dd><p>Велит GDB производить разрешение неоднозначных типов.  Неоднозначным
+является тип, описанный как указатель на <code>struct</code>, <code>class</code>
+или <code>union</code> &mdash; например, <code>struct MyType *</code> &mdash; то есть,
+используется в одном исходном файле, хотя полное описание <code>struct
+MyType</code> находится в другом исходном файле.  По умолчанию установлено в
+<code>on</code>.
+</p>
+<p>Изменения в установке этой подкоманды не вступят в силу, пока не будут
+загружены символы для какого-нибудь файла.
+</p>
+</dd>
+<dt><code>set opaque-type-resolution off</code></dt>
+<dd><p>Указывает GDB не производить разрешение неоднозначных типов.  В
+этом случае, тип выводится следующим образом:
+</p><div class="example">
+<pre class="example">{&lt;no data fields&gt;}
+</pre></div>
+
+<span id="index-show-opaque_002dtype_002dresolution"></span>
+</dd>
+<dt><code>show opaque-type-resolution</code></dt>
+<dd><p>Показать, производится разрешение неоднозначных типов или нет.
+</p>
+<span id="index-maint-print-symbols"></span>
+<span id="index-damp-simvolov"></span>
+<span id="index-maint-print-psymbols"></span>
+<span id="index-chastichnyi-damp-simvolov"></span>
+</dd>
+<dt><code>maint print symbols <var>имя-файла</var></code></dt>
+<dt><code>maint print psymbols <var>имя-файла</var></code></dt>
+<dt><code>maint print msymbols <var>имя-файла</var></code></dt>
+<dd><p>Записать дамп данных отладочных символов в файл <var>имя-файла</var>.  Эти
+команды используются для отладки кода GDB, осуществляющего
+чтение символов.  Включаются только символы с отладочными данными.  Если вы
+используете &lsquo;<samp>maint print symbols</samp>&rsquo;, GDB включает все символы, для
+которых уже собрана полная информация: то есть <var>имя-файла</var> отражает
+символы только для тех файлов, символы которых GDB уже
+прочитал.  Вы можете использовать команду <code>info sources</code>, чтобы
+определить, какие это файлы.  Если же вы используете &lsquo;<samp>maint print
+psymbols</samp>&rsquo;, дамп показывает информацию о тех символах, о которых
+GDB имеет лишь частичную информацию, то есть символы определены
+в файлах, которые GDB только просмотрел, но не прочитал
+полностью.  Наконец, &lsquo;<samp>maint print msymbols</samp>&rsquo;, выводит только
+минимальную информацию о символах, требуемую для каждого
+объектного файла, из которых GDB пpочитал какие-либо символы.
+See <a href="Faily.html">Команды для задания файлов</a>, где обсуждается, как
+GDB считывает символы (в описании <code>symbol-file</code>).
+</p></dd>
+</dl>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Izmeneniya.html" accesskey="n" rel="next">Изменения</a>, Previous: <a href="YAzyki.html" accesskey="p" rel="prev">Языки</a>, Up: <a href="index.html" accesskey="u" rel="up">Top</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

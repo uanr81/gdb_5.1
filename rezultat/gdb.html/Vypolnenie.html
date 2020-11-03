@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Выполнение (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Выполнение (Отладка с помощью GDB)">
+<meta name="keywords" content="Выполнение (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="index.html" rel="up" title="Top">
+<link href="Kompilyaciya.html" rel="next" title="Компиляция">
+<link href="Spravka.html" rel="prev" title="Справка">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0412_044b_043f_043e_043b_043d_0435_043d_0438_0435"></span><div class="header">
+<p>
+Next: <a href="Ostanovka.html" accesskey="n" rel="next">Остановка</a>, Previous: <a href="Komandy.html" accesskey="p" rel="prev">Команды</a>, Up: <a href="index.html" accesskey="u" rel="up">Top</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Vypolnenie-programm-pod-upravleniem-GDB"></span><h2 class="chapter">4 Выполнение программ под управлением GDB</h2>
+
+<p>Прежде чем выполнять программу под управлением GDB, при
+компиляции вы должны сгенерировать отладочную информацию.
+</p>
+<p>Вы можете запустить GDB с параметрами или без, в любой среде
+по вашему выбору.  Если вы отлаживаете программу на той же машине, на
+которой выполняется GDB, вы можете перенаправлять ввод и вывод
+вашей программы, отлаживать уже выполняющийся процесс или убить
+дочерний процесс.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Kompilyaciya.html" accesskey="1">Компиляция</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Компиляция для отладки
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Nachalo-vypolneniya.html" accesskey="2">Начало выполнения</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Запуск вашей программы
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Argumenty.html" accesskey="3">Аргументы</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Аргументы вашей программы
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Sreda.html" accesskey="4">Среда</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Среда вашей программы
+</td></tr>
+<tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
+
+</pre></th></tr><tr><td align="left" valign="top">&bull; <a href="Rabochii-katalog.html" accesskey="5">Рабочий каталог</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Рабочий каталог вашей программы
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Vvod_002dvyvod.html" accesskey="6">Ввод-вывод</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Ввод и вывод вашей программы
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Prisoedinenie.html" accesskey="7">Присоединение</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Отладка запущенного ранее процесса
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Unichtozhenie-processa.html" accesskey="8">Уничтожение процесса</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Уничтожение дочернего процесса
+</td></tr>
+<tr><th colspan="3" align="left" valign="top"><pre class="menu-comment">
+
+</pre></th></tr><tr><td align="left" valign="top">&bull; <a href="Niti.html" accesskey="9">Нити</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Отладка программ с несколькими нитями
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Processy.html">Процессы</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Отладка программ с несколькими процессами
+</td></tr>
+</table>
+
+
+
+
+</body>
+</html>

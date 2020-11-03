@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Область видимости в Модуле-2 (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Область видимости в Модуле-2 (Отладка с помощью GDB)">
+<meta name="keywords" content="Область видимости в Модуле-2 (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Modula_002d2.html" rel="up" title="Модула-2">
+<link href="GDB-i-Modula_002d2.html" rel="next" title="GDB и Модула-2">
+<link href="Proverki-Moduly_002d2.html" rel="prev" title="Проверки Модулы-2">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_041e_0431_043b_0430_0441_0442_044c-_0432_0438_0434_0438_043c_043e_0441_0442_0438-_0432-_041c_043e_0434_0443_043b_0435_002d2"></span><div class="header">
+<p>
+Next: <a href="GDB-i-Modula_002d2.html" accesskey="n" rel="next">GDB и Модула-2</a>, Previous: <a href="Proverki-Moduly_002d2.html" accesskey="p" rel="prev">Проверки Модулы-2</a>, Up: <a href="Modula_002d2.html" accesskey="u" rel="up">Модула-2</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Operatory-opredeleniya-oblasti-vidimosti-_003a_003a-i-_002e"></span><h4 class="subsubsection">9.4.2.7 Операторы определения области видимости <code>::</code> и <code>.</code></h4>
+<span id="index-oblastx-vidimosti"></span>
+<span id="index-_002e_002c-operator-oblasti-vidimosti-Moduly_002d2"></span>
+<span id="index-dvoinoe-dvoetochie-kak-operator-oblasti-vidimosti"></span>
+
+<p>Существует несколько тонких различий между операторами области видимости
+Модулы-2 (<code>.</code>) и GDB (<code>::</code>).  Оба имеют похожий синтаксис:
+</p>
+<div class="example">
+<pre class="example">
+
+<var>модуль</var> . <var>идент</var>
+<var>область</var> :: <var>идент</var>
+</pre></div>
+
+<p>где <var>область</var> &mdash; имя модуля или процедуры, <var>модуль</var> &mdash; имя модуля,
+а <var>идент</var> &mdash; любой идентификатор, описанный в пределах вашей программы,
+за исключением другого модуля.
+</p>
+<p>Использование оператора <code>::</code> заставляет GDB искать
+идентификатор <var>идент</var> в <var>области</var>.  Если он в ней
+не найден, GDB ищет его во всех областях,
+содержащих <var>область</var>.
+</p>
+<p>Использование оператора <code>.</code> заставляет GDB искать
+идентификатор <var>идент</var>, который был импортирован из модуля определения
+<var>модуль</var>, в текущей области видимости.  В этом операторе cчитается
+ошибкой, если идентификатор <var>идент</var> не был
+импортирован из модуля определения <var>модуль</var>, или если <var>идент</var> не
+является в нем идентификатором.
+</p>
+
+
+
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Среда (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Среда (Отладка с помощью GDB)">
+<meta name="keywords" content="Среда (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Vypolnenie.html" rel="up" title="Выполнение">
+<link href="Rabochii-katalog.html" rel="next" title="Рабочий каталог">
+<link href="Argumenty.html" rel="prev" title="Аргументы">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0421_0440_0435_0434_0430"></span><div class="header">
+<p>
+Next: <a href="Rabochii-katalog.html" accesskey="n" rel="next">Рабочий каталог</a>, Previous: <a href="Argumenty.html" accesskey="p" rel="prev">Аргументы</a>, Up: <a href="Vypolnenie.html" accesskey="u" rel="up">Выполнение</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Rabochaya-sreda-vashei-programmy"></span><h3 class="section">4.4 Рабочая среда вашей программы</h3>
+
+<span id="index-sreda-_0028vashei-programmy_0029"></span>
+<p><em>Среда</em> состоит из набора переменных среды и их значений.
+Переменные среды обычно хранят такие данные, как ваше имя пользователя,
+домашний каталог, тип терминала и путь поиска для
+запуска программ.  Как правило, вы устанавливаете переменные среды с
+помощью оболочки, и они наследуются всеми другими программами, которые вы
+вызываете.  При отладке может оказаться полезным попробовать
+запустить программу в измененной среде, не перезапуская
+GDB.
+</p>
+<dl compact="compact">
+<dd><span id="index-path"></span>
+</dd>
+<dt><code>path <var>каталог</var></code></dt>
+<dd><p>Добавить <var>каталог</var> в начало переменной среды <code>PATH</code> (пути
+поиска выполняемых файлов), как для GDB, так и для вашей
+программы.  Вы можете указать названия нескольких каталогов, разделив их
+пробелом или системно-зависимым разделителем (&lsquo;<samp>:</samp>&rsquo; в Unix, &lsquo;<samp>;</samp>&rsquo;
+в MS-DOS и MS-Windows).  Если <var>каталог</var> уже находится в списке путей,
+он переносится в начало, так что поиск в нем будет производиться
+раньше.
+</p>
+<p>Вы можете использовать строку &lsquo;<samp>cwd</samp>&rsquo;, чтобы сослаться на
+рабочий каталог, который является текущим в тот момент, когда
+GDB производит поиск.  Если вместо этого вы используете
+&lsquo;<samp>.</samp>&rsquo;, то она будет указывать на тот каталог, в котором вы
+выполнили команду <code>path</code>.  GDB заменяет &lsquo;<samp>.</samp>&rsquo; в
+аргументе <var>каталог</var> (на текущий путь) до добавления <var>каталога</var> к
+списку путей поиска.
+</p>
+<span id="index-show-paths"></span>
+</dd>
+<dt><code>show paths</code></dt>
+<dd><p>Отобразить список путей для поиска выполняемых файлов (переменную среды
+<code>PATH</code>).
+</p>
+<span id="index-show-environment"></span>
+</dd>
+<dt><code>show environment <span class="roman">[</span><var>имя-перем</var><span class="roman">]</span></code></dt>
+<dd><p>Вывести значение переменной среды <var>имя-перем</var>, которое будет
+передано вашей программе при ее старте.  Если вы не указываете
+<var>имя-перем</var>, вывести названия и значения всех переменных среды,
+передаваемых вашей программе.  Вы можете сократить
+<code>environment</code> как <code>env</code>.
+</p>
+<span id="index-set-environment"></span>
+</dd>
+<dt><code>set environment <var>имя-перем</var> <span class="roman">[</span>=<var>значение</var><span class="roman">]</span></code></dt>
+<dd><p>Присваивает <var>значение</var> переменной среды <var>имя-перем</var>.  Значение
+меняется только для вашей программы, но не для самого GDB.
+<var>значение</var> может быть любой строкой; значениями переменных среды
+являются просто строки, а их интерпретацию обеспечивает ваша
+программа.  Параметр <var>значение</var> является необязательным; если он
+опущен, переменная устанавливается в пустое значение.
+</p>
+<p>Например, эта команда:
+</p>
+<div class="example">
+<pre class="example">set env USER = foo
+</pre></div>
+
+<p>говорит отлаживаемой программе, что при последующих запусках именем
+пользователя является &lsquo;<samp>foo</samp>&rsquo;.  (Пробелы, окружающие &lsquo;<samp>=</samp>&rsquo;,
+использованы здесь для ясности; в действительности, они не обязательны.)
+</p>
+<span id="index-unset-environment"></span>
+</dd>
+<dt><code>unset environment <var>имя-перем</var></code></dt>
+<dd><p>Удалить переменную <var>имя-перем</var> из среды, передаваемой вашей
+программе.  Это отличается от &lsquo;<samp>set env <var>имя-перем</var> =</samp>&rsquo;;
+<code>unset environment</code> удаляет переменную из среды, а не присваивает
+ей пустое значение.
+</p></dd>
+</dl>
+
+<p><em>Предупреждение:</em> В системах Unix, GDB вызывает вашу
+программу, используя оболочку, указанную вашей переменной среды
+<code>SHELL</code>, если она определена (или <code>/bin/sh</code>, если не
+определена).  Если переменная <code>SHELL</code> указывает на оболочку,
+которая выполняет файл инициализации &mdash; такой как <samp>.cshrc</samp> для
+оболочки C-shell, или <samp>.bashrc</samp> для BASH &mdash; любая переменная, которую вы
+установите в этом файле, воздействует на вашу программу.  В этой
+связи, вы можете захотеть перенести установку переменных среды в
+файлы, которые выполняются только при входе в систему, такие как
+<samp>.login</samp> или <samp>.profile</samp>.
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Rabochii-katalog.html" accesskey="n" rel="next">Рабочий каталог</a>, Previous: <a href="Argumenty.html" accesskey="p" rel="prev">Аргументы</a>, Up: <a href="Vypolnenie.html" accesskey="u" rel="up">Выполнение</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Отключение (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Отключение (Отладка с помощью GDB)">
+<meta name="keywords" content="Отключение (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Tochki-ostanova.html" rel="up" title="Точки останова">
+<link href="Usloviya.html" rel="next" title="Условия">
+<link href="Udalenie-tochek-ostanova.html" rel="prev" title="Удаление точек останова">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_041e_0442_043a_043b_044e_0447_0435_043d_0438_0435"></span><div class="header">
+<p>
+Next: <a href="Usloviya.html" accesskey="n" rel="next">Условия</a>, Previous: <a href="Udalenie-tochek-ostanova.html" accesskey="p" rel="prev">Удаление точек останова</a>, Up: <a href="Tochki-ostanova.html" accesskey="u" rel="up">Точки останова</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Otkliuchenie-tochek-ostanova"></span><h4 class="subsection">5.1.5 Отключение точек останова</h4>
+
+<span id="index-disable-breakpoints"></span>
+<span id="index-enable-breakpoints"></span>
+<p>Вместо того, чтобы удалять точку останова, наблюдения или перехвата, вам
+может быть удобнее <em>отключить</em> ее.  Это делает точку останова
+бездействующей, как если бы она была удалена, но информация о ней
+запоминается, так что вы можете позже <em>включить</em> ее
+снова.
+</p>
+<p>Вы отключаете и включаете точки останова, наблюдения и перехвата
+командами <code>enable</code> и <code>disable</code>, возможно, указывая один или
+более номеров точек останова в качестве аргументов.  Используйте
+<code>info break</code> или <code>info watch</code> для распечатки списка точек
+останова, наблюдения и перехвата, если вы не знаете, какие номера
+использовать.
+</p>
+<p>Точка останова, наблюдения или перехвата может находиться в одном из четырех
+состояний:
+</p>
+<ul>
+<li> Включена.  Точка останова останавливает вашу программу.  Точка останова,
+установленная командой <code>break</code>, изначально находится в таком состоянии.
+</li><li> Отключена.  Точка останова не оказывает воздействия на вашу программу.
+</li><li> Включена до первого срабатывания.  Точка останова останавливает вашу
+программу, но потом становится отключенной.
+</li><li> Включена для удаления.  Точка останова останавливает вашу программу, но
+сразу после этого она удаляется навсегда.  Точка останова, установленная
+командой <code>tbreak</code>, изначально находится в этом состоянии.
+</li></ul>
+
+<p>Вы можете использовать следующие команды для включения или отключения
+точек останова, наблюдения и перехвата:
+</p>
+<dl compact="compact">
+<dd><span id="index-disable-breakpoints-1"></span>
+<span id="index-disable"></span>
+<span id="index-dis-_0028disable_0029"></span>
+</dd>
+<dt><code>disable <span class="roman">[</span>breakpoints<span class="roman">]</span> <span class="roman">[</span><var>диапазон</var>&hellip;<span class="roman">]</span></code></dt>
+<dd><p>Отключить указанные точки останова или все точки останова, если ни
+одна не перечислена.  Отключенная точка останова не оказывает никакого
+действия, но она не забывается.  Все параметры, такие как счетчик
+игнорирований, условия и команды запоминаются на случай, если точка
+останова позже будет снова включена.  Вы можете сокращать <code>disable</code>
+как <code>dis</code>.
+</p>
+<span id="index-enable-breakpoints-1"></span>
+<span id="index-enable"></span>
+</dd>
+<dt><code>enable <span class="roman">[</span>breakpoints<span class="roman">]</span> <span class="roman">[</span><var>диапазон</var>&hellip;<span class="roman">]</span></code></dt>
+<dd><p>Включает указанные (или все определенные) точки останова.  Они
+снова становятся значимыми для остановки вашей программы.
+</p>
+</dd>
+<dt><code>enable <span class="roman">[</span>breakpoints<span class="roman">]</span> once <var>диапазон</var>&hellip;</code></dt>
+<dd><p>Временно включить указанные точки останова.  GDB отключает
+любую из этих точек останова немедленно после срабатывания.
+</p>
+</dd>
+<dt><code>enable <span class="roman">[</span>breakpoints<span class="roman">]</span> delete <var>диапазон</var>&hellip;</code></dt>
+<dd><p>Включить указанные точки останова до первого срабатывания, затем
+уничтожить.  GDB удаляет любую из этих точек останова, как
+только ваша программа останавливается на ней.
+</p></dd>
+</dl>
+
+<p>Кроме точек останова, установленных командой <code>tbreak</code>
+(see <a href="Ustanovka-tochek-ostanova.html">Установка точек останова</a>),
+установленные вами точки останова изначально включены; следовательно,
+они становятся отключенными или включенными, только когда вы используете
+одну из вышеперечисленных команд.  (Команда <code>until</code> может
+устанавливать и удалять свою собственную точку останова, но она не
+изменяет состояние других точек останова; см. <a href="Prodolzhenie-i-poshagovoe-vypolnenie.html">Продолжение и выполнение по шагам</a>.)
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Usloviya.html" accesskey="n" rel="next">Условия</a>, Previous: <a href="Udalenie-tochek-ostanova.html" accesskey="p" rel="prev">Удаление точек останова</a>, Up: <a href="Tochki-ostanova.html" accesskey="u" rel="up">Точки останова</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

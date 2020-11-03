@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Вывод (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Вывод (Отладка с помощью GDB)">
+<meta name="keywords" content="Вывод (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Posledovatelxnosti.html" rel="up" title="Последовательности">
+<link href="Emacs.html" rel="next" title="Emacs">
+<link href="Komandnye-faily.html" rel="prev" title="Командные файлы">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0412_044b_0432_043e_0434"></span><div class="header">
+<p>
+Previous: <a href="Komandnye-faily.html" accesskey="p" rel="prev">Командные файлы</a>, Up: <a href="Posledovatelxnosti.html" accesskey="u" rel="up">Последовательности</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Komandy-dlya-upravlyaemogo-vyvoda"></span><h3 class="section">16.4 Команды для управляемого вывода</h3>
+
+<p>Во время выполнения командного файла или определенной пользователем
+команды нормальный вывод GDB подавляется; единственный появляющийся
+вывод &mdash; тот, который производится явно командами из определения.  В этом
+разделе описываются три команды, полезные для получения именно такого
+вывода, который вы хотите.
+</p>
+<dl compact="compact">
+<dd><span id="index-echo"></span>
+</dd>
+<dt><code>echo <var>текст</var></code></dt>
+<dd><p>Напечатать <var>текст</var>.  Непечатные знаки могут быть включены в
+<var>текст</var> при помощи экранирующих последовательностей Си, таких как
+&lsquo;<samp>\n</samp>&rsquo; для перехода на новую строку.  <strong>Переход на новую строку
+не печатается, если вы его не укажете.</strong>  В дополнение к стандартным
+экранирующим последовательностям Си, обратная косая черта, за
+которой следует пробел, обозначает пробел.  Это полезно для
+отображения строки с пробелами в начале или конце, поскольку в противном
+случае начальные и конечные пробелы удаляются из всех аргументов.  Чтобы
+напечатать &lsquo;<samp>&nbsp;<!-- /@w -->and foo =&nbsp;<!-- /@w --></samp>&rsquo;, используйте команду
+&lsquo;<samp>echo \&nbsp;<!-- /@w -->and foo = \&nbsp;<!-- /@w --></samp>&rsquo;.
+</p>
+<p>Обратная косая черта в конце <var>текста</var> может использоваться, как и в
+Си, для продолжения команды на последующие строки.  Например,
+</p>
+<div class="example">
+<pre class="example">echo Вот пример текста,\n\
+который занимает\n\
+несколько строк.\n
+</pre></div>
+
+<p>производит такой же вывод как
+</p>
+<div class="example">
+<pre class="example">echo Вот пример текста,\n
+echo который занимает\n
+echo несколько строк.\n
+</pre></div>
+
+<span id="index-output"></span>
+</dd>
+<dt><code>output <var>выражение</var></code></dt>
+<dd><p>Напечатать значение <var>выражения</var> и ничего кроме него: никаких новых
+строк, никаких &lsquo;<samp>$<var>nn</var> = </samp>&rsquo;.  Значение также не заносится в
+историю значений.  See <a href="Vyrazheniya.html">Выражения</a>, для дополнительной
+информации о выражениях.
+</p>
+</dd>
+<dt><code>output/<var>формат</var> <var>выражение</var></code></dt>
+<dd><p>Вывести значение <var>выражения</var> в формате <var>формат</var>.  Вы можете
+использовать те же форматы, что и для <code>print</code>.  See <a href="Formaty-vyvoda.html">Форматы вывода</a>, для получения большей информации.
+</p>
+<span id="index-printf"></span>
+</dd>
+<dt><code>printf <var>строка</var>, <var>выражения</var>&hellip;</code></dt>
+<dd><p>Напечатать значения <var>выражений</var>, причем формат вывода задает <var>строка</var>.
+<var>Выражения</var> разделяются запятыми и могут быть либо числами, либо
+указателями.  Их значения печатаются так, как определяет <var>строка</var>,
+в точности, как если бы ваша программа выполняла подпрограмму Си
+</p>
+<div class="example">
+<pre class="example">printf (<var>строка</var>, <var>выражения</var>&hellip;);
+</pre></div>
+
+<p>Например, вы можете напечатать два шестнадцатеричных значения:
+</p>
+<div class="example">
+<pre class="example">printf &quot;foo, bar-foo = 0x%x, 0x%x\n&quot;, foo, bar-foo
+</pre></div>
+
+<p>Единственые экранирующие последовательности с обратной косой чертой,
+которые вы можете использовать в строке формата &mdash; простые
+последовательности, состоящие из обратной косой черты, за которой
+следует буква.
+</p></dd>
+</dl>
+
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Komandnye-faily.html" accesskey="p" rel="prev">Командные файлы</a>, Up: <a href="Posledovatelxnosti.html" accesskey="u" rel="up">Последовательности</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

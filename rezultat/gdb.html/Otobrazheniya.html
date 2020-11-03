@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Отображения (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Отображения (Отладка с помощью GDB)">
+<meta name="keywords" content="Отображения (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Primechaniya.html" rel="up" title="Примечания">
+<link href="Priglasheniya.html" rel="next" title="Приглашения">
+<link href="Primechaniya-k-kadram.html" rel="prev" title="Примечания к кадрам">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_041e_0442_043e_0431_0440_0430_0436_0435_043d_0438_044f"></span><div class="header">
+<p>
+Next: <a href="Priglasheniya.html" accesskey="n" rel="next">Приглашения</a>, Previous: <a href="Primechaniya-k-kadram.html" accesskey="p" rel="prev">Примечания к кадрам</a>, Up: <a href="Primechaniya.html" accesskey="u" rel="up">Примечания</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Otobrazheniya"></span><h3 class="section">18.5 Отображения</h3>
+
+<span id="index-display_002dbegin"></span>
+<span id="index-display_002dnumber_002dend"></span>
+<span id="index-display_002dformat"></span>
+<span id="index-display_002dexpression"></span>
+<span id="index-display_002dexpression_002dend"></span>
+<span id="index-display_002dvalue"></span>
+<span id="index-display_002dend"></span>
+<span id="index-primechaniya-k-otobrazheniyam"></span>
+<p>Когда GDB велят отобразить что-то с помощью команды
+<code>display</code>, к результату отображения делаются примечания:
+</p>
+<div class="example">
+<pre class="example">^Z^Zdisplay-begin
+<var>номер</var>
+^Z^Zdisplay-number-end
+<var>разделитель-номеров</var>
+^Z^Zdisplay-format
+<var>формат</var>
+^Z^Zdisplay-expression
+<var>выражение</var>
+^Z^Zdisplay-expression-end
+<var>разделитель-выражений</var>
+^Z^Zdisplay-value
+<var>значение</var>
+^Z^Zdisplay-end
+</pre></div>
+
+<p>здесь <var>номер</var> &mdash; это номер отображения, <var>разделитель-номеров</var>
+предназначен для отделения номеров от того, что следует затем для
+пользователя, <var>формат</var> включает информацию о том, как отображается
+значение, такую как размер, формат и так далее, <var>выражение</var> &mdash; это
+отображаемое выражение, <var>разделитель-выражений</var> предназначен для
+отделения выражения от следующего за ним текста для пользователя, и
+<var>значение</var> &mdash; это действительное значение, которое отображается.
+</p>
+
+
+
+</body>
+</html>

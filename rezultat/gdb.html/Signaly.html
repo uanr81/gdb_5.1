@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Сигналы (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Сигналы (Отладка с помощью GDB)">
+<meta name="keywords" content="Сигналы (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Ostanovka.html" rel="up" title="Остановка">
+<link href="Ostanovka-nitei.html" rel="next" title="Остановка нитей">
+<link href="Prodolzhenie-i-poshagovoe-vypolnenie.html" rel="prev" title="Продолжение и пошаговое выполнение">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0421_0438_0433_043d_0430_043b_044b"></span><div class="header">
+<p>
+Next: <a href="Ostanovka-nitei.html" accesskey="n" rel="next">Остановка нитей</a>, Previous: <a href="Prodolzhenie-i-poshagovoe-vypolnenie.html" accesskey="p" rel="prev">Продолжение и пошаговое выполнение</a>, Up: <a href="Ostanovka.html" accesskey="u" rel="up">Остановка</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Signaly"></span><h3 class="section">5.3 Сигналы</h3>
+<span id="index-signaly"></span>
+
+<p>Сигнал &mdash; это асинхронное событие, которое может произойти в программе.
+Операционная система определяет возможные типы сигналов и дает каждому
+типу имя и номер.  В Unix, например, <code>SIGINT</code> &mdash; это сигнал, получаемый
+программой, когда вы вводите знак прерывания (часто <kbd>C-c</kbd>);
+<code>SIGSEGV</code> &mdash; сигнал, получаемый программой при ссылке на область
+памяти, отличную от всех используемых областей; <code>SIGALRM</code> появляется
+при срабатывании интервального таймера (возникает, только если ваша
+программа запросила временной сигнал).
+</p>
+<span id="index-fatalxnye-signaly"></span>
+<p>Некоторые сигналы, такие как <code>SIGALRM</code>, являются обычной частью
+функционирования вашей программы.  Другие, такие как <code>SIGSEGV</code>,
+обозначают ошибки; эти сигналы являются <em>фатальными</em> (они немедленно
+убивают вашу программу), если программа не определила заранее другой
+способ их обработки.  <code>SIGINT</code> не указывает на ошибку в вашей
+программе, но обычно является фатальным, так что он может выполнять
+функцию прерывания: убить программу.
+</p>
+<p>GDB способен обнаружить любое появление сигнала в вашей
+программе.  Вы можете заранее сообщить GDB, что делать для
+каждого типа сигнала.
+</p>
+<span id="index-obrabotka-signalov"></span>
+<p>Обычно, GDB установлен так, чтобы игнорировать неошибочные сигналы,
+такие как <code>SIGALRM</code> (чтобы не мешать их действию при исполнении вашей
+программы), но немедленно останавливать вашу программу всякий раз, когда
+возникает сигнал об ошибке.  Вы можете изменить эти установки командой
+<code>handle</code>.
+</p>
+<dl compact="compact">
+<dd><span id="index-info-signals"></span>
+</dd>
+<dt><code>info signals</code></dt>
+<dt><code>info handle</code></dt>
+<dd><p>Напечатать таблицу всех типов сигналов и описания, как GDB
+будет обрабатывать каждый из них.  Вы можете использовать эту команду, чтобы
+посмотреть номера всех определенных типов сигналов.
+</p>
+<p><code>info handle</code> является синонимом для <code>info signals</code>.
+</p>
+<span id="index-handle"></span>
+</dd>
+<dt><code>handle <var>сигнал</var> <var>ключевые-слова</var>&hellip;</code></dt>
+<dd><p>Изменить способ, которым GDB обрабатывает <var>сигнал</var>.
+<var>Сигнал</var> может быть номером сигнала или его именем (с &lsquo;<samp>SIG</samp>&rsquo; или
+без него в начале).  <var>Ключевые-слова</var> определяют, какие сделать изменения.
+</p></dd>
+</dl>
+
+<p>Ключевые слова, допускаемые командой <code>handle</code>, могут быть
+сокращены.  Вот их полные имена:
+</p>
+<dl compact="compact">
+<dt><code>nostop</code></dt>
+<dd><p>GDB не должен останавливать вашу программу при получении
+этого сигнала.  Все же он может вывести сообщение, уведомляющее о
+получении сигнала.
+</p>
+</dd>
+<dt><code>stop</code></dt>
+<dd><p>GDB должен остановить вашу программу при получении этого
+сигнала.  Это также подразумевает ключевое слово <code>print</code>.
+</p>
+</dd>
+<dt><code>print</code></dt>
+<dd><p>GDB должен вывести сообщение при возникновении данного сигнала.
+</p>
+</dd>
+<dt><code>noprint</code></dt>
+<dd><p>GDB вообще не должен замечать возникновение сигнала.  Это также
+подразумевает ключевое слово <code>nostop</code>.
+</p>
+</dd>
+<dt><code>pass</code></dt>
+<dd><p>GDB должен позволить вашей программе увидеть этот сигнал;
+программа может обработать сигнал, или же она может завершиться,
+если сигнал фатальный и не обработан.
+</p>
+</dd>
+<dt><code>nopass</code></dt>
+<dd><p>GDB не должен позволять вашей программе видеть этот сигнал.
+</p></dd>
+</dl>
+
+<p>Когда сигнал останавливает вашу программу, он невидим для нее,
+пока вы не продолжите выполнение.  Затем ваша программа видит
+сигнал, если <em>в данный момент</em> на рассматриваемый сигнал
+распространяется действие команды <code>pass</code>.  Другими словами, после
+того, как GDB сообщит о сигнале, вы можете использовать команду
+<code>handle</code> c <code>pass</code> или <code>nopass</code>, чтобы
+указать, должна ли ваша программа увидеть этот сигнал при продолжении.
+</p>
+<p>Вы также можете использовать команду <code>signal</code> для того, чтобы
+помешать вашей программе увидеть сигнал или, наоборот, заставить ее
+заметить обычно игнорируемый сигнал, или чтобы подать ей произвольный
+сигнал в любое время.  Например, если ваша программа остановилась
+вследствие какой-либо ошибки обращения к памяти, вы можете записать
+правильные значения в ошибочные переменные и продолжить выполнение в
+надежде посмотреть на дальнейшее выполнение, но ваша программа, вероятно,
+немедленно остановилась бы из-за фатального сигнала, как только она 
+его заметила бы.  Чтобы помешать этому, вы можете продолжить выполнение с
+&lsquo;<samp>signal 0</samp>&rsquo;.  See <a href="Podacha-signalov.html">Подача сигнала вашей программе</a>.
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Ostanovka-nitei.html" accesskey="n" rel="next">Остановка нитей</a>, Previous: <a href="Prodolzhenie-i-poshagovoe-vypolnenie.html" accesskey="p" rel="prev">Продолжение и пошаговое выполнение</a>, Up: <a href="Ostanovka.html" accesskey="u" rel="up">Остановка</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

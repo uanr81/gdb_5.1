@@ -1,0 +1,353 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Управление целью GDB/MI (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Управление целью GDB/MI (Отладка с помощью GDB)">
+<meta name="keywords" content="Управление целью GDB/MI (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="GDB_002fMI.html" rel="up" title="GDB/MI">
+<link href="Komandy-GDB_002fMI-dlya-nitei.html" rel="next" title="Команды GDB/MI для нитей">
+<link href="Zaprosy-GDB_002fMI-o-simvolakh.html" rel="prev" title="Запросы GDB/MI о символах">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0423_043f_0440_0430_0432_043b_0435_043d_0438_0435-_0446_0435_043b_044c_044e-GDB_002fMI"></span><div class="header">
+<p>
+Next: <a href="Komandy-GDB_002fMI-dlya-nitei.html" accesskey="n" rel="next">Команды GDB/MI для нитей</a>, Previous: <a href="Zaprosy-GDB_002fMI-o-simvolakh.html" accesskey="p" rel="prev">Запросы GDB/MI о символах</a>, Up: <a href="GDB_002fMI.html" accesskey="u" rel="up">GDB/MI</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Komandy-GDB_002fMI-upravleniya-celxiu"></span><h3 class="section">19.11 Команды <small>GDB/MI</small> управления целью</h3>
+
+
+<span id="Komanda-_002dtarget_002dattach"></span><h4 class="subheading">Команда <code>-target-attach</code></h4>
+<span id="index-_002dtarget_002dattach"></span>
+
+<span id="Kratkoe-opisanie-65"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -target-attach <var>ид-проц</var> | <var>файл</var>
+</pre></div>
+
+<p>Присоединиться к процессу <var>ид-проц</var> или файлу <var>файл</var> вне
+GDB.
+</p>
+<span id="Komanda-GDB-64"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>attach</samp>&rsquo;.
+</p>
+<span id="Primer-65"></span><h4 class="subsubheading">Пример</h4>
+<p>Н.П.
+</p>
+
+<span id="Komanda-_002dtarget_002dcompare_002dsections"></span><h4 class="subheading">Команда <code>-target-compare-sections</code></h4>
+<span id="index-_002dtarget_002dcompare_002dsections"></span>
+
+<span id="Kratkoe-opisanie-66"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -target-compare-sections [ <var>раздел</var> ]
+</pre></div>
+
+<p>Сравнить данные раздела <var>раздел</var> на цели с выполняемым файлом.  Без
+аргумента сравниваются все разделы.
+</p>
+<span id="Komanda-GDB-65"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Эквивалентной командой в GDB является &lsquo;<samp>compare-sections</samp>&rsquo;.
+</p>
+<span id="Primer-66"></span><h4 class="subsubheading">Пример</h4>
+<p>Н.П.
+</p>
+
+<span id="Komanda-_002dtarget_002ddetach"></span><h4 class="subheading">Команда <code>-target-detach</code></h4>
+<span id="index-_002dtarget_002ddetach"></span>
+
+<span id="Kratkoe-opisanie-67"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -target-detach
+</pre></div>
+
+<p>Отсоединиться от удаленной цели.  Никакого вывода не производится.
+</p>
+<span id="Komanda-GDB-66"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>detach</samp>&rsquo;.
+</p>
+<span id="Primer-67"></span><h4 class="subsubheading">Пример</h4>
+
+<div class="example">
+<pre class="example">(gdb)
+-target-detach
+^done
+(gdb)
+</pre></div>
+
+
+<span id="Komanda-_002dtarget_002ddownload"></span><h4 class="subheading">Команда <code>-target-download</code></h4>
+<span id="index-_002dtarget_002ddownload"></span>
+
+<span id="Kratkoe-opisanie-68"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -target-download
+</pre></div>
+
+<p>Загружает выполняемый файл на удаленную цель.  Команда два раза в
+секунду обновляет сообщение, которое включает поля:
+</p>
+<dl compact="compact">
+<dt>&lsquo;<samp>section</samp>&rsquo;</dt>
+<dd><p>Имя раздела.
+</p></dd>
+<dt>&lsquo;<samp>section-sent</samp>&rsquo;</dt>
+<dd><p>Размер переданного на данный момент участка для этого раздела.
+</p></dd>
+<dt>&lsquo;<samp>section-size</samp>&rsquo;</dt>
+<dd><p>Размер раздела.
+</p></dd>
+<dt>&lsquo;<samp>total-sent</samp>&rsquo;</dt>
+<dd><p>Общий размер переданной на данный момент информации (текущий и
+предыдущие разделы).
+</p></dd>
+<dt>&lsquo;<samp>total-size</samp>&rsquo;</dt>
+<dd><p>Размер всего выполняемого файла, подлежащего загрузке.
+</p></dd>
+</dl>
+
+<p>Каждое сообщение посылается в виде сообщения статуса (see <a href="Vykhodnoi-sintaksis-GDB_002fMI.html">Выходной синтаксис <small>GDB/MI</small></a>).
+</p>
+<p>Кроме того, команда печатает имена и размеры разделов, по мере их
+загрузки.  Эти сообщения включают следующие поля:
+</p>
+<dl compact="compact">
+<dt>&lsquo;<samp>section</samp>&rsquo;</dt>
+<dd><p>Имя раздела.
+</p></dd>
+<dt>&lsquo;<samp>section-size</samp>&rsquo;</dt>
+<dd><p>Размер раздела.
+</p></dd>
+<dt>&lsquo;<samp>total-size</samp>&rsquo;</dt>
+<dd><p>Размер всего выполняемого файла, подлежащего загрузке.
+</p></dd>
+</dl>
+
+<p>В конце печатается суммарная информация.
+</p>
+<span id="Komanda-GDB-67"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>load</samp>&rsquo;.
+</p>
+<span id="Primer-68"></span><h4 class="subsubheading">Пример</h4>
+
+<p>Замечание: каждое сообщение статуса появляется на одной строке.  Здесь
+сообщения были разбиты на несколько строк, чтобы они могли влезть на страницу.
+</p>
+<div class="example">
+<pre class="example">(gdb)
+-target-download
++download,{section=&quot;.text&quot;,section-size=&quot;6668&quot;,total-size=&quot;9880&quot;}
++download,{section=&quot;.text&quot;,section-sent=&quot;512&quot;,section-size=&quot;6668&quot;,
+total-sent=&quot;512&quot;,total-size=&quot;9880&quot;}
++download,{section=&quot;.text&quot;,section-sent=&quot;1024&quot;,section-size=&quot;6668&quot;,
+total-sent=&quot;1024&quot;,total-size=&quot;9880&quot;}
++download,{section=&quot;.text&quot;,section-sent=&quot;1536&quot;,section-size=&quot;6668&quot;,
+total-sent=&quot;1536&quot;,total-size=&quot;9880&quot;}
++download,{section=&quot;.text&quot;,section-sent=&quot;2048&quot;,section-size=&quot;6668&quot;,
+total-sent=&quot;2048&quot;,total-size=&quot;9880&quot;}
++download,{section=&quot;.text&quot;,section-sent=&quot;2560&quot;,section-size=&quot;6668&quot;,
+total-sent=&quot;2560&quot;,total-size=&quot;9880&quot;}
++download,{section=&quot;.text&quot;,section-sent=&quot;3072&quot;,section-size=&quot;6668&quot;,
+total-sent=&quot;3072&quot;,total-size=&quot;9880&quot;}
++download,{section=&quot;.text&quot;,section-sent=&quot;3584&quot;,section-size=&quot;6668&quot;,
+total-sent=&quot;3584&quot;,total-size=&quot;9880&quot;}
++download,{section=&quot;.text&quot;,section-sent=&quot;4096&quot;,section-size=&quot;6668&quot;,
+total-sent=&quot;4096&quot;,total-size=&quot;9880&quot;}
++download,{section=&quot;.text&quot;,section-sent=&quot;4608&quot;,section-size=&quot;6668&quot;,
+total-sent=&quot;4608&quot;,total-size=&quot;9880&quot;}
++download,{section=&quot;.text&quot;,section-sent=&quot;5120&quot;,section-size=&quot;6668&quot;,
+total-sent=&quot;5120&quot;,total-size=&quot;9880&quot;}
++download,{section=&quot;.text&quot;,section-sent=&quot;5632&quot;,section-size=&quot;6668&quot;,
+total-sent=&quot;5632&quot;,total-size=&quot;9880&quot;}
++download,{section=&quot;.text&quot;,section-sent=&quot;6144&quot;,section-size=&quot;6668&quot;,
+total-sent=&quot;6144&quot;,total-size=&quot;9880&quot;}
++download,{section=&quot;.text&quot;,section-sent=&quot;6656&quot;,section-size=&quot;6668&quot;,
+total-sent=&quot;6656&quot;,total-size=&quot;9880&quot;}
++download,{section=&quot;.init&quot;,section-size=&quot;28&quot;,total-size=&quot;9880&quot;}
++download,{section=&quot;.fini&quot;,section-size=&quot;28&quot;,total-size=&quot;9880&quot;}
++download,{section=&quot;.data&quot;,section-size=&quot;3156&quot;,total-size=&quot;9880&quot;}
++download,{section=&quot;.data&quot;,section-sent=&quot;512&quot;,section-size=&quot;3156&quot;,
+total-sent=&quot;7236&quot;,total-size=&quot;9880&quot;}
++download,{section=&quot;.data&quot;,section-sent=&quot;1024&quot;,section-size=&quot;3156&quot;,
+total-sent=&quot;7748&quot;,total-size=&quot;9880&quot;}
++download,{section=&quot;.data&quot;,section-sent=&quot;1536&quot;,section-size=&quot;3156&quot;,
+total-sent=&quot;8260&quot;,total-size=&quot;9880&quot;}
++download,{section=&quot;.data&quot;,section-sent=&quot;2048&quot;,section-size=&quot;3156&quot;,
+total-sent=&quot;8772&quot;,total-size=&quot;9880&quot;}
++download,{section=&quot;.data&quot;,section-sent=&quot;2560&quot;,section-size=&quot;3156&quot;,
+total-sent=&quot;9284&quot;,total-size=&quot;9880&quot;}
++download,{section=&quot;.data&quot;,section-sent=&quot;3072&quot;,section-size=&quot;3156&quot;,
+total-sent=&quot;9796&quot;,total-size=&quot;9880&quot;}
+^done,address=&quot;0x10004&quot;,load-size=&quot;9880&quot;,transfer-rate=&quot;6586&quot;,
+write-rate=&quot;429&quot;
+(gdb)
+</pre></div>
+
+
+<span id="Komanda-_002dtarget_002dexec_002dstatus"></span><h4 class="subheading">Команда <code>-target-exec-status</code></h4>
+<span id="index-_002dtarget_002dexec_002dstatus"></span>
+
+<span id="Kratkoe-opisanie-69"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -target-exec-status
+</pre></div>
+
+<p>Предоставить информацию о состоянии цели (например, выполняется она или
+нет).
+</p>
+<span id="Komanda-GDB-68"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Эквивалентной команды GDB нет.
+</p>
+<span id="Primer-69"></span><h4 class="subsubheading">Пример</h4>
+<p>Н.П.
+</p>
+
+<span id="Komanda-_002dtarget_002dlist_002davailable_002dtargets"></span><h4 class="subheading">Команда <code>-target-list-available-targets</code></h4>
+<span id="index-_002dtarget_002dlist_002davailable_002dtargets"></span>
+
+<span id="Kratkoe-opisanie-70"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -target-list-available-targets
+</pre></div>
+
+<p>Перечислить цели, к которым можно установить соединение.
+</p>
+<span id="Komanda-GDB-69"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>help target</samp>&rsquo;.
+</p>
+<span id="Primer-70"></span><h4 class="subsubheading">Пример</h4>
+<p>Н.П.
+</p>
+
+<span id="Komanda-_002dtarget_002dlist_002dcurrent_002dtargets"></span><h4 class="subheading">Команда <code>-target-list-current-targets</code></h4>
+<span id="index-_002dtarget_002dlist_002dcurrent_002dtargets"></span>
+
+<span id="Kratkoe-opisanie-71"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -target-list-current-targets
+</pre></div>
+
+<p>Описать текущую цель.
+</p>
+<span id="Komanda-GDB-70"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующая информация (вместе с другой) печатается командой
+&lsquo;<samp>info file</samp>&rsquo;.
+</p>
+<span id="Primer-71"></span><h4 class="subsubheading">Пример</h4>
+<p>Н.П.
+</p>
+
+<span id="Komanda-_002dtarget_002dlist_002dparameters"></span><h4 class="subheading">Команда <code>-target-list-parameters</code></h4>
+<span id="index-_002dtarget_002dlist_002dparameters"></span>
+
+<span id="Kratkoe-opisanie-72"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -target-list-parameters
+</pre></div>
+
+
+<span id="Komanda-GDB-71"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Эквивалента нет.
+</p>
+<span id="Primer-72"></span><h4 class="subsubheading">Пример</h4>
+<p>Н.П.
+</p>
+
+<span id="Komanda-_002dtarget_002dselect"></span><h4 class="subheading">Команда <code>-target-select</code></h4>
+<span id="index-_002dtarget_002dselect"></span>
+
+<span id="Kratkoe-opisanie-73"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -target-select <var>тип</var> <var>параметры &hellip;</var>
+</pre></div>
+
+<p>Соединить GDB с удаленной целью.  Эта команда допускает два
+аргумента:
+</p>
+<dl compact="compact">
+<dt>&lsquo;<samp><var>тип</var></samp>&rsquo;</dt>
+<dd><p>Тип цели, например, &lsquo;<samp>async</samp>&rsquo;, &lsquo;<samp>remote</samp>&rsquo;, и т.д.
+</p></dd>
+<dt>&lsquo;<samp><var>параметры</var></samp>&rsquo;</dt>
+<dd><p>Имена устройств, названия машин и тому подобное.  See <a href="Komandy-dlya-celei.html">Команды для управления целями</a>, для более полной информации.
+</p></dd>
+</dl>
+
+<p>Результатом является уведомление о соединении, за которым следует адрес,
+по которому находится целевая программа, в следующей форме:
+</p>
+<div class="example">
+<pre class="example">^connected,addr=&quot;<var>адрес</var>&quot;,func=&quot;<var>имя функции</var>&quot;,
+  args=[<var>список аргументов</var>]
+</pre></div>
+
+<span id="Komanda-GDB-72"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>target</samp>&rsquo;.
+</p>
+<span id="Primer-73"></span><h4 class="subsubheading">Пример</h4>
+
+<div class="example">
+<pre class="example">(gdb)
+-target-select async /dev/ttya
+^connected,addr=&quot;0xfe00a300&quot;,func=&quot;??&quot;,args=[]
+(gdb)
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Komandy-GDB_002fMI-dlya-nitei.html" accesskey="n" rel="next">Команды GDB/MI для нитей</a>, Previous: <a href="Zaprosy-GDB_002fMI-o-simvolakh.html" accesskey="p" rel="prev">Запросы GDB/MI о символах</a>, Up: <a href="GDB_002fMI.html" accesskey="u" rel="up">GDB/MI</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

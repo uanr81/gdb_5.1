@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Отображение языка (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Отображение языка (Отладка с помощью GDB)">
+<meta name="keywords" content="Отображение языка (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="YAzyki.html" rel="up" title="Языки">
+<link href="Proverka.html" rel="next" title="Проверка">
+<link href="Avtomaticheskoe.html" rel="prev" title="Автоматическое">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_041e_0442_043e_0431_0440_0430_0436_0435_043d_0438_0435-_044f_0437_044b_043a_0430"></span><div class="header">
+<p>
+Next: <a href="Proverka.html" accesskey="n" rel="next">Проверка</a>, Previous: <a href="Perekhod-ot-odnogo-yazyka-k-drugomu.html" accesskey="p" rel="prev">Переход от одного языка к другому</a>, Up: <a href="YAzyki.html" accesskey="u" rel="up">Языки</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Otobrazhenie-yazyka-programmirovaniya"></span><h3 class="section">9.2 Отображение языка программирования</h3>
+
+<p>Следующие команды помогают вам определить, какой язык
+является рабочим, а также на каком языке были написаны исходные файлы.
+</p>
+<span id="index-show-language"></span>
+<span id="index-info-frame_002c-pokazatx-iskhodnyi-yazyk"></span>
+<span id="index-info-source_002c-pokazatx-iskhodnyi-yazyk"></span>
+<dl compact="compact">
+<dt><code>show language</code></dt>
+<dd><p>Отобразить текущий рабочий язык.  Это тот язык, который вы можете
+использовать в командах типа <code>print</code> для построения и вычисления
+выражений, в которые могут входить переменные вашей программы.
+</p>
+</dd>
+<dt><code>info frame</code></dt>
+<dd><p>Отобразить исходный язык для данного кадра стека.  Этот язык
+становится рабочим, если используется идентификатор из этого кадра.
+See <a href="Informaciya-o-kadre.html">Информация о кадре стека</a>, для дополнительной
+информации.
+</p>
+</dd>
+<dt><code>info source</code></dt>
+<dd><p>Отобразить исходный язык данного исходного файла.
+See <a href="Simvoly.html">Исследование таблицы символов</a>, для получения
+дополнительной информации.
+</p></dd>
+</dl>
+
+<p>При необычных обстоятельствах, у вас могут быть исходные файлы с
+расширениями, не входящими в стандартный список.  Вы можете явно
+установить расширение, ассоциированное с языком:
+</p>
+<span id="index-set-extension_002dlanguage"></span>
+<span id="index-info-extensions"></span>
+<dl compact="compact">
+<dt><code>set extension-language <var>.расш</var> <var>язык</var></code></dt>
+<dd><p>Установить соответствие исходных файлов с расширением <var>.расш</var> с
+исходным языком <var>язык</var>.
+</p>
+</dd>
+<dt><code>info extensions</code></dt>
+<dd><p>Перечислить все расширения имен файлов и соответствующие им языки.
+</p></dd>
+</dl>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Ошибки в точках останова (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Ошибки в точках останова (Отладка с помощью GDB)">
+<meta name="keywords" content="Ошибки в точках останова (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Tochki-ostanova.html" rel="up" title="Точки останова">
+<link href="Prodolzhenie-i-poshagovoe-vypolnenie.html" rel="next" title="Продолжение и пошаговое выполнение">
+<link href="Meniu-tochki-ostanova.html" rel="prev" title="Меню точки останова">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_041e_0448_0438_0431_043a_0438-_0432-_0442_043e_0447_043a_0430_0445-_043e_0441_0442_0430_043d_043e_0432_0430"></span><div class="header">
+<p>
+Previous: <a href="Meniu-tochki-ostanova.html" accesskey="p" rel="prev">Меню точки останова</a>, Up: <a href="Tochki-ostanova.html" accesskey="u" rel="up">Точки останова</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="g_t_0060_0060Ne-udaetsya-pomestitx-tochki-ostanova_0027_0027"></span><h4 class="subsection">5.1.9 &ldquo;Не удается поместить точки останова&rdquo;</h4>
+
+<p>В некоторых операционных системах точки останова не могут быть
+использованы в программе, если какой-либо другой процесс выполняет эту
+программу.  В этом случае, попытка выполнить или продолжить выполнение
+программы с точкой останова приводит к тому, что GDB печатает
+сообщение об ошибке:
+</p>
+<div class="example">
+<pre class="example">Cannot insert breakpoints.
+The same program may be running in another process.<a id="DOCF9" href="#FOOT9">(9)</a>
+</pre></div>
+
+<p>Когда это происходит, у вас есть три варианта дальнейших действий:
+</p>
+<ol>
+<li> Удалить или отключить точки останова и затем продолжить.
+
+</li><li> Приостановить GDB и скопировать файл, содержащий вашу
+программу, под другим именем.  Возобновить работу GDB и
+использовать команду <code>exec-file</code> для указания, что GDB
+должен выполнять вашу программу под этим именем.  Затем запустите
+программу снова.
+
+</li><li> Скомпоновать заново вашу программу так, чтобы сегмент текста был
+неразделяемым, используя ключ компоновщика &lsquo;<samp>-N</samp>&rsquo;.  Ограничения
+операционной системы могут не распространяться на неразделяемые
+выполняемые файлы.
+</li></ol>
+
+<p>Аналогичное сообщение может выводиться, если вы запрашиваете слишком
+много активных аппаратно-поддерживаемых точек останова и наблюдения:
+</p>
+<div class="example">
+<pre class="example">Stopped; cannot insert breakpoints.
+You may have requested too many hardware breakpoints and watchpoints.<a id="DOCF10" href="#FOOT10">(10)</a>
+</pre></div>
+
+<p>Это сообщение выводится, когда вы пытаетесь возобновить выполнение
+программы, так как только тогда GDB знает точно, сколько аппаратных
+точек останова и наблюдения ему нужно установить.
+</p>
+<p>Когда вы видите это сообщение, вам необходимо отключить или удалить
+некоторые аппаратно-поддерживаемые точки останова и наблюдения и затем
+продолжить.
+</p>
+
+<div class="footnote">
+<hr>
+<h4 class="footnotes-heading">Footnotes</h4>
+
+<h5><a id="FOOT9" href="#DOCF9">(9)</a></h3>
+<p>Не удается поместить точки останова.  Возможно, эта программа выполняется в другом процессе.  <i>(Прим. переводчика)</i></p>
+<h5><a id="FOOT10" href="#DOCF10">(10)</a></h3>
+<p>Остановлено; не удается поместить точки останова.  Возможно, вы запросили слишком много аппаратно-поддерживаемых точек останова и наблюдения.  <i>(Прим. переводчика)</i></p>
+</div>
+
+
+
+</body>
+</html>

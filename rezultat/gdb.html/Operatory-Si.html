@@ -1,0 +1,236 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Операторы Си (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Операторы Си (Отладка с помощью GDB)">
+<meta name="keywords" content="Операторы Си (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Si.html" rel="up" title="Си">
+<link href="Konstanty-Si.html" rel="next" title="Константы Си">
+<link href="Si.html" rel="prev" title="Си">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_041e_043f_0435_0440_0430_0442_043e_0440_044b-_0421_0438"></span><div class="header">
+<p>
+Next: <a href="Konstanty-Si.html" accesskey="n" rel="next">Константы Си</a>, Up: <a href="Si.html" accesskey="u" rel="up">Си</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Operatory-Si-i-Si_002b_002b"></span><h4 class="subsubsection">9.4.1.1 Операторы Си и Си++</h4>
+
+<span id="index-operatory-Si-i-Si_002b_002b"></span>
+
+<p>Операторы должны быть определены на значениях определенных типов.
+Например, <code>+</code> определен на числах, но не на структурах.
+Операторы часто определяются на группах типов.
+</p>
+<p>Для целей Си и Си++, имеют место следующие определения:
+</p>
+<ul>
+<li> <em>Целые типы</em> включают <code>int</code> с любыми спецификаторами
+класса памяти; <code>char</code>; <code>enum</code>; и, для Си++, <code>bool</code>.
+
+</li><li> <em>Типы с плавающей точкой</em> включают <code>float</code>, <code>double</code> и
+<code>long double</code> (если поддерживается целевой платформой).
+
+</li><li> <em>Типы указателей</em> включают все типы, определенные как
+<code>(<var>тип</var> *)</code>.
+
+</li><li> <em>Скалярные типы</em> включают все вышеперечисленные типы.
+
+</li></ul>
+
+<p>Поддерживаются следующие операторы, перечисленные здесь в порядке
+возрастания приоритета:
+</p>
+<dl compact="compact">
+<dt><code>,</code></dt>
+<dd><p>Запятая, или оператор последовательного выполнения.  Выражения,
+разделенные в списке запятыми, вычисляются слева направо;
+результатом всего выражения является результат, полученный последним.
+</p>
+</dd>
+<dt><code>=</code></dt>
+<dd><p>Присваивание.  Значение выражения присваивания &mdash; присвоенное значение.
+Определено на скалярных типах.
+</p>
+</dd>
+<dt><code><var>опер</var>=</code></dt>
+<dd><p>Используется в выражениях в форме <code><var>a</var>&nbsp;<var>опер</var>=&nbsp;<var>b</var></code><!-- /@w -->
+и преобразовывается в <code><var>a</var>&nbsp;=&nbsp;<var>a&nbsp;опер&nbsp;b</var></code><!-- /@w -->.
+<code><var>опер</var>=</code><!-- /@w --> и <code>=</code> имеют одинаковый приоритет.
+<var>опер</var> может быть одним из операторов <code>|</code>, <code>^</code>, <code>&amp;</code>,
+<code>&lt;&lt;</code>, <code>&gt;&gt;</code>, <code>+</code>, <code>-</code>, <code>*</code>,
+<code>/</code>, <code>%</code>.
+</p>
+</dd>
+<dt><code>?:</code></dt>
+<dd><p>Тернарный оператор.  <code><var>a</var> ? <var>b</var> : <var>c</var></code> истолковывается
+так: если <var>a</var>, то <var>b</var>, иначе <var>c</var>.  <var>a</var>
+должно быть целого типа.
+</p>
+</dd>
+<dt><code>||</code></dt>
+<dd><p>Логическое <small>ИЛИ</small>.  Определено на целых типах.
+</p>
+</dd>
+<dt><code>&amp;&amp;</code></dt>
+<dd><p>Логическое <small>И</small>.  Определено на целых типах.
+</p>
+</dd>
+<dt><code>|</code></dt>
+<dd><p>Побитовое <small>ИЛИ</small>.  Определено на целых типах.
+</p>
+</dd>
+<dt><code>^</code></dt>
+<dd><p>Побитовое исключающее <small>ИЛИ</small>.  Определено на целых типах.
+</p>
+</dd>
+<dt><code>&amp;</code></dt>
+<dd><p>Побитовое <small>И</small>.  Определено на целых типах.
+</p>
+</dd>
+<dt><code>==<span class="roman">, </span>!=</code></dt>
+<dd><p>Равенство и неравенство.  Определено на скалярных типах.  Значение
+этих выражений отлично от нуля для истины и 0 для лжи.
+</p>
+</dd>
+<dt><code>&lt;<span class="roman">, </span>&gt;<span class="roman">, </span>&lt;=<span class="roman">, </span>&gt;=</code></dt>
+<dd><p>Меньше чем, больше чем, меньше или равно, больше или равно.  Определено
+на скалярных типах.  Значение этих выражений равно 0 для лжи и отлично от нуля
+для истины.
+</p>
+</dd>
+<dt><code>&lt;&lt;<span class="roman">, </span>&gt;&gt;</code></dt>
+<dd><p>Левый сдвиг и правый сдвиг.  Определено на целых типах.
+</p>
+</dd>
+<dt><code>@</code></dt>
+<dd><p>Оператор GDB создания &ldquo;искусственного массива&rdquo;
+(see <a href="Vyrazheniya.html">Выражения</a>).
+</p>
+</dd>
+<dt><code>+<span class="roman">, </span>-</code></dt>
+<dd><p>Сложение и вычитание.  Определено на целочисленных типах, типах с
+плавающей точкой и указателях.
+</p>
+</dd>
+<dt><code>*<span class="roman">, </span>/<span class="roman">, </span>%</code></dt>
+<dd><p>Умножение, деление и остаток.  Умножение и деление определены на
+целочисленных типах и типах с плавающей точкой.  Остаток определен
+на целочисленных типах.
+</p>
+</dd>
+<dt><code>++<span class="roman">, </span>--</code></dt>
+<dd><p>Инкремент и декремент.  При появлении перед переменной,
+операция выполняется прежде, чем переменная используется в
+выражении; при появлении после переменной,
+значение переменной используется до выполнения операции.
+</p>
+</dd>
+<dt><code>*</code></dt>
+<dd><p>Разыменование указателя.  Определено для указателей.  Имеет тот
+же приоритет, что и <code>++</code>.
+</p>
+</dd>
+<dt><code>&amp;</code></dt>
+<dd><p>Оператор получения адреса.  Определен на переменных.  Имеет тот же
+приоритет, что и <code>++</code>.
+</p>
+<p>Для отладки Си++, GDB реализует использование &lsquo;<samp>&amp;</samp>&rsquo;
+независимо от того, что позволяет сам язык Си++: вы можете использовать
+&lsquo;<samp>&amp;(&amp;<var>ссылка</var>)</samp>&rsquo; (или просто  &lsquo;<samp>&amp;&amp;<var>ссылка</var></samp>&rsquo;),
+чтобы исследовать адрес, по которому хранится
+переменная-ссылка Си++ (объявленная с помощью &lsquo;<samp>&amp;<var>ссылка</var></samp>&rsquo;).
+</p>
+</dd>
+<dt><code>-</code></dt>
+<dd><p>Унарный минус.  Определен на целочисленных типах и типах с
+плавающей точкой.  Имеет тот же приоритет, что и <code>++</code>.
+</p>
+</dd>
+<dt><code>!</code></dt>
+<dd><p>Логическое отрицание.  Определено на целочисленных типах.  Имеет тот
+же приоритет, что и <code>++</code>.
+</p>
+</dd>
+<dt><code>~</code></dt>
+<dd><p>Оператор побитового дополнения.  Определен на целочисленных
+типах. Имеет тот же приоритет, что и <code>++</code>.
+</p>
+</dd>
+<dt><code>.<span class="roman">, </span>-&gt;</code></dt>
+<dd><p>Элемент структуры и указатель на элемент структуры.  Для удобства,
+GDB считает их эквивалентными, определяя, следует ли
+разыменовывать указатель, основываясь на сохраненной информации о типах.
+Определен на данных структуры (<code>struct</code>) и объединения (<code>union</code>).
+</p>
+</dd>
+<dt><code>.*<span class="roman">, </span>-&gt;*</code></dt>
+<dd><p>Разыменовывание указателя на элемент.
+</p>
+</dd>
+<dt><code>[]</code></dt>
+<dd><p>Индексация массива.  <code><var>a</var>[<var>i</var>]</code> определяется как
+<code>*(<var>a</var>+<var>i</var>)</code>.  Имеет тот же приоритет, что и <code>-&gt;</code>.
+</p>
+</dd>
+<dt><code>()</code></dt>
+<dd><p>Список параметров функции.  Имеет тот же приоритет, что и <code>-&gt;</code>.
+</p>
+</dd>
+<dt><code>::</code></dt>
+<dd><p>Оператор Си++ определения области видимости.  Определен на типах
+<code>struct</code>, <code>union</code> и <code>class</code>.
+</p>
+</dd>
+<dt><code>::</code></dt>
+<dd><p>Двойное двоеточие также представляет оператор GDB области
+видимости (see <a href="Vyrazheniya.html">Выражения</a>).  Имеет тот же приоритет, что
+и <code>::</code>, описанный выше.
+</p></dd>
+</dl>
+
+<p>Если оператор переопределен в пользовательском коде, GDB обычно
+пытается выполнить переопределенную версию, а не использовать
+предопределенное значение оператора.
+</p>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Konstanty-Si.html" accesskey="n" rel="next">Константы Си</a>, Up: <a href="Si.html" accesskey="u" rel="up">Си</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Запросы GDB/MI о символах (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Запросы GDB/MI о символах (Отладка с помощью GDB)">
+<meta name="keywords" content="Запросы GDB/MI о символах (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="GDB_002fMI.html" rel="up" title="GDB/MI">
+<link href="Upravlenie-celxiu-GDB_002fMI.html" rel="next" title="Управление целью GDB/MI">
+<link href="Upravlenie-stekom-GDB_002fMI.html" rel="prev" title="Управление стеком GDB/MI">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0417_0430_043f_0440_043e_0441_044b-GDB_002fMI-_043e-_0441_0438_043c_0432_043e_043b_0430_0445"></span><div class="header">
+<p>
+Next: <a href="Upravlenie-celxiu-GDB_002fMI.html" accesskey="n" rel="next">Управление целью GDB/MI</a>, Previous: <a href="Upravlenie-stekom-GDB_002fMI.html" accesskey="p" rel="prev">Управление стеком GDB/MI</a>, Up: <a href="GDB_002fMI.html" accesskey="u" rel="up">GDB/MI</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Komandy-GDB_002fMI-zaprosov-o-simvolakh"></span><h3 class="section">19.10 Команды <small>GDB/MI</small> запросов о символах</h3>
+
+
+<span id="Komanda-_002dsymbol_002dinfo_002daddress"></span><h4 class="subheading">Команда <code>-symbol-info-address</code></h4>
+<span id="index-_002dsymbol_002dinfo_002daddress"></span>
+
+<span id="Kratkoe-opisanie-55"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -symbol-info-address <var>символ</var>
+</pre></div>
+
+<p>Описать, где хранится <var>символ</var>.
+</p>
+<span id="Komanda-GDB-54"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>info address</samp>&rsquo;.
+</p>
+<span id="Primer-55"></span><h4 class="subsubheading">Пример</h4>
+<p>Н.П.
+</p>
+
+<span id="Komanda-_002dsymbol_002dinfo_002dfile"></span><h4 class="subheading">Команда <code>-symbol-info-file</code></h4>
+<span id="index-_002dsymbol_002dinfo_002dfile"></span>
+
+<span id="Kratkoe-opisanie-56"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -symbol-info-file
+</pre></div>
+
+<p>Показать файл для символа.
+</p>
+<span id="Komanda-GDB-55"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Эквивалентной команды GDB нет.  В <code>gdbtk</code> есть команда
+&lsquo;<samp>gdb_find_file</samp>&rsquo;.
+</p>
+<span id="Primer-56"></span><h4 class="subsubheading">Пример</h4>
+<p>Н.П.
+</p>
+
+<span id="Komanda-_002dsymbol_002dinfo_002dfunction"></span><h4 class="subheading">Команда <code>-symbol-info-function</code></h4>
+<span id="index-_002dsymbol_002dinfo_002dfunction"></span>
+
+<span id="Kratkoe-opisanie-57"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -symbol-info-function
+</pre></div>
+
+<p>Показать, в какой функции находится символ.
+</p>
+<span id="Komanda-GDB-56"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>&lsquo;<samp>gdb_get_function</samp>&rsquo; в <code>gdbtk</code>.
+</p>
+<span id="Primer-57"></span><h4 class="subsubheading">Пример</h4>
+<p>Н.П.
+</p>
+
+<span id="Komanda-_002dsymbol_002dinfo_002dline"></span><h4 class="subheading">Команда <code>-symbol-info-line</code></h4>
+<span id="index-_002dsymbol_002dinfo_002dline"></span>
+
+<span id="Kratkoe-opisanie-58"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -symbol-info-line
+</pre></div>
+
+<p>Показать адреса памяти кода для текущей строки.
+</p>
+<span id="Komanda-GDB-57"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>info line</samp>&rsquo;.  В
+<code>gdbtk</code> есть команды &lsquo;<samp>gdb_get_line</samp>&rsquo; и &lsquo;<samp>gdb_get_file</samp>&rsquo;.
+</p>
+<span id="Primer-58"></span><h4 class="subsubheading">Пример</h4>
+<p>Н.П.
+</p>
+
+<span id="Komanda-_002dsymbol_002dinfo_002dsymbol"></span><h4 class="subheading">Команда <code>-symbol-info-symbol</code></h4>
+<span id="index-_002dsymbol_002dinfo_002dsymbol"></span>
+
+<span id="Kratkoe-opisanie-59"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -symbol-info-symbol <var>адрес</var>
+</pre></div>
+
+<p>Описать, какой символ находится в местоположении <var>адрес</var>.
+</p>
+<span id="Komanda-GDB-58"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>info symbol</samp>&rsquo;.
+</p>
+<span id="Primer-59"></span><h4 class="subsubheading">Пример</h4>
+<p>Н.П.
+</p>
+
+<span id="Komanda-_002dsymbol_002dlist_002dfunctions"></span><h4 class="subheading">Команда <code>-symbol-list-functions</code></h4>
+<span id="index-_002dsymbol_002dlist_002dfunctions"></span>
+
+<span id="Kratkoe-opisanie-60"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -symbol-list-functions
+</pre></div>
+
+<p>Перечислить функции, находящиеся в выполняемом файле.
+</p>
+<span id="Komanda-GDB-59"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>&lsquo;<samp>info functions</samp>&rsquo; в GDB, &lsquo;<samp>gdb_listfunc</samp>&rsquo; и
+&lsquo;<samp>gdb_search</samp>&rsquo; в <code>gdbtk</code>.
+</p>
+<span id="Primer-60"></span><h4 class="subsubheading">Пример</h4>
+<p>Н.П.
+</p>
+
+<span id="Komanda-_002dsymbol_002dlist_002dtypes"></span><h4 class="subheading">Команда <code>-symbol-list-types</code></h4>
+<span id="index-_002dsymbol_002dlist_002dtypes"></span>
+
+<span id="Kratkoe-opisanie-61"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -symbol-list-types
+</pre></div>
+
+<p>Перечислить все имена типов.
+</p>
+<span id="Komanda-GDB-60"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующими командами являются &lsquo;<samp>info types</samp>&rsquo; в GDB и
+&lsquo;<samp>gdb_search</samp>&rsquo; в <code>gdbtk</code>.
+</p>
+<span id="Primer-61"></span><h4 class="subsubheading">Пример</h4>
+<p>Н.П.
+</p>
+
+<span id="Komanda-_002dsymbol_002dlist_002dvariables"></span><h4 class="subheading">Команда <code>-symbol-list-variables</code></h4>
+<span id="index-_002dsymbol_002dlist_002dvariables"></span>
+
+<span id="Kratkoe-opisanie-62"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -symbol-list-variables
+</pre></div>
+
+<p>Перечислить имена всех глобальных и статических переменных.
+</p>
+<span id="Komanda-GDB-61"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>&lsquo;<samp>info variables</samp>&rsquo; в GDB, &lsquo;<samp>gdb_search</samp>&rsquo; в <code>gdbtk</code>.
+</p>
+<span id="Primer-62"></span><h4 class="subsubheading">Пример</h4>
+<p>Н.П.
+</p>
+
+<span id="Komanda-_002dsymbol_002dlocate"></span><h4 class="subheading">Команда <code>-symbol-locate</code></h4>
+<span id="index-_002dsymbol_002dlocate"></span>
+
+<span id="Kratkoe-opisanie-63"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -symbol-locate
+</pre></div>
+
+<span id="Komanda-GDB-62"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>&lsquo;<samp>gdb_loc</samp>&rsquo; в <code>gdbtk</code>.
+</p>
+<span id="Primer-63"></span><h4 class="subsubheading">Пример</h4>
+<p>Н.П.
+</p>
+
+<span id="Komanda-_002dsymbol_002dtype"></span><h4 class="subheading">Команда <code>-symbol-type</code></h4>
+<span id="index-_002dsymbol_002dtype"></span>
+
+<span id="Kratkoe-opisanie-64"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -symbol-type <var>переменная</var>
+</pre></div>
+
+<p>Показать тип <var>переменной</var>.
+</p>
+<span id="Komanda-GDB-63"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>ptype</samp>&rsquo;, в
+<code>gdbtk</code> есть команда &lsquo;<samp>gdb_obj_variable</samp>&rsquo;.
+</p>
+<span id="Primer-64"></span><h4 class="subsubheading">Пример</h4>
+<p>Н.П.
+</p>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Upravlenie-celxiu-GDB_002fMI.html" accesskey="n" rel="next">Управление целью GDB/MI</a>, Previous: <a href="Upravlenie-stekom-GDB_002fMI.html" accesskey="p" rel="prev">Управление стеком GDB/MI</a>, Up: <a href="GDB_002fMI.html" accesskey="u" rel="up">GDB/MI</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Форматы вывода (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Форматы вывода (Отладка с помощью GDB)">
+<meta name="keywords" content="Форматы вывода (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Dannye.html" rel="up" title="Данные">
+<link href="Pamyatx.html" rel="next" title="Память">
+<link href="Massivy.html" rel="prev" title="Массивы">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0424_043e_0440_043c_0430_0442_044b-_0432_044b_0432_043e_0434_0430"></span><div class="header">
+<p>
+Next: <a href="Pamyatx.html" accesskey="n" rel="next">Память</a>, Previous: <a href="Massivy.html" accesskey="p" rel="prev">Массивы</a>, Up: <a href="Dannye.html" accesskey="u" rel="up">Данные</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Formaty-vyvoda"></span><h3 class="section">8.4 Форматы вывода</h3>
+
+<span id="index-formatirovannyi-vyvod"></span>
+<span id="index-formaty-vyvoda"></span>
+<p>По умолчанию, GDB печатает значение в соответствии с его типом.
+Это не всегда отвечает вашему желанию.  Например, вы можете захотеть вывести
+число в шестнадцатеричной записи или указатель в десятичной.  Или вы
+можете захотеть просмотреть данные по некоторому адресу в памяти в
+виде строки знаков или в виде инструкций.  Для этого при выводе значения
+задайте <em>формат вывода</em>.
+</p>
+<p>Простейшим применением форматов вывода является форматирование вывода
+уже вычисленного выражения.  Чтобы сделать это, начните параметры
+команды <code>print</code> с косой черты и символа формата.  Поддерживаются
+следующие символы формата:
+</p>
+<dl compact="compact">
+<dt><code>x</code></dt>
+<dd><p>Рассматривать биты значения как целое и вывести целое в
+шестнадцатеричном виде.
+</p>
+</dd>
+<dt><code>d</code></dt>
+<dd><p>Вывести как десятичное целое со знаком.
+</p>
+</dd>
+<dt><code>u</code></dt>
+<dd><p>Вывести как десятичное целое без знака.
+</p>
+</dd>
+<dt><code>o</code></dt>
+<dd><p>Вывести как восьмеричное целое.
+</p>
+</dd>
+<dt><code>t</code></dt>
+<dd><p>Вывести как целое в двоичном виде.  Буква &lsquo;<samp>t</samp>&rsquo; означает &ldquo;two&rdquo;.
+<a id="DOCF11" href="#FOOT11"><sup>11</sup></a>
+</p>
+</dd>
+<dt><code>a</code></dt>
+<dd><span id="index-neizvestnyi-adres_002c-nakhozhdenie"></span>
+<p>Вывести в виде адреса, как абсолютного в шестнадцатеричной записи, так и
+в виде смещения от ближайшего предшествующего символа.  Вы можете
+использовать этот формат, чтобы определить, где (в какой
+функции) расположен какой-либо неизвестный адрес:
+</p>
+<div class="example">
+<pre class="example">(gdb) p/a 0x54320
+$3 = 0x54320 &lt;_initialize_vx+396&gt;
+</pre></div>
+
+</dd>
+<dt><code>c</code></dt>
+<dd><p>Рассматривать как целое и вывести в виде строковой постоянной.
+</p>
+</dd>
+<dt><code>f</code></dt>
+<dd><p>Рассматривать биты значения как число с плавающей точкой и вывести с
+использованием обычного синтаксиса для этих чисел.
+</p></dd>
+</dl>
+
+<p>Например, чтобы вывести счетчик программы в шестнадцатеричном виде
+(see <a href="Registry.html">Регистры</a>), введите
+</p>
+<div class="example">
+<pre class="example">p/x $pc
+</pre></div>
+
+<p>Обратите внимание, что перед косой чертой не требуется пробела, потому
+что имена команд в GDB не могут содержать косую черту.
+</p>
+<p>Чтобы вывести последнее значение из истории значений в другом
+формате, вы можете воспользоваться командой <code>print</code> лишь с указанием
+формата и без выражения.  Например, &lsquo;<samp>p/x</samp>&rsquo; выведет последнее
+значение в шестнадцатеричной форме.
+</p>
+<div class="footnote">
+<hr>
+<h4 class="footnotes-heading">Footnotes</h4>
+
+<h5><a id="FOOT11" href="#DOCF11">(11)</a></h3>
+<p>&lsquo;<samp>b</samp>&rsquo; не может быть использовано, потому что эти символы
+формата также используются с командой <code>x</code>, где &lsquo;<samp>b</samp>&rsquo; означает
+&ldquo;byte&rdquo;; смотрите <a href="Pamyatx.html">Исследование памяти</a>.</p>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Pamyatx.html" accesskey="n" rel="next">Память</a>, Previous: <a href="Massivy.html" accesskey="p" rel="prev">Массивы</a>, Up: <a href="Dannye.html" accesskey="u" rel="up">Данные</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

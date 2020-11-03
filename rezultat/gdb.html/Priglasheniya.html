@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Приглашения (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Приглашения (Отладка с помощью GDB)">
+<meta name="keywords" content="Приглашения (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Primechaniya.html" rel="up" title="Примечания">
+<link href="Oshibki.html" rel="next" title="Ошибки">
+<link href="Otobrazheniya.html" rel="prev" title="Отображения">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_041f_0440_0438_0433_043b_0430_0448_0435_043d_0438_044f"></span><div class="header">
+<p>
+Next: <a href="Oshibki.html" accesskey="n" rel="next">Ошибки</a>, Previous: <a href="Otobrazheniya.html" accesskey="p" rel="prev">Отображения</a>, Up: <a href="Primechaniya.html" accesskey="u" rel="up">Примечания</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Primechaniya-ko-vvodu-GDB"></span><h3 class="section">18.6 Примечания ко вводу GDB</h3>
+
+<span id="index-primechaniya-k-priglasheniyam"></span>
+<p>Когда GDB выводит приглашение для ввода, он делает к этому
+примечания, так что становится возможным узнать, когда посылать данные,
+когда закончен вывод от данной команды, и так далее.
+</p>
+<p>Каждый из различных видов ввода имеет различный <em>тип ввода</em>.  Каждый
+тип ввода имеет три примечания: примечание <code>pre-</code>, обозначающее
+начало каждого выводимого приглашения, простое примечание, обозначающее
+конец приглашения, и затем примечание <code>post-</code>, обозначающее конец
+любого эхо, которое может быть ассоциировано (а может и не быть) со
+вводом.  Например, характерной чертой типа ввода <code>prompt</code> являются
+следующие примечания:
+</p>
+<div class="example">
+<pre class="example">^Z^Zpre-prompt
+^Z^Zprompt
+^Z^Zpost-prompt
+</pre></div>
+
+<p>Существуют следующие типы ввода:
+</p>
+<dl compact="compact">
+<dd><span id="index-pre_002dprompt"></span>
+<span id="index-prompt"></span>
+<span id="index-post_002dprompt"></span>
+</dd>
+<dt><code>prompt</code></dt>
+<dd><p>Когда GDB запрашивает команду (главное приглашение GDB).
+</p>
+<span id="index-pre_002dcommands"></span>
+<span id="index-commands"></span>
+<span id="index-post_002dcommands"></span>
+</dd>
+<dt><code>commands</code></dt>
+<dd><p>Когда GDB запрашивает набор команд, как в команде <code>commands</code>.
+Примечания повторяются для каждой введенной команды.
+</p>
+<span id="index-pre_002doverload_002dchoice"></span>
+<span id="index-overload_002dchoice"></span>
+<span id="index-post_002doverload_002dchoice"></span>
+</dd>
+<dt><code>overload-choice</code></dt>
+<dd><p>Когда GDB хочет, чтобы пользователь выбрал одну из нескольких
+перегруженных функций.
+</p>
+<span id="index-pre_002dquery"></span>
+<span id="index-query"></span>
+<span id="index-post_002dquery"></span>
+</dd>
+<dt><code>query</code></dt>
+<dd><p>Когда GDB хочет, чтобы пользователь подтвердил потенциально
+опасное действие.
+</p>
+<span id="index-pre_002dprompt_002dfor_002dcontinue"></span>
+<span id="index-prompt_002dfor_002dcontinue"></span>
+<span id="index-post_002dprompt_002dfor_002dcontinue"></span>
+</dd>
+<dt><code>prompt-for-continue</code></dt>
+<dd><p>Когда GDB запрашивает у пользователя нажатие ввода для
+продолжения.  Замечание: не ожидайте, что это будет работать хорошо;
+используйте вместо этого <code>set height 0</code> для отключения приглашений.
+Это происходит потому, что при наличии примечаний подсчет строк
+происходит неверно.
+</p></dd>
+</dl>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Проверки Модулы-2 (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Проверки Модулы-2 (Отладка с помощью GDB)">
+<meta name="keywords" content="Проверки Модулы-2 (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Modula_002d2.html" rel="up" title="Модула-2">
+<link href="Oblastx-vidimosti-v-Module_002d2.html" rel="next" title="Область видимости в Модуле-2">
+<link href="Otkloneniya.html" rel="prev" title="Отклонения">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_041f_0440_043e_0432_0435_0440_043a_0438-_041c_043e_0434_0443_043b_044b_002d2"></span><div class="header">
+<p>
+Next: <a href="Oblastx-vidimosti-v-Module_002d2.html" accesskey="n" rel="next">Область видимости в Модуле-2</a>, Previous: <a href="Otkloneniya.html" accesskey="p" rel="prev">Отклонения</a>, Up: <a href="Modula_002d2.html" accesskey="u" rel="up">Модула-2</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Proverki-diapazona-i-prinadlezhnosti-tipu-Moduly_002d2"></span><h4 class="subsubsection">9.4.2.6 Проверки диапазона и принадлежности типу Модулы-2</h4>
+<span id="index-proverki-Moduly_002d2"></span>
+
+<blockquote>
+<p><em>Предупреждение:</em> в этом выпуске, GDB еще не выполняет проверки
+диапазона и принадлежности типу.
+</p></blockquote>
+
+<p>GDB считает две переменные Модулы-2 эквивалентными по типу,
+если:
+</p>
+<ul>
+<li> Их типы были объявлены эквивалентными посредством оператора <code>TYPE
+<var>t1</var> = <var>t2</var></code>
+
+</li><li> Они были объявлены на одной и той же строке.  (Примечание:  Это верно
+для компилятора <small>GNU</small> Модула-2, но это может не выполняться для других
+компиляторов.)
+</li></ul>
+
+<p>Пока проверка соответствия типов включена, любая попытка
+скомбинировать переменные неэквивалентных типов является ошибкой.
+</p>
+<p>Проверка диапазона выполняется во всех математических операциях,
+присваиваниях, при индексации массивов и во всех встроенных функциях
+и процедурах.
+</p>
+
+
+
+</body>
+</html>

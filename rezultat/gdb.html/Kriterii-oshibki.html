@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Критерий ошибки (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Критерий ошибки (Отладка с помощью GDB)">
+<meta name="keywords" content="Критерий ошибки (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Oshibki-v-GDB.html" rel="up" title="Ошибки в GDB">
+<link href="Otchety-ob-oshibkakh.html" rel="next" title="Отчеты об ошибках">
+<link href="Oshibki-v-GDB.html" rel="prev" title="Ошибки в GDB">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_041a_0440_0438_0442_0435_0440_0438_0439-_043e_0448_0438_0431_043a_0438"></span><div class="header">
+<p>
+Next: <a href="Otchety-ob-oshibkakh.html" accesskey="n" rel="next">Отчеты об ошибках</a>, Up: <a href="Oshibki-v-GDB.html" accesskey="u" rel="up">Ошибки в GDB</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Vy-nashli-oshibku_003f"></span><h3 class="section">20.1 Вы нашли ошибку?</h3>
+<span id="index-kriterii-oshibki"></span>
+
+<p>Если вы не уверены, нашли ли вы ошибку, вот несколько руководящих
+принципов:
+</p>
+<ul>
+<li> <span id="index-fatalxnyi-signal"></span>
+<span id="index-sboi-otladchika"></span>
+Если отладчик получает фатальный сигнал, то это ошибка в
+GDB, независимо от ввода.  В надежных отладчиках сбоев не бывает.
+
+</li><li> <span id="index-oshibka-pri-pravilxnykh-vkhodnykh-dannykh"></span>
+Если GDB выводит сообщение об ошибке для допустимого
+ввода &mdash; это ошибка.  (Заметьте, что если вы выполняете кросс-отладку,
+проблема может возникать где-то в соединении к цели.)
+
+</li><li> <span id="index-nedopustimye-vkhodnye-dannye"></span>
+Если GDB не выводит сообщение об ошибке для недопустимого ввода,
+это ошибка.  Однако вы должны обратить внимание, что если по вашему
+мнению что-то является &ldquo;недопустимым вводом&rdquo;, по нашему мнению это может быть
+&ldquo;расширением&rdquo; или &ldquo;поддержкой традиционной практики&rdquo;.
+
+</li><li> Если вы опытный пользователь средств отладки, ваши предложения по
+улучшению GDB приветствуются в любом случае.
+</li></ul>
+
+
+
+
+</body>
+</html>

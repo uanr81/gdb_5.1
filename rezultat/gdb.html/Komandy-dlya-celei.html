@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Команды для целей (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Команды для целей (Отладка с помощью GDB)">
+<meta name="keywords" content="Команды для целей (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Otladochnye-celi.html" rel="up" title="Отладочные цели">
+<link href="Poryadok-baitov.html" rel="next" title="Порядок байтов">
+<link href="Aktivnye-celi.html" rel="prev" title="Активные цели">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_041a_043e_043c_0430_043d_0434_044b-_0434_043b_044f-_0446_0435_043b_0435_0439"></span><div class="header">
+<p>
+Next: <a href="Poryadok-baitov.html" accesskey="n" rel="next">Порядок байтов</a>, Previous: <a href="Aktivnye-celi.html" accesskey="p" rel="prev">Активные цели</a>, Up: <a href="Otladochnye-celi.html" accesskey="u" rel="up">Отладочные цели</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Komandy-dlya-upravleniya-celyami"></span><h3 class="section">13.2 Команды для управления целями</h3>
+
+<dl compact="compact">
+<dt><code>target <var>тип</var> <var>параметры</var></code></dt>
+<dd><p>Соединяет рабочую среду GDB с целевой машиной или процессом.
+Целью обычно является протокол для взаимодействия со средствами отладки.
+Параметр <var>тип</var> используется, чтобы определить тип или протокол
+целевой машины.
+</p>
+<p>Дальнейшие <var>параметры</var> интерпретируются целевым
+протоколом, но обычно включают такие вещи, как имена
+устройств или имена рабочих машин, с которыми осуществляется
+связь, номера процессов и скорости в бодах.
+</p>
+<p>Команда <code>target</code> не повторяется при повторном нажатии <tt class="key">RET</tt> после
+ее выполнения.
+</p>
+<span id="index-help-target"></span>
+</dd>
+<dt><code>help target</code></dt>
+<dd><p>Отображает имена всех доступных целей.  Чтобы отобразить выбранные в
+данный момент цели, используйте либо <code>info target</code>, либо <code>info
+files</code> (see <a href="Faily.html">Команды для задания файлов</a>).
+</p>
+</dd>
+<dt><code>help target <var>имя</var></code></dt>
+<dd><p>Описывает определенную цель, включая любые параметры, необходимые для ее
+выбора.
+</p>
+<span id="index-set-gnutarget"></span>
+</dd>
+<dt><code>set gnutarget <var>арг</var></code></dt>
+<dd><p>GDB использует свою собственную библиотеку BFD<a id="DOCF14" href="#FOOT14"><sup>14</sup></a> для чтения ваших
+файлов.  GDB знает, читает ли он <em>выполняемый файл</em>,
+<em>файл дампа памяти</em> или <em>объектный (.o)</em> файл; однако вы можете
+определить формат файла командой <code>set gnutarget</code>.  В отличие от
+большинства команд <code>target</code>, в команде <code>gnutarget</code> слово <code>target</code>
+относится к программе, а не к машине.
+</p>
+<blockquote>
+<p><em>Предупреждение:</em> Для определения формата файла посредством <code>set
+gnutarget</code>, вы должны знать фактическое имя BFD.
+</p></blockquote>
+
+<p>See <a href="Faily.html">Команды для задания файлов</a>.
+</p>
+<span id="index-show-gnutarget"></span>
+</dd>
+<dt><code>show gnutarget</code></dt>
+<dd><p>Используйте команду <code>show gnutarget</code> для отображения, какого
+формата файлы <code>gnutarget</code> установлен считывать.  Если вы не
+установили <code>gnutarget</code>, GDB определит формат для каждого файла
+автоматически, и <code>show gnutarget</code> выведет &lsquo;<samp>The current BFD target
+is &quot;auto&quot;</samp>&rsquo;.
+</p></dd>
+</dl>
+
+<p>Ниже приведены некоторые наиболее распространенные цели (доступные или нет, в
+зависимоси от конфигурации GDB):
+</p>
+<dl compact="compact">
+<dd><span id="index-target-exec"></span>
+</dd>
+<dt><code>target exec <var>программа</var></code></dt>
+<dd><p>Выполняемый файл.  &lsquo;<samp>target exec <var>программа</var></samp>&rsquo; &mdash; это то же
+самое, что и &lsquo;<samp>exec-file <var>программа</var></samp>&rsquo;.
+</p>
+<span id="index-target-core"></span>
+</dd>
+<dt><code>target core <var>имя-файла</var></code></dt>
+<dd><p>Файл дампа памяти.  &lsquo;<samp>target core <var>имя-файла</var></samp>&rsquo; &mdash; это то же
+самое, что и &lsquo;<samp>core-file <var>имя-файла</var></samp>&rsquo;.
+</p>
+<span id="index-target-remote"></span>
+</dd>
+<dt><code>target remote <var>устр</var></code></dt>
+<dd><p>Удаленная последовательная цель является уникальным для GDB
+протоколом.  Параметр <var>устр</var> определяет, какое последовательное
+устройство использовать для соединения (например, <samp>/dev/ttya</samp>).
+See <a href="Udalennaya-otladka.html">Удаленная отладка</a>.  <code>target remote</code>
+поддерживает команду <code>load</code>.  Это полезно, только если вы можете
+получить заглушку для целевой системы каким-нибудь другим
+способом и можете разместить ее в памяти, где она не будет
+затерта загрузкой.
+</p>
+<span id="index-target-sim"></span>
+</dd>
+<dt><code>target sim</code></dt>
+<dd><p>Встроенный эмулятор ЦП.  GDB включает эмуляторы для большинства
+архитектур.  Вообще,
+</p><div class="example">
+<pre class="example">        target sim
+        load
+        run
+</pre></div>
+<p>работает; однако, вы не можете предполагать, что доступны какое-то
+отображение памяти, драйверы устройств или даже элементарные функции
+ввода-вывода, хотя некоторые эмуляторы действительно предоставляют это.  Для
+информации о деталях эмуляторов для конкретного процессора, смотрите
+соответствующий <a href="Vstroennye-processory.html">Встроенные
+процессоры</a>.
+</p>
+</dd>
+</dl>
+
+<p>Некоторые конфигурации могут также включать такие цели:
+</p>
+<dl compact="compact">
+<dd>
+<span id="index-target-nrom"></span>
+</dd>
+<dt><code>target nrom <var>устр</var></code></dt>
+<dd><p>Эмулятор NetROM ROM.  Эта цель поддерживает только загрузку.
+</p>
+</dd>
+</dl>
+
+<p>Для различных конфигураций GDB доступны различные цели; ваша
+конфигурация может иметь больше или меньше целей.
+</p>
+<p>Многие удаленные цели требуют, чтобы вы загрузили код выполняемого
+файла после того как успешно установили соединение.
+</p>
+<dl compact="compact">
+<dd>
+<span id="index-load-imya_002dfaila"></span>
+</dd>
+<dt><code>load <var>имя-файла</var></code></dt>
+<dd><p>В зависимости от того, какие возможности удаленной отладки
+сконфигурированы в GDB, может быть доступна команда
+<code>load</code>.  Если она существует, ее задачей является сделать
+<var>имя-файла</var> (выполняемый файл) доступным для отладки на удаленной
+системе &mdash; например, путем загрузки или динамической сборки.
+<code>load</code> также записывает таблицу символов <var>имя-файла</var> в
+GDB, как команда <code>add-symbol-file</code>.
+</p>
+<p>Если ваш GDB не имеет команды <code>load</code>, попытка выполнить ее
+выдает сообщение об ошибке &ldquo;<code>You can't do that when your
+target is &hellip;</code>&rdquo;.
+</p>
+<p>Файл загружается по адресу, указанному в выполняемом файле.  Для
+некоторых форматов объектных файлов вы можете задать адрес загрузки при
+сборке программы; для других форматов, таких как a.out, формат
+объектного файла задает фиксированный адрес.
+</p>
+<p><code>load</code> не повторяется, если вы нажимаете <tt class="key">RET</tt> снова после ее
+использования.
+</p></dd>
+</dl>
+
+<div class="footnote">
+<hr>
+<h4 class="footnotes-heading">Footnotes</h4>
+
+<h5><a id="FOOT14" href="#DOCF14">(14)</a></h3>
+<p>от
+&lsquo;Binary File Descriptor&rsquo; (библиотека описания двоичных файлов).
+<i>(Прим. переводчика)</i></p>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Poryadok-baitov.html" accesskey="n" rel="next">Порядок байтов</a>, Previous: <a href="Aktivnye-celi.html" accesskey="p" rel="prev">Активные цели</a>, Up: <a href="Otladochnye-celi.html" accesskey="u" rel="up">Отладочные цели</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

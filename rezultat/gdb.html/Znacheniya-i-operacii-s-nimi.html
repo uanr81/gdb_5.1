@@ -1,0 +1,228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Значения и операции с ними (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Значения и операции с ними (Отладка с помощью GDB)">
+<meta name="keywords" content="Значения и операции с ними (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Chill.html" rel="up" title="Chill">
+<link href="Proverka-diapazona-i-tipov-v-Chill.html" rel="next" title="Проверка диапазона и типов в Chill">
+<link href="Mestopolozheniya.html" rel="prev" title="Местоположения">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0417_043d_0430_0447_0435_043d_0438_044f-_0438-_043e_043f_0435_0440_0430_0446_0438_0438-_0441-_043d_0438_043c_0438"></span><div class="header">
+<p>
+Next: <a href="Proverka-diapazona-i-tipov-v-Chill.html" accesskey="n" rel="next">Проверка диапазона и типов в Chill</a>, Previous: <a href="Mestopolozheniya.html" accesskey="p" rel="prev">Местоположения</a>, Up: <a href="Chill.html" accesskey="u" rel="up">Chill</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Znacheniya-i-operacii-s-nimi"></span><h4 class="subsubsection">9.4.3.3 Значения и операции с ними</h4>
+
+<p>Значения используются для изменения местоположений, для более подробного
+изучения сложных структур и для отфильтровывания значимой информации из
+большого объема данных.  Определено несколько операций
+(зависящих от режима), которые позволяют проводить подобные изучения.
+Эти операции применимы не только к значениям-константам, но также и к
+местоположениям, что может оказаться достаточно полезным при отладке
+сложных структур.  Во время разбора командной строки (например, вычисляя
+выражение), GDB рассматривает имена местоположений как значения
+этих местоположений.
+</p>
+<p>Этот раздел описывает, как должны задаваться значения, и какие операции
+допустимо использовать с этими значениями.
+</p>
+<dl compact="compact">
+<dt><code>Буквенные значения</code></dt>
+<dd><p>Буквенные значения определяются также, как в программах
+<small>GNU</small> Chill.  Для подробной спецификации, смотрите главу 1.5
+Руководства по реализации <small>GNU</small> Chill.
+</p>
+</dd>
+<dt><code>Значения-наборы</code></dt>
+<dd><p>Набор может быть задан как <code>&lt;имя режима&gt;[&lt;набор&gt;]</code>, где <code>&lt;имя
+режима&gt;</code> может быть опущено, если режим набора определяется однозначно.
+Эта однозначность определяется из контекста вычисляемого выражения.
+<code>&lt;набор&gt;</code> может быть одним из:
+</p>
+<ul>
+<li> <em>Набор powerset</em>
+</li><li> <em>Набор массивов</em>
+</li><li> <em>Набор структур</em>
+</li></ul>
+
+<p>Наборы-powerset, наборы массивов и наборы структур определяются так же,
+как в программах на Chill.
+</p>
+</dd>
+<dt><code>Значение элемента строки</code></dt>
+<dd><p>Значение элемента строки задается как
+</p><div class="example">
+<pre class="example"><code>&lt;строковое значение&gt;(&lt;индекс&gt;)</code>
+</pre></div>
+<p>где <code>&lt;индекс&gt;</code> является целочисленным
+выражением.  Это дает знаковое значение, которое эквивалентно знаку,
+указываемому в строке индексом <code>&lt;индекс&gt;</code>.
+</p>
+</dd>
+<dt><code>Значение среза строки</code></dt>
+<dd><p>Значение среза строки задается как <code>&lt;значение строки&gt;(&lt;спецификация
+среза&gt;)</code>, где <code>&lt;спецификация среза&gt;</code> может быть либо диапазоном
+целых выражений, либо задаваться в виде <code>&lt;начальное выражение&gt; up
+&lt;размер&gt;</code>.  <code>&lt;размер&gt;</code> обозначает число элементов, которое содержит
+срез.  Полученная величина является строкой, которая является частью
+указанной строки.
+</p>
+</dd>
+<dt><code>Значения элементов массива</code></dt>
+<dd><p>Значение элемента массива указывается в виде <code>&lt;величина
+массива&gt;(&lt;выр&gt;)</code> и дает величину элемента массива с режимом как у
+указанного массива.
+</p>
+</dd>
+<dt><code>Значение среза массива</code></dt>
+<dd><p>Срез массива задается как <code>&lt;значение массива&gt;(&lt;спецификация
+среза&gt;)</code>, где <code>&lt;спецификация среза&gt;</code> может быть диапазоном,
+определенным либо выражениями, либо как <code>&lt;начальное выр&gt; up
+&lt;размер&gt;</code>.  <code>&lt;размер&gt;</code> обозначает число элементов массива, которое
+содержит срез.  Получаемое значение есть массив, который является
+частью указанного.
+</p>
+</dd>
+<dt><code>Значение поля структуры</code></dt>
+<dd><p>Значение поля структуры получается как <code>&lt;значение структуры&gt;.&lt;имя
+поля&gt;</code>, где <code>&lt;имя поля&gt;</code> указывает имя поля, заданное в определении
+режима структуры.  Режим полученного значения соответствует этому
+определению режима в определении структуры.
+</p>
+</dd>
+<dt><code>Значения вызова процедуры</code></dt>
+<dd><p>Значение вызова процедуры получается из значения, возвращенного
+процедурой<a id="DOCF13" href="#FOOT13"><sup>13</sup></a>.
+</p>
+<p>Значения местоположений режима длительности представляются буквами
+<code>ULONG</code>.
+</p>
+<p>Значения местоположений режима-времени выводятся как
+</p><div class="example">
+<pre class="example"><code>TIME(&lt;сек&gt;:&lt;нсек&gt;)</code>.
+</pre></div>
+
+</dd>
+<dt><code>Значение безаргументного оператора</code></dt>
+<dd><p>Значение безаргументного оператора получается из значения экземпляра для
+текущего активного процесса.
+</p>
+</dd>
+<dt><code>Значения выражений</code></dt>
+<dd><p>Значение, доставляемое выражением, является результатом вычисления
+указанного выражения.  В случае ошибки (несовместимость режимов и тому
+подобное), вычисление выражения прерывается с соответствующим сообщением об
+ошибке.  Выражение может быть заключено в скобки, что приводит к
+вычислению этого выражения до любого другого, использующего результат
+выражения в скобках.  GDB поддерживает следующие операторы:
+</p>
+<dl compact="compact">
+<dt><code><code>OR, ORIF, XOR</code></code></dt>
+<dt><code><code>AND, ANDIF</code></code></dt>
+<dt><code><code>NOT</code></code></dt>
+<dd><p>Логические операторы, определенные на операндах булевого режима.
+</p>
+</dd>
+<dt><code><code>=, /=</code></code></dt>
+<dd><p>Операторы равенства и неравенства, определенные на всех режимах.
+</p>
+</dd>
+<dt><code><code>&gt;, &gt;=</code></code></dt>
+<dt><code><code>&lt;, &lt;=</code></code></dt>
+<dd><p>Операторы отношения, заданные на предопределенных режимах.
+</p>
+</dd>
+<dt><code><code>+, -</code></code></dt>
+<dt><code><code>*, /, MOD, REM</code></code></dt>
+<dd><p>Арифметические операторы, заданные на предопределенных режимах.
+</p>
+</dd>
+<dt><code><code>-</code></code></dt>
+<dd><p>Оператор изменения знака.
+</p>
+</dd>
+<dt><code><code>//</code></code></dt>
+<dd><p>Оператор соединения строк.
+</p>
+</dd>
+<dt><code><code>()</code></code></dt>
+<dd><p>Оператор повторения строки.
+</p>
+</dd>
+<dt><code><code>-&gt;</code></code></dt>
+<dd><p>Оператор ссылки местоположения, который может быть использован
+либо для получения адреса местоположения (<code>-&gt;loc</code>), или для
+разыменовывания ссылки местоположения (<code>loc-&gt;</code>).
+</p>
+</dd>
+<dt><code><code>OR, XOR</code></code></dt>
+<dt><code><code>AND</code></code></dt>
+<dt><code><code>NOT</code></code></dt>
+<dd><p>Операторы режимов powerset и строки битов.
+</p>
+</dd>
+<dt><code><code>&gt;, &gt;=</code></code></dt>
+<dt><code><code>&lt;, &lt;=</code></code></dt>
+<dd><p>Операторы включения режима powerset.
+</p>
+</dd>
+<dt><code><code>IN</code></code></dt>
+<dd><p>Оператор принадлежности.
+</p></dd>
+</dl>
+</dd>
+</dl>
+
+<div class="footnote">
+<hr>
+<h4 class="footnotes-heading">Footnotes</h4>
+
+<h5><a id="FOOT13" href="#DOCF13">(13)</a></h3>
+<p>Если, например, вызов процедуры используется в
+выражении, то эта процедура вызывается со всеми своими побочными
+эффектами.  При неаккуратном использовании это может привести к
+путанице.</p>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Proverka-diapazona-i-tipov-v-Chill.html" accesskey="n" rel="next">Проверка диапазона и типов в Chill</a>, Previous: <a href="Mestopolozheniya.html" accesskey="p" rel="prev">Местоположения</a>, Up: <a href="Chill.html" accesskey="u" rel="up">Chill</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

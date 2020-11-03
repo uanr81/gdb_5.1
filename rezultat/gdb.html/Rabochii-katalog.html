@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Рабочий каталог (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Рабочий каталог (Отладка с помощью GDB)">
+<meta name="keywords" content="Рабочий каталог (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Vypolnenie.html" rel="up" title="Выполнение">
+<link href="Vvod_002dvyvod.html" rel="next" title="Ввод-вывод">
+<link href="Sreda.html" rel="prev" title="Среда">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0420_0430_0431_043e_0447_0438_0439-_043a_0430_0442_0430_043b_043e_0433"></span><div class="header">
+<p>
+Next: <a href="Vvod_002dvyvod.html" accesskey="n" rel="next">Ввод-вывод</a>, Previous: <a href="Sreda.html" accesskey="p" rel="prev">Среда</a>, Up: <a href="Vypolnenie.html" accesskey="u" rel="up">Выполнение</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Rabochii-katalog-vashei-programmy"></span><h3 class="section">4.5 Рабочий каталог вашей программы</h3>
+
+<span id="index-rabochii-katalog-_0028vashei-programmy_0029"></span>
+<p>Каждый раз, когда вы запускаете свою программу командой <code>run</code>, она
+наследует рабочий каталог от текущего рабочего каталога
+GDB.  В начальный момент, рабочий каталог GDB
+наследуется от его родительского процесса (обычно оболочки), но вы
+можете задать новый рабочий каталог командой <code>cd</code> из GDB.
+</p>
+<p>Рабочий каталог GDB также служит каталогом по умолчанию для
+команд отладчика, определяющих действия с файлами.  See <a href="Faily.html">Команды для задания файлов</a>.
+</p>
+<dl compact="compact">
+<dd><span id="index-cd"></span>
+</dd>
+<dt><code>cd <var>каталог</var></code></dt>
+<dd><p>Установить рабочий каталог GDB в <var>каталог</var>.
+</p>
+<span id="index-pwd"></span>
+</dd>
+<dt><code>pwd</code></dt>
+<dd><p>Вывести рабочий каталог GDB.
+</p></dd>
+</dl>
+
+
+
+
+</body>
+</html>

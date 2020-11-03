@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Информация о точке останова (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Информация о точке останова (Отладка с помощью GDB)">
+<meta name="keywords" content="Информация о точке останова (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Primechaniya.html" rel="up" title="Примечания">
+<link href="Nedostovernostx.html" rel="next" title="Недостоверность">
+<link href="Oshibki.html" rel="prev" title="Ошибки">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0418_043d_0444_043e_0440_043c_0430_0446_0438_044f-_043e-_0442_043e_0447_043a_0435-_043e_0441_0442_0430_043d_043e_0432_0430"></span><div class="header">
+<p>
+Next: <a href="Nedostovernostx.html" accesskey="n" rel="next">Недостоверность</a>, Previous: <a href="Oshibki.html" accesskey="p" rel="prev">Ошибки</a>, Up: <a href="Primechaniya.html" accesskey="u" rel="up">Примечания</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Informaciya-o-tochke-ostanova"></span><h3 class="section">18.8 Информация о точке останова</h3>
+
+<span id="index-primechaniya-k-tochkam-ostanova"></span>
+<p>К выводу, производимому командой <code>info breakpoints</code>, делаются
+следующие примечания:
+</p>
+<span id="index-breakpoints_002dheaders"></span>
+<span id="index-breakpoints_002dtable"></span>
+<div class="example">
+<pre class="example">^Z^Zbreakpoints-headers
+<var>элемент-заголовка</var>
+^Z^Zbreakpoints-table
+</pre></div>
+
+<p>где <var>элемент-заголовка</var> имеет тот же синтаксис, что и элемент
+(смотрите ниже), но вместо данных он содержит строки, которые
+предназначены для разъяснения пользователю значений каждого поля.  Затем
+следует произвольное число элементов.  Если поле не подходит к этому
+элементу, оно опускается.  Поля могут содержать завершающие пропуски.
+Каждое поле состоит из:
+</p>
+<span id="index-record"></span>
+<span id="index-field"></span>
+<div class="example">
+<pre class="example">^Z^Zrecord
+^Z^Zfield 0
+<var>номер</var>
+^Z^Zfield 1
+<var>тип</var>
+^Z^Zfield 2
+<var>положение</var>
+^Z^Zfield 3
+<var>включена</var>
+^Z^Zfield 4
+<var>адрес</var>
+^Z^Zfield 5
+<var>что</var>
+^Z^Zfield 6
+<var>кадр</var>
+^Z^Zfield 7
+<var>условие</var>
+^Z^Zfield 8
+<var>счетчик-игнорирований</var>
+^Z^Zfield 9
+<var>команды</var>
+</pre></div>
+
+<p>Заметьте, что <var>адрес</var> предназначен для использования
+пользователем &mdash; синтаксис различается в зависимости от языка.
+</p>
+<p>Вывод заканчивается так:
+</p>
+<span id="index-breakpoints_002dtable_002dend"></span>
+<div class="example">
+<pre class="example">^Z^Zbreakpoints-table-end
+</pre></div>
+
+
+
+
+</body>
+</html>

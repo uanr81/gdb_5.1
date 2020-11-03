@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Сервер (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Сервер (Отладка с помощью GDB)">
+<meta name="keywords" content="Сервер (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Udalennyi.html" rel="up" title="Удаленный">
+<link href="NetWare.html" rel="next" title="NetWare">
+<link href="Protokol.html" rel="prev" title="Протокол">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0421_0435_0440_0432_0435_0440"></span><div class="header">
+<p>
+Next: <a href="NetWare.html" accesskey="n" rel="next">NetWare</a>, Previous: <a href="Protokol.html" accesskey="p" rel="prev">Протокол</a>, Up: <a href="Udalennyi.html" accesskey="u" rel="up">Удаленный</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Ispolxzovanie-programmy-gdbserver"></span><h4 class="subsubsection">13.4.1.5 Использование программы <code>gdbserver</code></h4>
+
+<span id="index-gdbserver"></span>
+<span id="index-udalennoe-soedinenie-bez-zaglushek"></span>
+<p><code>gdbserver</code> является управляющей программой для Unix-подобных
+систем, которая позволяет вам установить соединение вашей программы с
+удаленным GDB посредством <code>target remote</code>, но без
+компоновки с обычной отладочной заглушкой.
+</p>
+<p><code>gdbserver</code> не является полной заменой отладочных заглушек, потому что
+требует по существу тех же средств операционной системы, что и сам
+GDB.  Фактически, система, на которой может выполняться
+<code>gdbserver</code> для соединения с удаленным GDB, может также
+выполнять GDB локально!  Тем не менее, <code>gdbserver</code> иногда
+полезен, так как по размеру эта программа гораздо меньше, чем
+GDB.  <code>gdbserver</code> также легче переносить, чем
+весь GDB, так что вы сможете быстрее начать работать в новой системе,
+используя его.  Наконец, если вы разрабатываете программы для
+систем реального времени, вы можете обнаружить, что накладные расходы,
+связанные с операциями реального времени, делают более удобным
+проведение всей возможной разработки на другой системе, например, с помощью
+кросс-компиляции.  Вы можете использовать <code>gdbserver</code>, чтобы
+реализовать аналогичный выбор для отладки.
+</p>
+<p>GDB и <code>gdbserver</code> общаются или через последовательную
+линию, или через TCP-соединение, используя стандартный удаленный
+последовательный протокол GDB.
+</p>
+<dl compact="compact">
+<dt><em>На целевой машине</em></dt>
+<dd><p>вам необходимо иметь копию программы, которую вы хотите отладить.
+<code>gdbserver</code> не нуждается в таблице символов вашей программы, так
+что вы можете ее исключить, если необходимо сэкономить
+пространство.  Всю обработку символов осуществляет GDB на
+рабочей машине.
+</p>
+<p>Чтобы использовать сервер, вы должны сообщить ему, как взаимодействовать с
+GDB, имя вашей программы и ее аргументы.  Синтаксис следующий:
+</p>
+<div class="example">
+<pre class="example">target&gt; gdbserver <var>comm</var> <var>программа</var> [ <var>арг</var> &hellip; ]
+</pre></div>
+
+<p><var>comm</var> &mdash; это или имя устройства (для использования последовательной линии),
+или имя рабочей машины и номер порта TCP.  Например, для
+отладки Emacs с параметром &lsquo;<samp>foo.txt</samp>&rsquo; и взаимодействия с
+GDB через последовательный порт <samp>/dev/com1</samp>:
+</p>
+<div class="example">
+<pre class="example">target&gt; gdbserver /dev/com1 emacs foo.txt
+</pre></div>
+
+<p><code>gdbserver</code> пассивно ждет рабочего GDB для связи с ним.
+</p>
+<p>При использовании TCP-соединения вместо последовательной линии:
+</p>
+<div class="example">
+<pre class="example">target&gt; gdbserver host:2345 emacs foo.txt
+</pre></div>
+
+<p>Единственное отличие от предыдущего примера состоит в первом параметре,
+определяющем, что вы связываетесь с рабочим GDB через TCP.
+Параметр &lsquo;<samp>host:2345</samp>&rsquo; означает, что <code>gdbserver</code> должен ожидать
+TCP-соединение от машины &lsquo;<samp>host</samp>&rsquo; к локальному порту TCP 2345. (В
+настоящее время часть &lsquo;<samp>host</samp>&rsquo; игнорируется.)  Вы можете выбрать
+любой номер порта, какой захотите, если при этом он не конфликтует с
+какими-либо портами TCP, уже использующимися на целевой системе
+(например, <code>23</code> зарезервирован для <code>telnet</code>).<a id="DOCF15" href="#FOOT15"><sup>15</sup></a>  Вы
+должны использовать тот же номер порта с командой рабочего GDB
+<code>target remote</code>.
+</p>
+</dd>
+<dt><em>На рабочей машине GDB</em></dt>
+<dd><p>вам нужна копия вашей программы с символьными данными, так как
+GDB нужна информация о символах и отладочная информация.
+Запустите GDB как обычно, используя имя локальной копии вашей
+программы в качестве первого аргумента.  (Вам также может понадобиться
+ключ &lsquo;<samp><span class="nolinebreak">--baud</span></samp>&rsquo;<!-- /@w -->, если последовательная линия работает на скорости,
+отличной от 9600бит/сек.)  После этого, используйте <code>target remote</code>,
+чтобы установить связь с <code>gdbserver</code>.  Ее параметры &mdash; либо
+имя устройства (обычно последовательного устройства, такого как
+<samp>/dev/ttyb</samp>), либо дескриптор порта TCP в форме
+<code><var>машина</var>:<var>порт</var></code>.  Например:
+</p>
+<div class="example">
+<pre class="example">(gdb) target remote /dev/ttyb
+</pre></div>
+
+<p>взаимодействует с сервером через последовательную линию <samp>/dev/ttyb</samp>, а
+</p>
+<div class="example">
+<pre class="example">(gdb) target remote the-target:2345
+</pre></div>
+
+<p>взаимодействует через TCP-соединение с портом 2345 на рабочей машине
+<samp><span class="nolinebreak">the-target</span></samp><!-- /@w -->.  Для TCP-соединения, вы должны запустить
+<code>gdbserver</code> до использования команды <code>target remote</code>.  Иначе
+вы можете получить ошибку, текст которой зависит от рабочей системы, но
+обычно он выглядит примерно так: &lsquo;<samp>Connection refused</samp>&rsquo;.
+</p></dd>
+</dl>
+
+<div class="footnote">
+<hr>
+<h4 class="footnotes-heading">Footnotes</h4>
+
+<h5><a id="FOOT15" href="#DOCF15">(15)</a></h3>
+<p>Если вы
+выберете номер порта, который конфликтует с другим сервисом,
+<code>gdbserver</code> печатает сообщение об ошибке и завершает работу.</p>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="NetWare.html" accesskey="n" rel="next">NetWare</a>, Previous: <a href="Protokol.html" accesskey="p" rel="prev">Протокол</a>, Up: <a href="Udalennyi.html" accesskey="u" rel="up">Удаленный</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

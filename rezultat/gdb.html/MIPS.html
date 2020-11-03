@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>MIPS (Отладка с помощью GDB)</title>
+
+<meta name="description" content="MIPS (Отладка с помощью GDB)">
+<meta name="keywords" content="MIPS (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Arkhitektury.html" rel="up" title="Архитектуры">
+<link href="Upravlenie-GDB.html" rel="next" title="Управление GDB">
+<link href="Alpha.html" rel="prev" title="Alpha">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="MIPS"></span><div class="header">
+<p>
+Previous: <a href="Alpha.html" accesskey="p" rel="prev">Alpha</a>, Up: <a href="Arkhitektury.html" accesskey="u" rel="up">Архитектуры</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="MIPS-1"></span><h4 class="subsection">14.4.3 MIPS</h4>
+
+<span id="index-stek-na-Alpha"></span>
+<span id="index-stek-na-MIPS"></span>
+<span id="index-Alpha_002c-stek"></span>
+<span id="index-MIPS_002c-stek"></span>
+<p>Компьютеры, базирующиеся на архитектурах Alpha и MIPS, используют
+необычный кадр стека, который иногда требует от GDB поиска в
+объектном коде в обратном направлении, чтобы найти начало функции.
+</p>
+<span id="index-vremya-otveta_002c-otladka-MIPS"></span>
+<p>Чтобы сократить время ответа (особенно для встроенных приложений, где
+GDB может быть ограничен медленной последовательной линией для
+этого поиска), вы можете захотеть ограничить область поиска, используя
+одну из этих команд:
+</p>
+<dl compact="compact">
+<dd><span id="index-heuristic_002dfence_002dpost-_0028Alpha_002c-MIPS_0029"></span>
+</dd>
+<dt><code>set heuristic-fence-post <var>предел</var></code></dt>
+<dd><p>Ограничить GDB для исследования не более <var>предела</var> байт при
+поиске начала функции.  Значение <var>0</var> (по умолчанию) означает
+неограниченный поиск.  Однако, исключая <var>0</var>, чем больше предел, тем
+больше байт <code>heuristic-fence-post</code> должен просмотреть, и,
+следовательно, тем дольше он будет выполняться.
+</p>
+</dd>
+<dt><code>show heuristic-fence-post</code></dt>
+<dd><p>Отобразить текущее значение данного предела.
+</p></dd>
+</dl>
+
+<p>Эти команды доступны, <em>только</em> когда GDB сконфигурирован
+для отладки программ на процессорах Alpha или MIPS.
+</p>
+
+
+
+
+</body>
+</html>

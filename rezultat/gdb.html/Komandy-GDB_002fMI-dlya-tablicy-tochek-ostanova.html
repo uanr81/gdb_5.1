@@ -1,0 +1,581 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Команды GDB/MI для таблицы точек останова (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Команды GDB/MI для таблицы точек останова (Отладка с помощью GDB)">
+<meta name="keywords" content="Команды GDB/MI для таблицы точек останова (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="GDB_002fMI.html" rel="up" title="GDB/MI">
+<link href="Upravlenie-dannymi-GDB_002fMI.html" rel="next" title="Управление данными GDB/MI">
+<link href="Format-opisaniya-komand-GDB_002fMI.html" rel="prev" title="Формат описания команд GDB/MI">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_041a_043e_043c_0430_043d_0434_044b-GDB_002fMI-_0434_043b_044f-_0442_0430_0431_043b_0438_0446_044b-_0442_043e_0447_0435_043a-_043e_0441_0442_0430_043d_043e_0432_0430"></span><div class="header">
+<p>
+Next: <a href="Upravlenie-dannymi-GDB_002fMI.html" accesskey="n" rel="next">Управление данными GDB/MI</a>, Previous: <a href="Format-opisaniya-komand-GDB_002fMI.html" accesskey="p" rel="prev">Формат описания команд GDB/MI</a>, Up: <a href="GDB_002fMI.html" accesskey="u" rel="up">GDB/MI</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Komandy-GDB_002fMI-dlya-tablicy-tochek-ostanova"></span><h3 class="section">19.5 Команды <small>GDB/MI</small> для таблицы точек останова</h3>
+
+<span id="index-komandy-tochki-ostanova-dlya-GDB_002fMI"></span>
+<span id="index-GDB_002fMI_002c-komandy-tochki-ostanova"></span>
+<p>Этот раздел описывает команды <small>GDB/MI</small> для управления точками
+останова.
+</p>
+<span id="Komanda-_002dbreak_002dafter"></span><h4 class="subheading">Команда <code>-break-after</code></h4>
+<span id="index-_002dbreak_002dafter"></span>
+
+<span id="Kratkoe-opisanie-1"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -break-after <var>номер</var> <var>число</var>
+</pre></div>
+
+<p>Точка останова с номером <var>номер</var> не срабатывает, пока она не будет
+достигнута <var>число</var> раз.  Чтобы увидеть, как это отражается на выводе
+команды &lsquo;<samp>-break-list</samp>&rsquo;, смотрите ниже описание команды
+&lsquo;<samp>-break-list</samp>&rsquo;.
+</p>
+<span id="Komanda-GDB-1"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>ignore</samp>&rsquo;.
+</p>
+<span id="Primer-1"></span><h4 class="subsubheading">Пример</h4>
+
+<div class="example">
+<pre class="example">(gdb)
+-break-insert main
+^done,bkpt={number=&quot;1&quot;,addr=&quot;0x000100d0&quot;,file=&quot;hello.c&quot;,line=&quot;5&quot;}
+(gdb)
+-break-after 1 3
+~
+^done
+(gdb)
+-break-list
+^done,BreakpointTable={nr_rows=&quot;1&quot;,nr_cols=&quot;6&quot;,
+hdr=[{width=&quot;3&quot;,alignment=&quot;-1&quot;,col_name=&quot;number&quot;,colhdr=&quot;Num&quot;},
+{width=&quot;14&quot;,alignment=&quot;-1&quot;,col_name=&quot;type&quot;,colhdr=&quot;Type&quot;},
+{width=&quot;4&quot;,alignment=&quot;-1&quot;,col_name=&quot;disp&quot;,colhdr=&quot;Disp&quot;},
+{width=&quot;3&quot;,alignment=&quot;-1&quot;,col_name=&quot;enabled&quot;,colhdr=&quot;Enb&quot;},
+{width=&quot;10&quot;,alignment=&quot;-1&quot;,col_name=&quot;addr&quot;,colhdr=&quot;Address&quot;},
+{width=&quot;40&quot;,alignment=&quot;2&quot;,col_name=&quot;what&quot;,colhdr=&quot;What&quot;}],
+body=[bkpt={number=&quot;1&quot;,type=&quot;breakpoint&quot;,disp=&quot;keep&quot;,enabled=&quot;y&quot;,
+addr=&quot;0x000100d0&quot;,func=&quot;main&quot;,file=&quot;hello.c&quot;,line=&quot;5&quot;,times=&quot;0&quot;,
+ignore=&quot;3&quot;}]}
+(gdb)
+</pre></div>
+
+
+
+<span id="Komanda-_002dbreak_002dcondition"></span><h4 class="subheading">Команда <code>-break-condition</code></h4>
+<span id="index-_002dbreak_002dcondition"></span>
+
+<span id="Kratkoe-opisanie-2"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -break-condition <var>номер</var> <var>выраж</var>
+</pre></div>
+
+<p>Точка останова <var>номер</var> остановит программу, только если условие
+<var>выраж</var> истинно.  Условие становится частью вывода &lsquo;<samp>-break-list</samp>&rsquo;
+(смотрите ниже описание команды &lsquo;<samp>-break-list</samp>&rsquo;).
+</p>
+<span id="Komanda-GDB-2"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>condition</samp>&rsquo;.
+</p>
+<span id="Primer-2"></span><h4 class="subsubheading">Пример</h4>
+
+<div class="example">
+<pre class="example">(gdb)
+-break-condition 1 1
+^done
+(gdb)
+-break-list
+^done,BreakpointTable={nr_rows=&quot;1&quot;,nr_cols=&quot;6&quot;,
+hdr=[{width=&quot;3&quot;,alignment=&quot;-1&quot;,col_name=&quot;number&quot;,colhdr=&quot;Num&quot;},
+{width=&quot;14&quot;,alignment=&quot;-1&quot;,col_name=&quot;type&quot;,colhdr=&quot;Type&quot;},
+{width=&quot;4&quot;,alignment=&quot;-1&quot;,col_name=&quot;disp&quot;,colhdr=&quot;Disp&quot;},
+{width=&quot;3&quot;,alignment=&quot;-1&quot;,col_name=&quot;enabled&quot;,colhdr=&quot;Enb&quot;},
+{width=&quot;10&quot;,alignment=&quot;-1&quot;,col_name=&quot;addr&quot;,colhdr=&quot;Address&quot;},
+{width=&quot;40&quot;,alignment=&quot;2&quot;,col_name=&quot;what&quot;,colhdr=&quot;What&quot;}],
+body=[bkpt={number=&quot;1&quot;,type=&quot;breakpoint&quot;,disp=&quot;keep&quot;,enabled=&quot;y&quot;,
+addr=&quot;0x000100d0&quot;,func=&quot;main&quot;,file=&quot;hello.c&quot;,line=&quot;5&quot;,cond=&quot;1&quot;,
+times=&quot;0&quot;,ignore=&quot;3&quot;}]}
+(gdb)
+</pre></div>
+
+<span id="Komanda-_002dbreak_002ddelete"></span><h4 class="subheading">Команда <code>-break-delete</code></h4>
+<span id="index-_002dbreak_002ddelete"></span>
+
+<span id="Kratkoe-opisanie-3"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -break-delete ( <var>точка-останова</var> )+
+</pre></div>
+
+<p>Удалить точки останова, чьи номера указаны в списке аргументов.  Это
+очевидным образом отражается на списке точек останова.
+</p>
+<span id="Komanda-GDB-3"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>delete</samp>&rsquo;.
+</p>
+<span id="Primer-3"></span><h4 class="subsubheading">Пример</h4>
+
+<div class="example">
+<pre class="example">(gdb)
+-break-delete 1
+^done
+(gdb)
+-break-list
+^done,BreakpointTable={nr_rows=&quot;0&quot;,nr_cols=&quot;6&quot;,
+hdr=[{width=&quot;3&quot;,alignment=&quot;-1&quot;,col_name=&quot;number&quot;,colhdr=&quot;Num&quot;},
+{width=&quot;14&quot;,alignment=&quot;-1&quot;,col_name=&quot;type&quot;,colhdr=&quot;Type&quot;},
+{width=&quot;4&quot;,alignment=&quot;-1&quot;,col_name=&quot;disp&quot;,colhdr=&quot;Disp&quot;},
+{width=&quot;3&quot;,alignment=&quot;-1&quot;,col_name=&quot;enabled&quot;,colhdr=&quot;Enb&quot;},
+{width=&quot;10&quot;,alignment=&quot;-1&quot;,col_name=&quot;addr&quot;,colhdr=&quot;Address&quot;},
+{width=&quot;40&quot;,alignment=&quot;2&quot;,col_name=&quot;what&quot;,colhdr=&quot;What&quot;}],
+body=[]}
+(gdb)
+</pre></div>
+
+<span id="Komanda-_002dbreak_002ddisable"></span><h4 class="subheading">Команда <code>-break-disable</code></h4>
+<span id="index-_002dbreak_002ddisable"></span>
+
+<span id="Kratkoe-opisanie-4"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -break-disable ( <var>точка-останова</var> )+
+</pre></div>
+
+<p>Отключить перечисленные <var>точки-останова</var>.  Для указанных
+<var>точек-останова</var> поле &lsquo;<samp>enabled</samp>&rsquo; в списке точек останова
+теперь установлено в &lsquo;<samp>n</samp>&rsquo;.
+</p>
+<span id="Komanda-GDB-4"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>disable</samp>&rsquo;.
+</p>
+<span id="Primer-4"></span><h4 class="subsubheading">Пример</h4>
+
+<div class="example">
+<pre class="example">(gdb)
+-break-disable 2
+^done
+(gdb)
+-break-list
+^done,BreakpointTable={nr_rows=&quot;1&quot;,nr_cols=&quot;6&quot;,
+hdr=[{width=&quot;3&quot;,alignment=&quot;-1&quot;,col_name=&quot;number&quot;,colhdr=&quot;Num&quot;},
+{width=&quot;14&quot;,alignment=&quot;-1&quot;,col_name=&quot;type&quot;,colhdr=&quot;Type&quot;},
+{width=&quot;4&quot;,alignment=&quot;-1&quot;,col_name=&quot;disp&quot;,colhdr=&quot;Disp&quot;},
+{width=&quot;3&quot;,alignment=&quot;-1&quot;,col_name=&quot;enabled&quot;,colhdr=&quot;Enb&quot;},
+{width=&quot;10&quot;,alignment=&quot;-1&quot;,col_name=&quot;addr&quot;,colhdr=&quot;Address&quot;},
+{width=&quot;40&quot;,alignment=&quot;2&quot;,col_name=&quot;what&quot;,colhdr=&quot;What&quot;}],
+body=[bkpt={number=&quot;2&quot;,type=&quot;breakpoint&quot;,disp=&quot;keep&quot;,enabled=&quot;n&quot;,
+addr=&quot;0x000100d0&quot;,func=&quot;main&quot;,file=&quot;hello.c&quot;,line=&quot;5&quot;,times=&quot;0&quot;}]}
+(gdb)
+</pre></div>
+
+<span id="Komanda-_002dbreak_002denable"></span><h4 class="subheading">Команда <code>-break-enable</code></h4>
+<span id="index-_002dbreak_002denable"></span>
+
+<span id="Kratkoe-opisanie-5"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -break-enable ( <var>точка-останова</var> )+
+</pre></div>
+
+<p>Включить (ранее отключенные) <var>точки-останова</var>.
+</p>
+<span id="Komanda-GDB-5"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>enable</samp>&rsquo;.
+</p>
+<span id="Primer-5"></span><h4 class="subsubheading">Пример</h4>
+
+<div class="example">
+<pre class="example">(gdb)
+-break-enable 2
+^done
+(gdb)
+-break-list
+^done,BreakpointTable={nr_rows=&quot;1&quot;,nr_cols=&quot;6&quot;,
+hdr=[{width=&quot;3&quot;,alignment=&quot;-1&quot;,col_name=&quot;number&quot;,colhdr=&quot;Num&quot;},
+{width=&quot;14&quot;,alignment=&quot;-1&quot;,col_name=&quot;type&quot;,colhdr=&quot;Type&quot;},
+{width=&quot;4&quot;,alignment=&quot;-1&quot;,col_name=&quot;disp&quot;,colhdr=&quot;Disp&quot;},
+{width=&quot;3&quot;,alignment=&quot;-1&quot;,col_name=&quot;enabled&quot;,colhdr=&quot;Enb&quot;},
+{width=&quot;10&quot;,alignment=&quot;-1&quot;,col_name=&quot;addr&quot;,colhdr=&quot;Address&quot;},
+{width=&quot;40&quot;,alignment=&quot;2&quot;,col_name=&quot;what&quot;,colhdr=&quot;What&quot;}],
+body=[bkpt={number=&quot;2&quot;,type=&quot;breakpoint&quot;,disp=&quot;keep&quot;,enabled=&quot;y&quot;,
+addr=&quot;0x000100d0&quot;,func=&quot;main&quot;,file=&quot;hello.c&quot;,line=&quot;5&quot;,times=&quot;0&quot;}]}
+(gdb)
+</pre></div>
+
+<span id="Komanda-_002dbreak_002dinfo"></span><h4 class="subheading">Команда <code>-break-info</code></h4>
+<span id="index-_002dbreak_002dinfo"></span>
+
+<span id="Kratkoe-opisanie-6"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -break-info <var>точка-останова</var>
+</pre></div>
+
+<p>Получить информацию об одной точке останова.
+</p>
+<span id="Komanda-GDB-6"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>info break
+<var>точка-останова</var></samp>&rsquo;.
+</p>
+<span id="Primer-6"></span><h4 class="subsubheading">Пример</h4>
+<p>Н.П.
+</p>
+<span id="Komanda-_002dbreak_002dinsert"></span><h4 class="subheading">Команда <code>-break-insert</code></h4>
+<span id="index-_002dbreak_002dinsert"></span>
+
+<span id="Kratkoe-opisanie-7"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -break-insert [ -t ] [ -h ] [ -r ]
+    [ -c <var>условие</var> ] [ -i <var>счетчик-игнорирований</var> ]
+    [ -p <var>нить</var> ] [ <var>строка</var> | <var>адрес</var> ]
+</pre></div>
+
+<p><var>Строка</var>, если указана, может быть одной из:
+</p>
+<ul>
+<li> функция
+</li><li> имя-файла:номер-строки
+</li><li> имя-файла:функция
+</li><li> *адрес
+</li></ul>
+
+<p>Вот возможные необязательные параметры этой команды:
+</p>
+<dl compact="compact">
+<dt>&lsquo;<samp>-t</samp>&rsquo;</dt>
+<dd><p>Вставить временную точку останова.
+</p></dd>
+<dt>&lsquo;<samp>-h</samp>&rsquo;</dt>
+<dd><p>Вставить аппаратную точку останова.
+</p></dd>
+<dt>&lsquo;<samp>-c <var>условие</var></samp>&rsquo;</dt>
+<dd><p>Сделать точку останова условной с заданным <var>условием</var>.
+</p></dd>
+<dt>&lsquo;<samp>-i <var>счетчик-игнорирований</var></samp>&rsquo;</dt>
+<dd><p>Инициализировать <var>счетчик-игнорирований</var>.
+</p></dd>
+<dt>&lsquo;<samp>-r</samp>&rsquo;</dt>
+<dd><p>Вставить обычную точку останова во всех функциях, чьи имена
+удовлетворяют данному регулярному выражению.  Другие флаги к регулярному
+выражению неприменимы.
+</p></dd>
+</dl>
+
+<span id="Rezulxtat-1"></span><h4 class="subsubheading">Результат</h4>
+
+<p>Результат имеет форму:
+</p>
+<div class="example">
+<pre class="example"> ^done,bkptno=&quot;<var>номер</var>&quot;,func=&quot;<var>имя-функции</var>&quot;,
+  file=&quot;<var>имя-файла</var>&quot;,line=&quot;<var>ном-строки</var>&quot;
+</pre></div>
+
+<p>где <var>номер</var> является номером этой точки останова в GDB,
+<var>имя-функции</var> &mdash; имя функции, в которой была вставлена точка
+останова, <var>имя-файла</var> &mdash; имя исходного файла, в котором находится эта
+функция, а <var>ном-строки</var> является номером строки исходного текста в
+этом файле.
+</p>
+<p>Замечание: этот формат может изменяться.
+</p>
+<span id="Komanda-GDB-7"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующими командами GDB являются &lsquo;<samp>break</samp>&rsquo;,
+&lsquo;<samp>tbreak</samp>&rsquo;, &lsquo;<samp>hbreak</samp>&rsquo;, &lsquo;<samp>thbreak</samp>&rsquo; и &lsquo;<samp>rbreak</samp>&rsquo;.
+</p>
+<span id="Primer-7"></span><h4 class="subsubheading">Пример</h4>
+
+<div class="example">
+<pre class="example">(gdb)
+-break-insert main
+^done,bkpt={number=&quot;1&quot;,addr=&quot;0x0001072c&quot;,file=&quot;recursive2.c&quot;,line=&quot;4&quot;}
+(gdb)
+-break-insert -t foo
+^done,bkpt={number=&quot;2&quot;,addr=&quot;0x00010774&quot;,file=&quot;recursive2.c&quot;,line=&quot;11&quot;}
+(gdb)
+-break-list
+^done,BreakpointTable={nr_rows=&quot;2&quot;,nr_cols=&quot;6&quot;,
+hdr=[{width=&quot;3&quot;,alignment=&quot;-1&quot;,col_name=&quot;number&quot;,colhdr=&quot;Num&quot;},
+{width=&quot;14&quot;,alignment=&quot;-1&quot;,col_name=&quot;type&quot;,colhdr=&quot;Type&quot;},
+{width=&quot;4&quot;,alignment=&quot;-1&quot;,col_name=&quot;disp&quot;,colhdr=&quot;Disp&quot;},
+{width=&quot;3&quot;,alignment=&quot;-1&quot;,col_name=&quot;enabled&quot;,colhdr=&quot;Enb&quot;},
+{width=&quot;10&quot;,alignment=&quot;-1&quot;,col_name=&quot;addr&quot;,colhdr=&quot;Address&quot;},
+{width=&quot;40&quot;,alignment=&quot;2&quot;,col_name=&quot;what&quot;,colhdr=&quot;What&quot;}],
+body=[bkpt={number=&quot;1&quot;,type=&quot;breakpoint&quot;,disp=&quot;keep&quot;,enabled=&quot;y&quot;,
+addr=&quot;0x0001072c&quot;, func=&quot;main&quot;,file=&quot;recursive2.c&quot;,line=&quot;4&quot;,times=&quot;0&quot;},
+bkpt={number=&quot;2&quot;,type=&quot;breakpoint&quot;,disp=&quot;del&quot;,enabled=&quot;y&quot;,
+addr=&quot;0x00010774&quot;,func=&quot;foo&quot;,file=&quot;recursive2.c&quot;,line=&quot;11&quot;,times=&quot;0&quot;}]}
+(gdb)
+-break-insert -r foo.*
+~int foo(int, int);
+^done,bkpt={number=&quot;3&quot;,addr=&quot;0x00010774&quot;,file=&quot;recursive2.c&quot;,line=&quot;11&quot;}
+(gdb)
+</pre></div>
+
+<span id="Komanda-_002dbreak_002dlist"></span><h4 class="subheading">Команда <code>-break-list</code></h4>
+<span id="index-_002dbreak_002dlist"></span>
+
+<span id="Kratkoe-opisanie-8"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -break-list
+</pre></div>
+
+<p>Отображает список установленных точек останова, показывая следующие
+поля:
+</p>
+<dl compact="compact">
+<dt>&lsquo;<samp>Number</samp>&rsquo;</dt>
+<dd><p>номер точки останова
+</p></dd>
+<dt>&lsquo;<samp>Type</samp>&rsquo;</dt>
+<dd><p>тип точки останова: &lsquo;<samp>breakpoint</samp>&rsquo; или &lsquo;<samp>watchpoint</samp>&rsquo;
+</p></dd>
+<dt>&lsquo;<samp>Disposition</samp>&rsquo;</dt>
+<dd><p>эта точка останова должна быть удалена или отключена при срабатывании:
+&lsquo;<samp>keep</samp>&rsquo; или &lsquo;<samp>nokeep</samp>&rsquo;
+</p></dd>
+<dt>&lsquo;<samp>Enabled</samp>&rsquo;</dt>
+<dd><p>включена точка останова или нет: &lsquo;<samp>y</samp>&rsquo; или &lsquo;<samp>n</samp>&rsquo;
+</p></dd>
+<dt>&lsquo;<samp>Address</samp>&rsquo;</dt>
+<dd><p>местоположение в памяти, где установлена точка останова
+</p></dd>
+<dt>&lsquo;<samp>What</samp>&rsquo;</dt>
+<dd><p>логическое положение точки останова, выраженное именем функции, именем
+файла, номером строки
+</p></dd>
+<dt>&lsquo;<samp>Times</samp>&rsquo;</dt>
+<dd><p>Число раз, которое точка останова срабатывала
+</p></dd>
+</dl>
+
+<p>Если точек останова или наблюдения нет, поле <code>body</code>
+<code>BreakpointTable</code> является пустым списком.
+</p>
+<span id="Komanda-GDB-8"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>info break</samp>&rsquo;.
+</p>
+<span id="Primer-8"></span><h4 class="subsubheading">Пример</h4>
+
+<div class="example">
+<pre class="example">(gdb)
+-break-list
+^done,BreakpointTable={nr_rows=&quot;2&quot;,nr_cols=&quot;6&quot;,
+hdr=[{width=&quot;3&quot;,alignment=&quot;-1&quot;,col_name=&quot;number&quot;,colhdr=&quot;Num&quot;},
+{width=&quot;14&quot;,alignment=&quot;-1&quot;,col_name=&quot;type&quot;,colhdr=&quot;Type&quot;},
+{width=&quot;4&quot;,alignment=&quot;-1&quot;,col_name=&quot;disp&quot;,colhdr=&quot;Disp&quot;},
+{width=&quot;3&quot;,alignment=&quot;-1&quot;,col_name=&quot;enabled&quot;,colhdr=&quot;Enb&quot;},
+{width=&quot;10&quot;,alignment=&quot;-1&quot;,col_name=&quot;addr&quot;,colhdr=&quot;Address&quot;},
+{width=&quot;40&quot;,alignment=&quot;2&quot;,col_name=&quot;what&quot;,colhdr=&quot;What&quot;}],
+body=[bkpt={number=&quot;1&quot;,type=&quot;breakpoint&quot;,disp=&quot;keep&quot;,enabled=&quot;y&quot;,
+addr=&quot;0x000100d0&quot;,func=&quot;main&quot;,file=&quot;hello.c&quot;,line=&quot;5&quot;,times=&quot;0&quot;},
+bkpt={number=&quot;2&quot;,type=&quot;breakpoint&quot;,disp=&quot;keep&quot;,enabled=&quot;y&quot;,
+addr=&quot;0x00010114&quot;,func=&quot;foo&quot;,file=&quot;hello.c&quot;,line=&quot;13&quot;,times=&quot;0&quot;}]}
+(gdb)
+</pre></div>
+
+<p>Вот пример результата, когда точек останова нет:
+</p>
+<div class="example">
+<pre class="example">(gdb)
+-break-list
+^done,BreakpointTable={nr_rows=&quot;0&quot;,nr_cols=&quot;6&quot;,
+hdr=[{width=&quot;3&quot;,alignment=&quot;-1&quot;,col_name=&quot;number&quot;,colhdr=&quot;Num&quot;},
+{width=&quot;14&quot;,alignment=&quot;-1&quot;,col_name=&quot;type&quot;,colhdr=&quot;Type&quot;},
+{width=&quot;4&quot;,alignment=&quot;-1&quot;,col_name=&quot;disp&quot;,colhdr=&quot;Disp&quot;},
+{width=&quot;3&quot;,alignment=&quot;-1&quot;,col_name=&quot;enabled&quot;,colhdr=&quot;Enb&quot;},
+{width=&quot;10&quot;,alignment=&quot;-1&quot;,col_name=&quot;addr&quot;,colhdr=&quot;Address&quot;},
+{width=&quot;40&quot;,alignment=&quot;2&quot;,col_name=&quot;what&quot;,colhdr=&quot;What&quot;}],
+body=[]}
+(gdb)
+</pre></div>
+
+<span id="Komanda-_002dbreak_002dwatch"></span><h4 class="subheading">Команда <code>-break-watch</code></h4>
+<span id="index-_002dbreak_002dwatch"></span>
+
+<span id="Kratkoe-opisanie-9"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -break-watch [ -a | -r ]
+</pre></div>
+
+<p>Создать точку наблюдения.  С ключом &lsquo;<samp>-a</samp>&rsquo; будет создана точка
+наблюдения за <em>доступом</em>, то есть такая точка наблюдения, которая
+срабатывает либо при чтении, либо при записи в определенное
+местоположение в памяти.  С ключом &lsquo;<samp>-r</samp>&rsquo; созданная точка наблюдения
+будет точкой наблюдения за <em>чтением</em>, то есть она будет срабатывать,
+только когда к определенному местоположению в памяти осуществляется доступ на
+чтение.  Без этих ключей будет создана обычная точка наблюдения, то есть
+она будет срабатывать, когда к местоположению в памяти осуществляется
+доступ для записи.
+See <a href="Ustanovka-tochek-nabliudeniya.html">Установка точек наблюдения</a>.
+</p>
+<p>Заметьте, что &lsquo;<samp>-break-list</samp>&rsquo; выдаст единый список установленных
+точек наблюдения и останова.
+</p>
+<span id="Komada-GDB"></span><h4 class="subsubheading">Комада GDB</h4>
+
+<p>Соответствующими командами GDB являются &lsquo;<samp>watch</samp>&rsquo;,
+&lsquo;<samp>awatch</samp>&rsquo; и &lsquo;<samp>rwatch</samp>&rsquo;.
+</p>
+<span id="Primer-9"></span><h4 class="subsubheading">Пример</h4>
+
+<p>Установка точки наблюдения за переменной в функции <code>main</code>:
+</p>
+<div class="example">
+<pre class="example">(gdb)
+-break-watch x
+^done,wpt={number=&quot;2&quot;,exp=&quot;x&quot;}
+(gdb)
+-exec-continue
+^running
+^done,reason=&quot;watchpoint-trigger&quot;,wpt={number=&quot;2&quot;,exp=&quot;x&quot;},
+value={old=&quot;-268439212&quot;,new=&quot;55&quot;},
+frame={func=&quot;main&quot;,args=[],file=&quot;recursive2.c&quot;,line=&quot;5&quot;}
+(gdb)
+</pre></div>
+
+<p>Установка точки наблюдения за локальной переменной функции.
+GDB дважды остановит выполнение программы: сначала при
+изменении значения переменной, затем при выходе точки наблюдения из
+области видимости.
+</p>
+<div class="example">
+<pre class="example">(gdb)
+-break-watch C
+^done,wpt={number=&quot;5&quot;,exp=&quot;C&quot;}
+(gdb)
+-exec-continue
+^running
+^done,reason=&quot;watchpoint-trigger&quot;,
+wpt={number=&quot;5&quot;,exp=&quot;C&quot;},value={old=&quot;-276895068&quot;,new=&quot;3&quot;},
+frame={func=&quot;callee4&quot;,args=[],
+file=&quot;../../../devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot;13&quot;}
+(gdb)
+-exec-continue
+^running
+^done,reason=&quot;watchpoint-scope&quot;,wpnum=&quot;5&quot;,
+frame={func=&quot;callee3&quot;,args=[{name=&quot;strarg&quot;,
+value=&quot;0x11940 \&quot;A string argument.\&quot;&quot;}],
+file=&quot;../../../devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot;18&quot;}
+(gdb)
+</pre></div>
+
+<p>Получение списка точек останова и наблюдения в разных местах выполнения
+программы.  Заметьте, что как только точка наблюдения выходит из области
+видимости, она удаляется.
+</p>
+<div class="example">
+<pre class="example">(gdb)
+-break-watch C
+^done,wpt={number=&quot;2&quot;,exp=&quot;C&quot;}
+(gdb)
+-break-list
+^done,BreakpointTable={nr_rows=&quot;2&quot;,nr_cols=&quot;6&quot;,
+hdr=[{width=&quot;3&quot;,alignment=&quot;-1&quot;,col_name=&quot;number&quot;,colhdr=&quot;Num&quot;},
+{width=&quot;14&quot;,alignment=&quot;-1&quot;,col_name=&quot;type&quot;,colhdr=&quot;Type&quot;},
+{width=&quot;4&quot;,alignment=&quot;-1&quot;,col_name=&quot;disp&quot;,colhdr=&quot;Disp&quot;},
+{width=&quot;3&quot;,alignment=&quot;-1&quot;,col_name=&quot;enabled&quot;,colhdr=&quot;Enb&quot;},
+{width=&quot;10&quot;,alignment=&quot;-1&quot;,col_name=&quot;addr&quot;,colhdr=&quot;Address&quot;},
+{width=&quot;40&quot;,alignment=&quot;2&quot;,col_name=&quot;what&quot;,colhdr=&quot;What&quot;}],
+body=[bkpt={number=&quot;1&quot;,type=&quot;breakpoint&quot;,disp=&quot;keep&quot;,enabled=&quot;y&quot;,
+addr=&quot;0x00010734&quot;,func=&quot;callee4&quot;,
+file=&quot;../../../devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot;8&quot;,times=&quot;1&quot;},
+bkpt={number=&quot;2&quot;,type=&quot;watchpoint&quot;,disp=&quot;keep&quot;,
+enabled=&quot;y&quot;,addr=&quot;&quot;,what=&quot;C&quot;,times=&quot;0&quot;}]}
+(gdb)
+-exec-continue
+^running
+^done,reason=&quot;watchpoint-trigger&quot;,wpt={number=&quot;2&quot;,exp=&quot;C&quot;},
+value={old=&quot;-276895068&quot;,new=&quot;3&quot;},
+frame={func=&quot;callee4&quot;,args=[],
+file=&quot;../../../devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot;13&quot;}
+(gdb)
+-break-list
+^done,BreakpointTable={nr_rows=&quot;2&quot;,nr_cols=&quot;6&quot;,
+hdr=[{width=&quot;3&quot;,alignment=&quot;-1&quot;,col_name=&quot;number&quot;,colhdr=&quot;Num&quot;},
+{width=&quot;14&quot;,alignment=&quot;-1&quot;,col_name=&quot;type&quot;,colhdr=&quot;Type&quot;},
+{width=&quot;4&quot;,alignment=&quot;-1&quot;,col_name=&quot;disp&quot;,colhdr=&quot;Disp&quot;},
+{width=&quot;3&quot;,alignment=&quot;-1&quot;,col_name=&quot;enabled&quot;,colhdr=&quot;Enb&quot;},
+{width=&quot;10&quot;,alignment=&quot;-1&quot;,col_name=&quot;addr&quot;,colhdr=&quot;Address&quot;},
+{width=&quot;40&quot;,alignment=&quot;2&quot;,col_name=&quot;what&quot;,colhdr=&quot;What&quot;}],
+body=[bkpt={number=&quot;1&quot;,type=&quot;breakpoint&quot;,disp=&quot;keep&quot;,enabled=&quot;y&quot;,
+addr=&quot;0x00010734&quot;,func=&quot;callee4&quot;,
+file=&quot;../../../devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot;8&quot;,times=&quot;1&quot;},
+bkpt={number=&quot;2&quot;,type=&quot;watchpoint&quot;,disp=&quot;keep&quot;,
+enabled=&quot;y&quot;,addr=&quot;&quot;,what=&quot;C&quot;,times=&quot;-5&quot;}]}
+(gdb)
+-exec-continue
+^running
+^done,reason=&quot;watchpoint-scope&quot;,wpnum=&quot;2&quot;,
+frame={func=&quot;callee3&quot;,args=[{name=&quot;strarg&quot;,
+value=&quot;0x11940 \&quot;A string argument.\&quot;&quot;}],
+file=&quot;../../../devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot;18&quot;}
+(gdb)
+-break-list
+^done,BreakpointTable={nr_rows=&quot;1&quot;,nr_cols=&quot;6&quot;,
+hdr=[{width=&quot;3&quot;,alignment=&quot;-1&quot;,col_name=&quot;number&quot;,colhdr=&quot;Num&quot;},
+{width=&quot;14&quot;,alignment=&quot;-1&quot;,col_name=&quot;type&quot;,colhdr=&quot;Type&quot;},
+{width=&quot;4&quot;,alignment=&quot;-1&quot;,col_name=&quot;disp&quot;,colhdr=&quot;Disp&quot;},
+{width=&quot;3&quot;,alignment=&quot;-1&quot;,col_name=&quot;enabled&quot;,colhdr=&quot;Enb&quot;},
+{width=&quot;10&quot;,alignment=&quot;-1&quot;,col_name=&quot;addr&quot;,colhdr=&quot;Address&quot;},
+{width=&quot;40&quot;,alignment=&quot;2&quot;,col_name=&quot;what&quot;,colhdr=&quot;What&quot;}],
+body=[bkpt={number=&quot;1&quot;,type=&quot;breakpoint&quot;,disp=&quot;keep&quot;,enabled=&quot;y&quot;,
+addr=&quot;0x00010734&quot;,func=&quot;callee4&quot;,
+file=&quot;../../../devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot;8&quot;,times=&quot;1&quot;}]}
+(gdb)
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Upravlenie-dannymi-GDB_002fMI.html" accesskey="n" rel="next">Управление данными GDB/MI</a>, Previous: <a href="Format-opisaniya-komand-GDB_002fMI.html" accesskey="p" rel="prev">Формат описания команд GDB/MI</a>, Up: <a href="GDB_002fMI.html" accesskey="u" rel="up">GDB/MI</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

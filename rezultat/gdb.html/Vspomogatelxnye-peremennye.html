@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Вспомогательные переменные (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Вспомогательные переменные (Отладка с помощью GDB)">
+<meta name="keywords" content="Вспомогательные переменные (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Dannye.html" rel="up" title="Данные">
+<link href="Registry.html" rel="next" title="Регистры">
+<link href="Istoriya-znachenii.html" rel="prev" title="История значений">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0412_0441_043f_043e_043c_043e_0433_0430_0442_0435_043b_044c_043d_044b_0435-_043f_0435_0440_0435_043c_0435_043d_043d_044b_0435"></span><div class="header">
+<p>
+Next: <a href="Registry.html" accesskey="n" rel="next">Регистры</a>, Previous: <a href="Istoriya-znachenii.html" accesskey="p" rel="prev">История значений</a>, Up: <a href="Dannye.html" accesskey="u" rel="up">Данные</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Vspomogatelxnye-peremennye"></span><h3 class="section">8.9 Вспомогательные переменные</h3>
+
+<span id="index-vspomogatelxnye-peremennye"></span>
+<p>GDB предоставляет <em>вспомогательные переменные</em>, которые вы
+можете в нем использовать, чтобы сохранить значение и обратиться к
+нему позже.  Эти переменные существуют только в GDB; они не
+являются частью вашей программы, и установка вспомогательной переменной
+не оказывает непосредственного влияния на ее дальшейшее выполнение.
+Поэтому вы можете пользоваться ими совершенно свободно.
+</p>
+<p>Имена вспомогательных переменных начинаются с &lsquo;<samp>$</samp>&rsquo;.  Любое имя с приставкой
+&lsquo;<samp>$</samp>&rsquo; может использоваться для вспомогательной переменной, если
+только оно не является предопределенным машинно-зависимым именем регистра,
+(see <a href="Registry.html">Регистры</a>).  (Ссылки на историю значений,
+напротив, есть <em>числа</em>, которым предшествует &lsquo;<samp>$</samp>&rsquo;.
+See <a href="Istoriya-znachenii.html">История значений</a>.)
+</p>
+<p>Вы можете сохранить значение во вспомогательной переменной с помощью
+выражения присваивания, как если бы вы устанавливали переменную в
+вашей программе.  Например:
+</p>
+<div class="example">
+<pre class="example">set $foo = *object_ptr
+</pre></div>
+
+<p>сохранит в <code>$foo</code> значение объекта, на который указывает
+<code>object_ptr</code>.
+</p>
+<p>Первое использование вспомогательной переменной создает ее, но
+значением переменной будет <code>void</code>, пока вы не присвоите ей новое.
+С помощью другого присваивания вы можете в любое время
+изменить значение.
+</p>
+<p>Вспомогательные переменные не имеют фиксированного типа.  Вы можете
+присваивать вспомогательной переменной значение любого типа, включая
+структуры и массивы, даже если у этой переменной уже было значение
+другого типа.  Будучи использованной в выражении, вспомогательная
+переменная имеет тип своего текущего значения.
+</p>
+<dl compact="compact">
+<dd><span id="index-show-convenience"></span>
+</dd>
+<dt><code>show convenience</code></dt>
+<dd><p>Вывести список используемых вспомогательных переменных с их значениями.
+Сокращается как <code>show conv</code>.
+</p></dd>
+</dl>
+
+<p>Один из способов использования вспомогательных переменных &mdash; в качестве
+увеличивающегося счетчика или продвигающегося указателя.  Например,
+чтобы напечатать поле из последовательных элементов массива структур:
+</p>
+<div class="example">
+<pre class="example">set $i = 0
+print bar[$i++]-&gt;contents
+</pre></div>
+
+<p>Повторяйте эту команду нажатием <tt class="key">RET</tt>.
+</p>
+<p>Некоторые вспомогательные переменные создаются GDB автоматически,
+и им присваиваются значения, которые вероятно могут оказаться полезными.
+</p>
+<dl compact="compact">
+<dd><span id="index-_0024_005f_002c-vspomogatelxnaya-peremennaya"></span>
+</dd>
+<dt><code>$_</code></dt>
+<dd><p>Переменная <code>$_</code> устанавливается автоматически командой <code>x</code> в
+последний исследованный адрес (see <a href="Pamyatx.html">Исследование памяти</a>).
+Другие команды, которые устанавливают адрес по умолчанию для
+исследования командой <code>x</code>, также присваивают <code>$_</code> упомянутый
+адрес; эти команды включают <code>info line</code> и <code>info breakpoint</code>.
+Переменная <code>$_</code> имеет тип <code>void *</code>, если только она не
+установлена командой <code>x</code>; в этом случае она является указателем на
+тип переменной <code>$__</code>.
+</p>
+<span id="index-_0024_005f_005f_002c-vspomogatelxnaya-peremennaya"></span>
+</dd>
+<dt><code>$__</code></dt>
+<dd><p>Переменная <code>$__</code> устанавливается автоматически командой <code>x</code> в
+значение, находящееся по последнему исследованному адресу.  Ее тип
+выбирается соответствующим формату, в котором это значение было
+выведено.
+</p>
+</dd>
+<dt><code>$_exitcode</code></dt>
+<dd><span id="index-_0024_005fexitcode_002c-vspomogatelxnaya-peremennaya"></span>
+<p>Переменной <code>$_exitcode</code> автоматически присваивается код завершения,
+когда отлаживаемая программа завершается.
+</p></dd>
+</dl>
+
+<p>В системах HP-UX, если вы ссылаетесь на функцию или переменную, чье имя
+начинается со знака доллара, GDB сначала производит поиск
+пользовательского или системного имени, перед поиском вспомогательной
+переменной.
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Registry.html" accesskey="n" rel="next">Регистры</a>, Previous: <a href="Istoriya-znachenii.html" accesskey="p" rel="prev">История значений</a>, Up: <a href="Dannye.html" accesskey="u" rel="up">Данные</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

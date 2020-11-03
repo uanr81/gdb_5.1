@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Указатели событий (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Указатели событий (Отладка с помощью GDB)">
+<meta name="keywords" content="Указатели событий (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Vzaimodeistvie-s-istoriei.html" rel="up" title="Взаимодействие с историей">
+<link href="Ukazateli-slov.html" rel="next" title="Указатели слов">
+<link href="Vzaimodeistvie-s-istoriei.html" rel="prev" title="Взаимодействие с историей">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0423_043a_0430_0437_0430_0442_0435_043b_0438-_0441_043e_0431_044b_0442_0438_0439"></span><div class="header">
+<p>
+Next: <a href="Ukazateli-slov.html" accesskey="n" rel="next">Указатели слов</a>, Up: <a href="Vzaimodeistvie-s-istoriei.html" accesskey="u" rel="up">Взаимодействие с историей</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Ukazateli-sobytii"></span><h4 class="subsection">22.1.1 Указатели событий</h4>
+<span id="index-ukazateli-sobytii"></span>
+
+<p>Указатель событий является ссылкой на запись командной строки в
+списке истории.
+<span id="index-sobytiya-istorii"></span>
+</p>
+<dl compact="compact">
+<dt><code>!</code></dt>
+<dd><p>Начать подстановку истории, если только за <code>!</code> не следует пробел,
+знак табуляции, знак конца строки, &lsquo;<samp>=</samp>&rsquo; или &lsquo;<samp>(</samp>&rsquo;.
+</p>
+</dd>
+<dt><code>!<var>n</var></code></dt>
+<dd><p>Сослаться на командную строку с номером <var>n</var>.
+</p>
+</dd>
+<dt><code>!-<var>n</var></code></dt>
+<dd><p>Сослаться на командную строку, отстоящую на <var>n</var> строк назад.
+</p>
+</dd>
+<dt><code>!!</code></dt>
+<dd><p>Сослаться на предыдущую команду.  Это синоним для &lsquo;<samp>!-1</samp>&rsquo;.
+</p>
+</dd>
+<dt><code>!<var>строка</var></code></dt>
+<dd><p>Сослаться на самую последнюю команду, начинающуюся со <var>строки</var>.
+</p>
+</dd>
+<dt><code>!?<var>строка</var>[?]</code></dt>
+<dd><p>Сослаться на самую последнюю команду, содержащую <var>строку</var>.  &lsquo;<samp>?</samp>&rsquo;
+в конце может быть опущен, если знак новой строки следует немедленно за
+<var>строкой</var>.
+</p>
+</dd>
+<dt><code>^<var>строка1</var>^<var>строка2</var>^</code></dt>
+<dd><p>Быстрая подстановка.  Повторяет последнюю команду, заменяя <var>строку1</var>
+на <var>строку2</var>.  Эквивалентно <code>!!:s/<var>строка1</var>/<var>строка2</var>/</code>.
+</p>
+</dd>
+<dt><code>!#</code></dt>
+<dd><p>Вся командная строка, введенная до этого момента.
+</p>
+</dd>
+</dl>
+
+
+
+
+</body>
+</html>

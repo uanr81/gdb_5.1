@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Удаление точек останова (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Удаление точек останова (Отладка с помощью GDB)">
+<meta name="keywords" content="Удаление точек останова (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Tochki-ostanova.html" rel="up" title="Точки останова">
+<link href="Otkliuchenie.html" rel="next" title="Отключение">
+<link href="Ustanovka-tochek-perekhvata.html" rel="prev" title="Установка точек перехвата">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0423_0434_0430_043b_0435_043d_0438_0435-_0442_043e_0447_0435_043a-_043e_0441_0442_0430_043d_043e_0432_0430"></span><div class="header">
+<p>
+Next: <a href="Otkliuchenie.html" accesskey="n" rel="next">Отключение</a>, Previous: <a href="Ustanovka-tochek-perekhvata.html" accesskey="p" rel="prev">Установка точек перехвата</a>, Up: <a href="Tochki-ostanova.html" accesskey="u" rel="up">Точки останова</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Udalenie-tochek-ostanova"></span><h4 class="subsection">5.1.4 Удаление точек останова</h4>
+
+<span id="index-unichtozhenie-tochek-ostanova_002c-nabliudeniya_002c-perekhvata"></span>
+<span id="index-ochistka-tochek-ostanova_002c-nabliudeniya_002c-perekhvata"></span>
+<p>Часто бывает необходимо уничтожить точку останова, наблюдения или
+перехвата, когда она сделала свое дело, и вы больше не хотите
+останавливать там свою программу.  Это называется <em>уничтожением</em>
+точки останова.  Точка останова, которая была уничтожена, более не
+существует; она забыта.
+</p>
+<p>С помощью команды <code>clear</code> вы можете удалять точки останова в
+соответствии с тем, где они находятся в вашей программе.  С помощью
+команды <code>delete</code> вы можете удалять отдельные точки останова,
+наблюдения или перехвата, указывая их номера.
+</p>
+<p>Не обязательно удалять точку останова, чтобы продолжить выполнение после
+нее.  GDB автоматически игнорирует точки останова на первой
+инструкции, которая должна быть выполнена, когда вы продолжаете
+исполнение без изменения адреса выполнения.
+</p>
+<dl compact="compact">
+<dd><span id="index-clear"></span>
+</dd>
+<dt><code>clear</code></dt>
+<dd><p>Удаляет любые точки останова, установленные на следующей инструкции,
+которая должна быть выполнена в выбранном кадре стека (see <a href="Vybor.html">Выбор кадра</a>).  Когда выбран самый внутренний кадр, это хороший способ
+удалить ту точку останова, на которой ваша программа только что
+остановилась.
+</p>
+</dd>
+<dt><code>clear <var>функция</var></code></dt>
+<dt><code>clear <var>имя-файла</var>:<var>функция</var></code></dt>
+<dd><p>Удалить любые точки останова, установленные на входе в <var>функцию</var>.
+</p>
+</dd>
+<dt><code>clear <var>номер-строки</var></code></dt>
+<dt><code>clear <var>имя-файла</var>:<var>номер-строки</var></code></dt>
+<dd><p>Удалить все точки останова, установленные на или внутри кода на
+указанной строке.
+</p>
+<span id="index-unichtozhenie-tochek-ostanova"></span>
+<span id="index-delete"></span>
+<span id="index-d-_0028delete_0029"></span>
+</dd>
+<dt><code>delete <span class="roman">[</span>breakpoints<span class="roman">]</span> <span class="roman">[</span><var>диапазон</var>&hellip;<span class="roman">]</span></code></dt>
+<dd><p>Удалить точки останова, наблюдения или перехвата из диапазона, указанного
+в качестве аргумента.  Если аргумент не задан, удалить все точки
+останова (GDB запрашивает подтверждение, если у вас не
+установлено <code>set confirm off</code>).  Вы можете сократить это команду
+как <code>d</code>.
+</p></dd>
+</dl>
+
+
+
+
+</body>
+</html>

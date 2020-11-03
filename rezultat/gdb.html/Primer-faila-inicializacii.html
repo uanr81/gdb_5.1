@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Пример файла инициализации (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Пример файла инициализации (Отладка с помощью GDB)">
+<meta name="keywords" content="Пример файла инициализации (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Fail-inicializacii-Readline.html" rel="up" title="Файл инициализации Readline">
+<link href="Privyazyvaemye-komandy-Readline.html" rel="next" title="Привязываемые команды Readline">
+<link href="Uslovnye-konstrukcii-inicializacii.html" rel="prev" title="Условные конструкции инициализации">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_041f_0440_0438_043c_0435_0440-_0444_0430_0439_043b_0430-_0438_043d_0438_0446_0438_0430_043b_0438_0437_0430_0446_0438_0438"></span><div class="header">
+<p>
+Previous: <a href="Uslovnye-konstrukcii-inicializacii.html" accesskey="p" rel="prev">Условные конструкции инициализации</a>, Up: <a href="Fail-inicializacii-Readline.html" accesskey="u" rel="up">Файл инициализации Readline</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Primer-faila-inicializacii"></span><h4 class="subsection">21.3.3 Пример файла инициализации</h4>
+
+<p>Вот пример файла <var>inputrc</var>.  Он иллюстрирует привязки клавиш, присвоение
+значений переменным и синтаксис условий.
+</p>
+<div class="example">
+<pre class="example"># Этот файл управляет поведением редактирования строки ввода в
+# программах, использующих библиотеку Gnu Readline.  Среди таких программ
+# FTP, Bash и Gdb.
+#
+# Вы можете заново считать файл inputrc с помощью C-x C-r.
+# Строки, начинающиеся с '#', являются комментариями.
+#
+# Сначала, включим все общесистемные привязки и переменные из
+# /etc/Inputrc
+$include /etc/Inputrc
+
+#
+# Установка различных привязок для режима emacs.
+
+set editing-mode emacs 
+
+$if mode=emacs
+
+Meta-Control-h:	backward-kill-word	Текст после имени функции игнорируется
+
+#
+# Стрелки в режиме малой клавиатуры
+#
+#&quot;\M-OD&quot;:        backward-char
+#&quot;\M-OC&quot;:        forward-char
+#&quot;\M-OA&quot;:        previous-history
+#&quot;\M-OB&quot;:        next-history
+#
+# Стрелки в режиме ANSI
+#
+&quot;\M-[D&quot;:        backward-char
+&quot;\M-[C&quot;:        forward-char
+&quot;\M-[A&quot;:        previous-history
+&quot;\M-[B&quot;:        next-history
+#
+# Стрелки в восьмибитном режиме малой клавиатуры
+#
+#&quot;\M-\C-OD&quot;:       backward-char
+#&quot;\M-\C-OC&quot;:       forward-char
+#&quot;\M-\C-OA&quot;:       previous-history
+#&quot;\M-\C-OB&quot;:       next-history
+#
+# Стрелки в восьмибитном режиме ANSI
+#
+#&quot;\M-\C-[D&quot;:       backward-char
+#&quot;\M-\C-[C&quot;:       forward-char
+#&quot;\M-\C-[A&quot;:       previous-history
+#&quot;\M-\C-[B&quot;:       next-history
+
+C-q: quoted-insert
+
+$endif
+
+# Привязки старого стиля.  Устанавливается по умолчанию.
+TAB: complete
+
+# Макрокоманды, удобные при взаимодействии с оболочкой
+$if Bash
+# редактирование пути
+&quot;\C-xp&quot;: &quot;PATH=${PATH}\e\C-e\C-a\ef\C-f&quot;
+# Подготовка к вводу слова в кавычках -- вставляет открывающуюся и
+# закрывающуюся двойные кавычки и помещает курсор сразу за открывающей
+&quot;\C-x\&quot;&quot;: &quot;\&quot;\&quot;\C-b&quot;
+# вставляет обратную косую черту (testing backslash escapes in sequences
+# and macros)  &quot;\C-x\\&quot;: &quot;\\&quot;
+# Заключает в кавычки текущее или предыдущее слово
+&quot;\C-xq&quot;: &quot;\eb\&quot;\ef\&quot;&quot;
+# Добавляет привязку для обновления строки
+&quot;\C-xr&quot;: redraw-current-line
+# Редактирование переменной в текущей строке
+&quot;\M-\C-v&quot;: &quot;\C-a\C-k$\C-y\M-\C-e\C-a\C-y=&quot;
+$endif
+
+# использовать визуальный звонок, если он доступен
+set bell-style visible
+
+# не урезать знаки при чтении до 7 бит
+set input-meta on
+
+# позволяет ввод знаков iso-latin1 вместо их преобразования к
+# последовательностям с Meta-префиксом
+# prefix-meta sequences
+set convert-meta off
+
+# отображает знаки непосредственно с установленным восьмым битом, а не
+# в виде знаков с Meta-префиксом
+set output-meta on
+
+# если существует более 150 возможных завершений слова, запросить
+# пользователя, хочет ли он видеть их все
+set completion-query-items 150
+
+# Для FTP
+$if Ftp
+&quot;\C-xg&quot;: &quot;get \M-?&quot;
+&quot;\C-xt&quot;: &quot;put \M-?&quot;
+&quot;\M-.&quot;: yank-last-arg
+$endif
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Uslovnye-konstrukcii-inicializacii.html" accesskey="p" rel="prev">Условные конструкции инициализации</a>, Up: <a href="Fail-inicializacii-Readline.html" accesskey="u" rel="up">Файл инициализации Readline</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

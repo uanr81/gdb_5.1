@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Удаленная отладка (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Удаленная отладка (Отладка с помощью GDB)">
+<meta name="keywords" content="Удаленная отладка (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Otladochnye-celi.html" rel="up" title="Отладочные цели">
+<link href="Udalennyi.html" rel="next" title="Удаленный">
+<link href="Poryadok-baitov.html" rel="prev" title="Порядок байтов">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0423_0434_0430_043b_0435_043d_043d_0430_044f-_043e_0442_043b_0430_0434_043a_0430"></span><div class="header">
+<p>
+Next: <a href="Otobrazhenie-obwektov-yadra.html" accesskey="n" rel="next">Отображение объектов ядра</a>, Previous: <a href="Poryadok-baitov.html" accesskey="p" rel="prev">Порядок байтов</a>, Up: <a href="Otladochnye-celi.html" accesskey="u" rel="up">Отладочные цели</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Udalennaya-otladka"></span><h3 class="section">13.4 Удаленная отладка</h3>
+<span id="index-udalennaya-otladka"></span>
+
+<p>Если вы пытаетесь отлаживать программу, выполняющуюся на машине,
+которая не может запустить GDB обычным способом, часто бывает полезна
+удаленная отладка.  Например, вы можете использовать удаленную
+отладку для ядра операционной системы или для малой системы, которая не
+имеет достаточно мощной операционной системы общего назначения для
+вызова отладчика со всеми возможностями.
+</p>
+<p>Некоторые конфигурации GDB имеют специальный последовательный или
+TCP/IP-интерфейсы для того, чтобы это работало с конкретными отладочными
+целями.  Кроме того, GDB распространяется с общим
+последовательным протоколом (уникальным для GDB, но не для
+конкретной целевой системы), который вы можете использовать, если пишете
+удаленные заглушки &mdash; код, выполняемый в удаленной системе для связи с
+GDB.
+</p>
+<p>В вашей конфигурации GDB могут быть доступны другие удаленные
+цели; используете <code>help target</code>, чтобы получить их список.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Udalennyi.html" accesskey="1">Удаленный</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Удаленный последовательный протокол GDB
+</td></tr>
+</table>
+
+
+
+
+</body>
+</html>

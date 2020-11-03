@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Условия (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Условия (Отладка с помощью GDB)">
+<meta name="keywords" content="Условия (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Tochki-ostanova.html" rel="up" title="Точки останова">
+<link href="Komandy-ostanova.html" rel="next" title="Команды останова">
+<link href="Otkliuchenie.html" rel="prev" title="Отключение">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0423_0441_043b_043e_0432_0438_044f"></span><div class="header">
+<p>
+Next: <a href="Komandy-ostanova.html" accesskey="n" rel="next">Команды останова</a>, Previous: <a href="Otkliuchenie.html" accesskey="p" rel="prev">Отключение</a>, Up: <a href="Tochki-ostanova.html" accesskey="u" rel="up">Точки останова</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Usloviya-ostanova"></span><h4 class="subsection">5.1.6 Условия останова</h4>
+<span id="index-uslovnye-tochki-ostanova"></span>
+<span id="index-usloviya-i-tochki-ostanova"></span>
+
+<p>Простейшая точка останова останавливает вашу программу каждый раз, когда
+управление достигает заданного места.  Вы можете также указать
+<em>условие</em> для точки останова.  Условие является просто булевым
+выражением в вашем языке программирования (see <a href="Vyrazheniya.html">Выражения</a>).  Точка останова с условием вычисляет выражение каждый раз,
+когда ваша программа достигает ее, и ваша программа остановится только в
+том случае, если условие <em>истинно</em>.
+</p>
+<p>Это противоположно использованию утверждений для проверки правильности
+программы; в этом случае, вы хотите остановиться, когда утверждение
+нарушается &mdash; то есть, когда условие ложно.  В Си, если вы хотите
+проверить утверждение, выраженное условием <var>assert</var>, вы должны
+установить условие &lsquo;<samp>! <var>assert</var></samp>&rsquo; на соответствующей точке
+останова.
+</p>
+<p>Условия также допускаются для точек наблюдения; вам они могут не
+понадобиться, так как точка наблюдения так или иначе контролирует значение
+выражения &mdash; но может оказаться проще, скажем, просто установить точку
+наблюдения на имя переменной и указать условие, проверяющее, является ли
+новое значение тем, которое нас интересует.
+</p>
+<p>Условия останова могут иметь побочные эффекты и даже могут вызывать
+функции в вашей программе.  Это может быть полезным, например, для
+активации функций, которые запоминают продвижение выполнения вашей
+программы, или для использования ваших собственных функций печати для
+форматирования специальных структур данных.  Результаты полностью
+предсказуемы, если нет другой включенной точки останова по тому же
+адресу.  (В этом случае, GDB может сначала увидеть другую точку
+останова и остановить вашу программу программу без проверки условия
+первой точки останова.)  Заметьте, что для выполнения побочных эффектов
+при достижении точки останова обычно более удобны и гибки команды точек
+останова, а не условия останова (see <a href="Komandy-ostanova.html">Команды точки
+останова</a>).
+</p>
+<p>Условия останова можно задать в момент установки точки останова,
+используя &lsquo;<samp>if</samp>&rsquo; в аргументах команды <code>break</code>.  See <a href="Ustanovka-tochek-ostanova.html">Установка точек останова</a>.  Они могут быть также
+изменены в любой момент с помощью команды <code>condition</code>.
+</p>
+<p>Вы также можете использовать ключевое слово <code>if</code> с командой
+<code>watch</code>.  Команда <code>catch</code> не распознает ключевое слово
+<code>if</code>; <code>condition</code> является единственным способом наложить
+дальнейшие условия на точку перехвата.
+</p>
+<dl compact="compact">
+<dd><span id="index-condition"></span>
+</dd>
+<dt><code>condition <var>номер</var> <var>выражение</var></code></dt>
+<dd><p>Задайте <var>выражение</var> как условие остановки для точки останова,
+наблюдения или перехвата с номером <var>номер</var>.  После того, как вы
+установили условие, данная точка останова остановит вашу программу, только
+если значение <var>выражения</var> будет истинным (ненулевым, в Си).  Когда
+вы используете <code>condition</code>, GDB немедленно проверяет
+<var>выражение</var> на синтаксическую корректность и на тот факт, что
+символы в нем ссылаются на реальные объекты в контексте данной точки останова.
+Если <var>выражение</var> использует символы, не существующие в контексте
+точки останова, GDB выведет сообщение об ошибке:
+</p>
+<div class="example">
+<pre class="example">No symbol &quot;foo&quot; in current context.<a id="DOCF8" href="#FOOT8">(8)</a>
+</pre></div>
+
+<p>Однако, GDB в действительности не вычисляет <var>выражение</var> в
+момент подачи команды <code>condition</code> (или команды, устанавливающей
+точку останова с условием, такой как <code>break if &hellip;</code>).
+See <a href="Vyrazheniya.html">Выражения</a>.
+</p>
+</dd>
+<dt><code>condition <var>номер</var></code></dt>
+<dd><p>Снимает условие с точки останова с номером <var>номер</var>.  Она становится
+обычной безусловной точкой останова.
+</p></dd>
+</dl>
+
+<span id="index-schetchik-ignorirovanii-_0028tochek-ostanova_0029"></span>
+<p>Специальным случаем условия для точки останова является остановка только
+тогда, когда точка останова была достигнута определенное число раз.  Это
+настолько полезно, что существует специальный способ сделать это,
+используя <em>счетчик игнорирования</em>.  Каждая точка
+останова имеет счетчик игнорирования, являющийся целым числом.
+Как правило, счетчик игнорирования равен нулю и,
+следовательно, не производит никакого действия.  Но если ваша программа
+достигает точки останова, чей счетчик игнорирования положителен, тогда
+вместо того чтобы остановиться, она лишь уменьшит его на единицу и
+продолжит выполнение.  В результате, если величина счетчика
+игнорирования равна <var>n</var>, точка останова не остановит программу
+следующие <var>n</var> раз, когда программа его достигнет.
+</p>
+<dl compact="compact">
+<dd><span id="index-ignore"></span>
+</dd>
+<dt><code>ignore <var>номер</var> <var>значение</var></code></dt>
+<dd><p>Устанавливает счетчик игнорирований точки останова с номером <var>номер</var> в
+<var>значение</var>.  Следующие <var>значение</var> раз, когда точка останова
+будет достигнута, выполнение вашей программы не будет остановлено; 
+GDB не производит никаких действий, 
+только уменьшает счетчик игнорирований.
+</p>
+<p>Чтобы точка останова сработала при следующем достижении, установите
+счетчик в ноль.
+</p>
+<p>Когда вы используете <code>continue</code> для возобновления выполнения вашей
+программы от точки останова, вы можете установить счетчик игнорирований
+непосредственно как аргумент к <code>continue</code>, а не использовать
+<code>ignore</code>.  See <a href="Prodolzhenie-i-poshagovoe-vypolnenie.html">Продолжение и
+выполнение по шагам</a>.
+</p>
+<p>Если точка останова имеет положительный счетчик игнорирований и условие,
+то условие не проверяется.  Как только счетчик игнорирований достигнет
+нуля, GDB возобновит проверку условия.
+</p>
+<p>Вы можете достигнуть эффекта счетчика игнорирований с помощью такого
+условия, как &lsquo;<samp><span class="nolinebreak">$foo--</span>&nbsp;&lt;=&nbsp;0</samp>&rsquo;<!-- /@w -->, используя вспомогательную
+переменную отладчика, которая уменьшается каждый раз.
+See <a href="Vspomogatelxnye-peremennye.html">Вспомогательные переменные</a>.
+</p></dd>
+</dl>
+
+<p>Счетчики игнорирований можно использовать с точками останова, точками
+наблюдения и точками перехвата.
+</p>
+
+<div class="footnote">
+<hr>
+<h4 class="footnotes-heading">Footnotes</h4>
+
+<h5><a id="FOOT8" href="#DOCF8">(8)</a></h3>
+<p>В текущем контексте нет символа &quot;foo&quot;.  <i>(Прим. переводчика)</i></p>
+</div>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Komandy-ostanova.html" accesskey="n" rel="next">Команды останова</a>, Previous: <a href="Otkliuchenie.html" accesskey="p" rel="prev">Отключение</a>, Up: <a href="Tochki-ostanova.html" accesskey="u" rel="up">Точки останова</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

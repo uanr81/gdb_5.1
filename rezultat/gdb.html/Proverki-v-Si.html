@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Проверки в Си (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Проверки в Си (Отладка с помощью GDB)">
+<meta name="keywords" content="Проверки в Си (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Si.html" rel="up" title="Си">
+<link href="Otladka-Si.html" rel="next" title="Отладка Си">
+<link href="Znacheniya-Si-po-umolchaniiu.html" rel="prev" title="Значения Си по умолчанию">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_041f_0440_043e_0432_0435_0440_043a_0438-_0432-_0421_0438"></span><div class="header">
+<p>
+Next: <a href="Otladka-Si.html" accesskey="n" rel="next">Отладка Си</a>, Previous: <a href="Znacheniya-Si-po-umolchaniiu.html" accesskey="p" rel="prev">Значения Си по умолчанию</a>, Up: <a href="Si.html" accesskey="u" rel="up">Си</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Proverki-diapazona-i-prinadlezhnosti-tipu-v-Si-i-Si_002b_002b"></span><h4 class="subsubsection">9.4.1.5 Проверки диапазона и принадлежности типу в Си и Си++</h4>
+
+<span id="index-proverki-v-Si-i-Si_002b_002b"></span>
+
+<p>Когда GDB производит разбор выражений Си или Си++, по умолчанию
+проверки соответствия типов не проводятся.  Однако, если вы их включите,
+GDB считает типы двух переменных эквивалентными, если:
+</p>
+<ul>
+<li> Обе переменные структурированы и имеют один и тот же тег структуры,
+объединения или перечисления.
+
+</li><li> Имена типов обеих переменных совпадают или были объявлены
+эквивалентными через <code>typedef</code>.
+</li></ul>
+
+<p>Проверка диапазона, если она включена, выполняется для
+математических операций.  Индексы массивов не проверяются, так как они
+часто применяются для индексирования указателей, которые
+сами по себе массивами не являются.
+</p>
+
+
+
+</body>
+</html>

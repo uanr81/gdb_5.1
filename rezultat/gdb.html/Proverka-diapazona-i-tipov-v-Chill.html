@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Проверка диапазона и типов в Chill (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Проверка диапазона и типов в Chill (Отладка с помощью GDB)">
+<meta name="keywords" content="Проверка диапазона и типов в Chill (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Chill.html" rel="up" title="Chill">
+<link href="Ustanovki-po-umolchaniiu-Chill.html" rel="next" title="Установки по умолчанию Chill">
+<link href="Znacheniya-i-operacii-s-nimi.html" rel="prev" title="Значения и операции с ними">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_041f_0440_043e_0432_0435_0440_043a_0430-_0434_0438_0430_043f_0430_0437_043e_043d_0430-_0438-_0442_0438_043f_043e_0432-_0432-Chill"></span><div class="header">
+<p>
+Next: <a href="Ustanovki-po-umolchaniiu-Chill.html" accesskey="n" rel="next">Установки по умолчанию Chill</a>, Previous: <a href="Znacheniya-i-operacii-s-nimi.html" accesskey="p" rel="prev">Значения и операции с ними</a>, Up: <a href="Chill.html" accesskey="u" rel="up">Chill</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Proverka-diapazona-i-tipov-v-Chill"></span><h4 class="subsubsection">9.4.3.4 Проверка диапазона и типов в Chill</h4>
+
+<p>GDB считает два режима переменных Chill эквивалентными, если их
+размеры равны.  Это правило применяется рекурсивно для
+более сложных типов данных.  Это означает, что сложные режимы
+считаются эквивалентными, если режимы всех элементов (которые тоже могут
+быть сложными, например, массивами, структурами, и так далее) имеют
+одинаковый размер.
+</p>
+<p>Проверка диапазона производится для всех математических операций,
+присваиваний, границ индексов массива и всех встроенных процедур.
+</p>
+<p>Строгие проверки типов включаются с помощью команды GDB
+<code>set check strong</code>.  Это навязывает строгую проверку диапазона и
+принадлежности типу для всех действий, где используются конструкции
+Chill (выражения, встроенные функции и так далее), в соответствии с
+семантикой, определенной в спецификации языка z.200.
+</p>
+<p>Все проверки могут быть отключены командой GDB <code>set check
+off</code>.
+</p>
+
+
+
+</body>
+</html>

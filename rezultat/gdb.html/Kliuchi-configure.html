@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Ключи configure (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Ключи configure (Отладка с помощью GDB)">
+<meta name="keywords" content="Ключи configure (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Ustanovka-GDB.html" rel="up" title="Установка GDB">
+<link href="Alfavitnyi-ukazatelx.html" rel="next" title="Алфавитный указатель">
+<link href="Imena-konfiguracii.html" rel="prev" title="Имена конфигураций">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_041a_043b_044e_0447_0438-configure"></span><div class="header">
+<p>
+Previous: <a href="Imena-konfiguracii.html" accesskey="p" rel="prev">Имена конфигураций</a>, Up: <a href="Ustanovka-GDB.html" accesskey="u" rel="up">Установка GDB</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Kliuchi-configure"></span><h3 class="section">B.3 Ключи <code>configure</code></h3>
+
+<p>Здесь приводится обзор ключей и параметров <code>configure</code>, которые
+наиболее часто используются для построения GDB.
+<code>configure</code> также имеет несколько других ключей, не представленных
+здесь.  See <a href="../configure/What-Configure-Does.html#What-Configure-Does">(configure.info)What Configure Does</a>, для полного
+объяснения <code>configure</code>.
+</p>
+<div class="example">
+<pre class="example">configure <span class="roman">[</span>--help<span class="roman">]</span>
+          <span class="roman">[</span>--prefix=<var>каталог</var><span class="roman">]</span>
+          <span class="roman">[</span>--exec-prefix=<var>каталог</var><span class="roman">]</span>
+          <span class="roman">[</span>--srcdir=<var>имя-каталога</var><span class="roman">]</span>
+          <span class="roman">[</span>--norecursion<span class="roman">]</span> <span class="roman">[</span>--rm<span class="roman">]</span>
+          <span class="roman">[</span>--target=<var>цель</var><span class="roman">]</span>
+          <var>платформа</var>
+</pre></div>
+
+<p>Если хотите, можете вводить ключи с одним &lsquo;<samp>-</samp>&rsquo;, а не с &lsquo;<samp>--</samp>&rsquo;; но
+если вы используете &lsquo;<samp>--</samp>&rsquo;, вы можете сокращать имена ключей.
+</p>
+<dl compact="compact">
+<dt><code>--help</code></dt>
+<dd><p>Отображает краткий обзор, как вызывать <code>configure</code>.
+</p>
+</dd>
+<dt><code>--prefix=<var>каталог</var></code></dt>
+<dd><p>Конфигурировать исходник для установки программ и файлов в подкаталогах
+<samp><var>каталога</var></samp>.
+</p>
+</dd>
+<dt><code>--exec-prefix=<var>каталог</var></code></dt>
+<dd><p>Конфигурировать исходник для установки программ в каталог
+<samp><var>каталог</var></samp>.
+</p>
+</dd>
+<dt><code>--srcdir=<var>имя-каталога</var></code></dt>
+<dd><p><strong>Предупреждение: использование этого ключа требует <small>GNU</small>
+<code>make</code> или другой программы <code>make</code>, реализующей возможности
+<code>VPATH</code>.</strong><br>
+Используйте этот ключ для создания конфигураций в каталогах,
+отдельных от исходного каталога GDB.  Кроме всего прочего, вы
+можете использовать его для построения (или поддержки)
+нескольких конфигураций одновременно в отдельных каталогах.
+<code>configure</code> записывает файлы, относящиеся к конфигурации, в текущий
+каталог, но принимает меры, чтобы можно было использовать исходники в
+каталоге <var>имя-каталога</var>.  <code>configure</code> создает каталоги внутри
+рабочего каталога параллельно с исходными каталогами внутри <var>имя-каталога</var>.
+</p>
+</dd>
+<dt><code>--norecursion</code></dt>
+<dd><p>Конфигурировать только тот уровень каталогов, где выполняется
+<code>configure</code>; не распространять конфигурацию на подкаталоги.
+</p>
+</dd>
+<dt><code>--target=<var>цель</var></code></dt>
+<dd><p>Конфигурировать GDB для кросс-отладки программ, выполняемых на
+указанной <var>цели</var>.  Без этого ключа GDB конфигурируется для
+отладки программ, выполняемых на той же машине (<var>платформе</var>), что и сам
+GDB.
+</p>
+<p>Нет никакого удобного способа сгенерировать список всех доступных
+целей.
+</p>
+</dd>
+<dt><code><var>платформа</var> &hellip;</code></dt>
+<dd><p>Конфигуровать GDB для выполнения на указанной <var>платформе</var>.
+</p>
+<p>Нет никакого удобного способа сгенерировать список всех допустимых
+платформ.
+</p></dd>
+</dl>
+
+<p>Существует также много других ключей, но обычно они требуются только для
+специальных целей.
+</p>
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Imena-konfiguracii.html" accesskey="p" rel="prev">Имена конфигураций</a>, Up: <a href="Ustanovka-GDB.html" accesskey="u" rel="up">Установка GDB</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

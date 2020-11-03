@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Массивы (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Массивы (Отладка с помощью GDB)">
+<meta name="keywords" content="Массивы (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Dannye.html" rel="up" title="Данные">
+<link href="Formaty-vyvoda.html" rel="next" title="Форматы вывода">
+<link href="Peremennye.html" rel="prev" title="Переменные">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_041c_0430_0441_0441_0438_0432_044b"></span><div class="header">
+<p>
+Next: <a href="Formaty-vyvoda.html" accesskey="n" rel="next">Форматы вывода</a>, Previous: <a href="Peremennye.html" accesskey="p" rel="prev">Переменные</a>, Up: <a href="Dannye.html" accesskey="u" rel="up">Данные</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Iskusstvennye-massivy"></span><h3 class="section">8.3 Искусственные массивы</h3>
+
+<span id="index-iskusstvennye-massivy"></span>
+<span id="index-_0040_002c-ssylka-na-pamyatx-kak-na-massiv"></span>
+<p>Часто бывает полезным вывести несколько объектов одного типа,
+расположенных в памяти последовательно; часть массива или динамический
+массив, для которого в программе существует только указатель.
+</p>
+<p>Вы можете это сделать, обращаясь к непрерывному участку памяти как к
+<em>искусственному массиву</em>, используя бинарный оператор &lsquo;<samp>@</samp>&rsquo;.
+Левым операндом для &lsquo;<samp>@</samp>&rsquo; должен быть первый элемент желаемого
+массива, и он должен быть индивидуальным объектом.  Правым операндом
+должна быть длина массива.  Результатом операции будет массив, все элементы
+которого имеют тот же тип, что и левый аргумент.  Первым элементом
+массива является левый аргумент; второй элемент формируется из байтов
+памяти, непосредственно следующих за байтами, содержащими первый элемент, и
+так далее.  Например, если в программе есть строка
+</p>
+<div class="example">
+<pre class="example">int *array = (int *) malloc (len * sizeof (int));
+</pre></div>
+
+<p>то вы можете вывести содержимое <code>array</code> с помощью
+</p>
+<div class="example">
+<pre class="example">p *array@len
+</pre></div>
+
+<p>Левый операнд операции &lsquo;<samp>@</samp>&rsquo; должен находиться в памяти.
+Значения массивов, полученных операцией &lsquo;<samp>@</samp>&rsquo;, при индексации ведут
+себя точно так же, как и другие массивы, и приводятся к указателям при
+использовании в выражениях.  Искусственные массивы чаще всего появляются
+в выражениях через историю значений (see <a href="Istoriya-znachenii.html">История
+значений</a>), после вывода одного из них.
+</p>
+<p>Другой способ создания искусственного массива &mdash; использование приведения
+типов.  Оно заново интерпретирует значение так, как если бы оно было
+массивом.  Значение не обязано находиться в памяти.
+</p>
+<div class="example">
+<pre class="example">(gdb) p/x (short[2])0x12345678
+$1 = {0x1234, 0x5678}
+</pre></div>
+
+<p>Если вы опускаете длину массива (как в
+&lsquo;<samp>(<var>тип</var>[])<var>значение</var></samp>&rsquo;), GDB для удобства вычисляет
+его размер для заполнения значениями (как
+&lsquo;<samp>sizeof(<var>значение</var>)/sizeof(<var>тип</var>)</samp>&rsquo;:
+</p>
+<div class="example">
+<pre class="example">(gdb) p/x (short[])0x12345678
+$2 = {0x1234, 0x5678}
+</pre></div>
+
+<p>Иногда механизма искусственных массивов бывает недостаточно;
+в сравнительно сложных структурах данных интересующие нас элементы могут
+не быть смежными &mdash; например, если вас интересуют значения указателей в
+массиве.  Одно из удачных решений этой проблемы &mdash; использование
+вспомогательной переменной (see <a href="Vspomogatelxnye-peremennye.html">Вспомогательные переменные</a>) в качестве счетчика в выражении, выводящем
+первое интересующее нас значение, а затем повторять это выражение
+нажатием <tt class="key">RET</tt>.  Предположим, например, у вас есть массив
+<code>dtab</code> указателей на структуры, и вас интересуют значения полей
+<code>fv</code> в каждой структуре.  Ниже приведен пример ваших возможных действий:
+</p>
+<div class="example">
+<pre class="example">set $i = 0
+p dtab[$i++]-&gt;fv
+<span class="key">RET</span>
+<span class="key">RET</span>
+&hellip;
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Formaty-vyvoda.html" accesskey="n" rel="next">Форматы вывода</a>, Previous: <a href="Peremennye.html" accesskey="p" rel="prev">Переменные</a>, Up: <a href="Dannye.html" accesskey="u" rel="up">Данные</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

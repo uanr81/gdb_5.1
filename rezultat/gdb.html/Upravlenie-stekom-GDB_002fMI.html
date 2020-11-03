@@ -1,0 +1,357 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Управление стеком GDB/MI (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Управление стеком GDB/MI (Отладка с помощью GDB)">
+<meta name="keywords" content="Управление стеком GDB/MI (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="GDB_002fMI.html" rel="up" title="GDB/MI">
+<link href="Zaprosy-GDB_002fMI-o-simvolakh.html" rel="next" title="Запросы GDB/MI о символах">
+<link href="Raznye-komandy-GDB_002fMI.html" rel="prev" title="Разные команды GDB/MI">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0423_043f_0440_0430_0432_043b_0435_043d_0438_0435-_0441_0442_0435_043a_043e_043c-GDB_002fMI"></span><div class="header">
+<p>
+Next: <a href="Zaprosy-GDB_002fMI-o-simvolakh.html" accesskey="n" rel="next">Запросы GDB/MI о символах</a>, Previous: <a href="Raznye-komandy-GDB_002fMI.html" accesskey="p" rel="prev">Разные команды GDB/MI</a>, Up: <a href="GDB_002fMI.html" accesskey="u" rel="up">GDB/MI</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Komandy-GDB_002fMI-upravleniya-stekom"></span><h3 class="section">19.9 Команды <small>GDB/MI</small> управления стеком</h3>
+
+
+<span id="Komanda-_002dstack_002dinfo_002dframe"></span><h4 class="subheading">Команда <code>-stack-info-frame</code></h4>
+<span id="index-_002dstack_002dinfo_002dframe"></span>
+
+<span id="Kratkoe-opisanie-49"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -stack-info-frame
+</pre></div>
+
+<p>Получить информацию о текущем кадре.
+</p>
+<span id="Komanda-GDB-48"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>info frame</samp>&rsquo; или
+&lsquo;<samp>frame</samp>&rsquo; (без аргументов).
+</p>
+<span id="Primer-49"></span><h4 class="subsubheading">Пример</h4>
+<p>Н.П.
+</p>
+<span id="Komanda-_002dstack_002dinfo_002ddepth"></span><h4 class="subheading">Команда <code>-stack-info-depth</code></h4>
+<span id="index-_002dstack_002dinfo_002ddepth"></span>
+
+<span id="Kratkoe-opisanie-50"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -stack-info-depth [ <var>макс-глуб</var> ]
+</pre></div>
+
+<p>Возвращает глубину стека.  Если указан целочисленный аргумент
+<var>макс-глуб</var>, не считать более <var>макс-глуб</var> кадров.
+</p>
+<span id="Komanda-GDB-49"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Эквивалентной команды GDB нет.
+</p>
+<span id="Primer-50"></span><h4 class="subsubheading">Пример</h4>
+
+<p>Для стека с уровнями кадров от 0 до 11:
+</p>
+<div class="example">
+<pre class="example">(gdb)
+-stack-info-depth
+^done,depth=&quot;12&quot;
+(gdb)
+-stack-info-depth 4
+^done,depth=&quot;4&quot;
+(gdb)
+-stack-info-depth 12
+^done,depth=&quot;12&quot;
+(gdb)
+-stack-info-depth 11
+^done,depth=&quot;11&quot;
+(gdb)
+-stack-info-depth 13
+^done,depth=&quot;12&quot;
+(gdb)
+</pre></div>
+
+<span id="Komanda-_002dstack_002dlist_002darguments"></span><h4 class="subheading">Команда <code>-stack-list-arguments</code></h4>
+<span id="index-_002dstack_002dlist_002darguments"></span>
+
+<span id="Kratkoe-opisanie-51"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -stack-list-arguments <var>показ-знач</var>
+    [ <var>нижн-кадр</var> <var>верхн-кадр</var> ]
+</pre></div>
+
+<p>Отобразить список аргументов для кадров от <var>нижн-кадр</var> до
+<var>верхн-кадр</var> (включительно).  Если <var>нижн-кадр</var> и
+<var>верхн-кадр</var> не указаны, перечислить аргументы для всего стека
+вызовов.
+</p>
+<p>Аргумент <var>показ-знач</var> должен иметь значение 0 или 1.  Значение 0
+означает, что выводятся только имена аргументов, а 1 &mdash; что
+печатаются как имена, так и значения аргументов.
+</p>
+<span id="Komanda-GDB-50"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>GDB не имеет эквивалентной команды.  В <code>gdbtk</code> есть
+команда &lsquo;<samp>gdb_get_args</samp>&rsquo;, которая частично перекрывается с действием
+&lsquo;<samp>-stack-list-arguments</samp>&rsquo;.
+</p>
+<span id="Primer-51"></span><h4 class="subsubheading">Пример</h4>
+
+<div class="example">
+<pre class="example">(gdb)
+-stack-list-frames
+^done,
+stack=[
+frame={level=&quot;0 &quot;,addr=&quot;0x00010734&quot;,func=&quot;callee4&quot;,
+file=&quot;../../../devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot;8&quot;},
+frame={level=&quot;1 &quot;,addr=&quot;0x0001076c&quot;,func=&quot;callee3&quot;,
+file=&quot;../../../devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot;17&quot;},
+frame={level=&quot;2 &quot;,addr=&quot;0x0001078c&quot;,func=&quot;callee2&quot;,
+file=&quot;../../../devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot;22&quot;},
+frame={level=&quot;3 &quot;,addr=&quot;0x000107b4&quot;,func=&quot;callee1&quot;,
+file=&quot;../../../devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot;27&quot;},
+frame={level=&quot;4 &quot;,addr=&quot;0x000107e0&quot;,func=&quot;main&quot;,
+file=&quot;../../../devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot;32&quot;}]
+(gdb)
+-stack-list-arguments 0
+^done,
+stack-args=[
+frame={level=&quot;0&quot;,args=[]},
+frame={level=&quot;1&quot;,args=[name=&quot;strarg&quot;]},
+frame={level=&quot;2&quot;,args=[name=&quot;intarg&quot;,name=&quot;strarg&quot;]},
+frame={level=&quot;3&quot;,args=[name=&quot;intarg&quot;,name=&quot;strarg&quot;,name=&quot;fltarg&quot;]},
+frame={level=&quot;4&quot;,args=[]}]
+(gdb)
+-stack-list-arguments 1
+^done,
+stack-args=[
+frame={level=&quot;0&quot;,args=[]},
+frame={level=&quot;1&quot;,
+ args=[{name=&quot;strarg&quot;,value=&quot;0x11940 \&quot;Строковый аргумент.\&quot;&quot;}]},
+frame={level=&quot;2&quot;,args=[
+{name=&quot;intarg&quot;,value=&quot;2&quot;},
+{name=&quot;strarg&quot;,value=&quot;0x11940 \&quot;Строковый аргумент.\&quot;&quot;}]},
+{frame={level=&quot;3&quot;,args=[
+{name=&quot;intarg&quot;,value=&quot;2&quot;},
+{name=&quot;strarg&quot;,value=&quot;0x11940 \&quot;Строковый аргумент.\&quot;&quot;},
+{name=&quot;fltarg&quot;,value=&quot;3.5&quot;}]},
+frame={level=&quot;4&quot;,args=[]}]
+(gdb)
+-stack-list-arguments 0 2 2
+^done,stack-args=[frame={level=&quot;2&quot;,args=[name=&quot;intarg&quot;,name=&quot;strarg&quot;]}]
+(gdb)
+-stack-list-arguments 1 2 2
+^done,stack-args=[frame={level=&quot;2&quot;,
+args=[{name=&quot;intarg&quot;,value=&quot;2&quot;},
+{name=&quot;strarg&quot;,value=&quot;0x11940 \&quot;Строковый аргумент.\&quot;&quot;}]}]
+(gdb)
+</pre></div>
+
+
+
+<span id="Komanda-_002dstack_002dlist_002dframes"></span><h4 class="subheading">Команда <code>-stack-list-frames</code></h4>
+<span id="index-_002dstack_002dlist_002dframes"></span>
+
+<span id="Kratkoe-opisanie-52"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -stack-list-frames [ <var>нижн-кадр</var> <var>верхн-кадр</var> ]
+</pre></div>
+
+<p>Перечисляет кадры, находящиеся в данный момент в стеке.  Для каждого
+кадра, команда отображает следующую информацию:
+</p>
+<dl compact="compact">
+<dt>&lsquo;<samp><var>level</var></samp>&rsquo;</dt>
+<dd><p>Номер кадра, 0 для самого верхнего, то есть для самой внутренней
+функции.
+</p></dd>
+<dt>&lsquo;<samp><var>addr</var></samp>&rsquo;</dt>
+<dd><p>Значение <code>$pc</code> для этого кадра.
+</p></dd>
+<dt>&lsquo;<samp><var>func</var></samp>&rsquo;</dt>
+<dd><p>Имя функции.
+</p></dd>
+<dt>&lsquo;<samp><var>file</var></samp>&rsquo;</dt>
+<dd><p>Имя исходного файла, где находится функция.
+</p></dd>
+<dt>&lsquo;<samp><var>line</var></samp>&rsquo;</dt>
+<dd><p>Номер строки, соответствующий <code>$pc</code>.
+</p></dd>
+</dl>
+
+<p>Будучи вызванной без аргументов, эта команда печатает цепочку вызовов
+для всего стека.  Если задано два целочисленных аргумента, она
+показывает кадры с уровнями между этими аргументами (включительно).
+Если аргументы равны, она показывает один единственный кадр
+соответствующего уровня.
+</p>
+<span id="Komanda-GDB-51"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующими командами GDB являются &lsquo;<samp>backtrace</samp>&rsquo; и
+&lsquo;<samp>where</samp>&rsquo;.
+</p>
+<span id="Primer-52"></span><h4 class="subsubheading">Пример</h4>
+
+<p>Цепочка вызовов стека целиком:
+</p>
+<div class="example">
+<pre class="example">(gdb)
+-stack-list-frames
+^done,stack=
+[frame={level=&quot;0 &quot;,addr=&quot;0x0001076c&quot;,func=&quot;foo&quot;,
+  file=&quot;recursive2.c&quot;,line=&quot;11&quot;},
+frame={level=&quot;1 &quot;,addr=&quot;0x000107a4&quot;,func=&quot;foo&quot;,
+  file=&quot;recursive2.c&quot;,line=&quot;14&quot;},
+frame={level=&quot;2 &quot;,addr=&quot;0x000107a4&quot;,func=&quot;foo&quot;,
+  file=&quot;recursive2.c&quot;,line=&quot;14&quot;},
+frame={level=&quot;3 &quot;,addr=&quot;0x000107a4&quot;,func=&quot;foo&quot;,
+  file=&quot;recursive2.c&quot;,line=&quot;14&quot;},
+frame={level=&quot;4 &quot;,addr=&quot;0x000107a4&quot;,func=&quot;foo&quot;,
+  file=&quot;recursive2.c&quot;,line=&quot;14&quot;},
+frame={level=&quot;5 &quot;,addr=&quot;0x000107a4&quot;,func=&quot;foo&quot;,
+  file=&quot;recursive2.c&quot;,line=&quot;14&quot;},
+frame={level=&quot;6 &quot;,addr=&quot;0x000107a4&quot;,func=&quot;foo&quot;,
+  file=&quot;recursive2.c&quot;,line=&quot;14&quot;},
+frame={level=&quot;7 &quot;,addr=&quot;0x000107a4&quot;,func=&quot;foo&quot;,
+  file=&quot;recursive2.c&quot;,line=&quot;14&quot;},
+frame={level=&quot;8 &quot;,addr=&quot;0x000107a4&quot;,func=&quot;foo&quot;,
+  file=&quot;recursive2.c&quot;,line=&quot;14&quot;},
+frame={level=&quot;9 &quot;,addr=&quot;0x000107a4&quot;,func=&quot;foo&quot;,
+  file=&quot;recursive2.c&quot;,line=&quot;14&quot;},
+frame={level=&quot;10&quot;,addr=&quot;0x000107a4&quot;,func=&quot;foo&quot;,
+  file=&quot;recursive2.c&quot;,line=&quot;14&quot;},
+frame={level=&quot;11&quot;,addr=&quot;0x00010738&quot;,func=&quot;main&quot;,
+  file=&quot;recursive2.c&quot;,line=&quot;4&quot;}]
+(gdb)
+</pre></div>
+
+<p>Показать кадры между <var>нижн-кадр</var> и <var>верхн-кадр</var>:
+</p>
+<div class="example">
+<pre class="example">(gdb)
+-stack-list-frames 3 5
+^done,stack=
+[frame={level=&quot;3 &quot;,addr=&quot;0x000107a4&quot;,func=&quot;foo&quot;,
+  file=&quot;recursive2.c&quot;,line=&quot;14&quot;},
+frame={level=&quot;4 &quot;,addr=&quot;0x000107a4&quot;,func=&quot;foo&quot;,
+  file=&quot;recursive2.c&quot;,line=&quot;14&quot;},
+frame={level=&quot;5 &quot;,addr=&quot;0x000107a4&quot;,func=&quot;foo&quot;,
+  file=&quot;recursive2.c&quot;,line=&quot;14&quot;}]
+(gdb)
+</pre></div>
+
+<p>Показать один кадр:
+</p>
+<div class="example">
+<pre class="example">(gdb)
+-stack-list-frames 3 3
+^done,stack=
+[frame={level=&quot;3 &quot;,addr=&quot;0x000107a4&quot;,func=&quot;foo&quot;,
+  file=&quot;recursive2.c&quot;,line=&quot;14&quot;}]
+(gdb)
+</pre></div>
+
+
+<span id="Komanda-_002dstack_002dlist_002dlocals"></span><h4 class="subheading">Команда <code>-stack-list-locals</code></h4>
+<span id="index-_002dstack_002dlist_002dlocals"></span>
+
+<span id="Kratkoe-opisanie-53"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -stack-list-locals <var>печатать-значения</var>
+</pre></div>
+
+<p>Вывести имена локальных переменных для текущего кадра.  С параметром 0
+выводит только имена переменных, с параметром 1 выводит также их
+значения.
+</p>
+<span id="Komanda-GDB-52"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>&lsquo;<samp>info locals</samp>&rsquo; в GDB, &lsquo;<samp>gdb_get_locals</samp>&rsquo; в <code>gdbtk</code>.
+</p>
+<span id="Primer-53"></span><h4 class="subsubheading">Пример</h4>
+
+<div class="example">
+<pre class="example">(gdb)
+-stack-list-locals 0
+^done,locals=[name=&quot;A&quot;,name=&quot;B&quot;,name=&quot;C&quot;]
+(gdb)
+-stack-list-locals 1
+^done,locals=[{name=&quot;A&quot;,value=&quot;1&quot;},{name=&quot;B&quot;,value=&quot;2&quot;},
+  {name=&quot;C&quot;,value=&quot;3&quot;}]
+(gdb)
+</pre></div>
+
+
+<span id="Komanda-_002dstack_002dselect_002dframe"></span><h4 class="subheading">Команда <code>-stack-select-frame</code></h4>
+<span id="index-_002dstack_002dselect_002dframe"></span>
+
+<span id="Kratkoe-opisanie-54"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -stack-select-frame <var>ном-кадра</var>
+</pre></div>
+
+<p>Изменить текущий кадр.  Выбрать другой кадр <var>ном-кадра</var> в стеке.
+</p>
+<span id="Komanda-GDB-53"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующими командами GDB являются &lsquo;<samp>frame</samp>&rsquo;,
+&lsquo;<samp>up</samp>&rsquo;, &lsquo;<samp>down</samp>&rsquo;, &lsquo;<samp>select-frame</samp>&rsquo;, &lsquo;<samp>up-silent</samp>&rsquo; и
+&lsquo;<samp>down-silent</samp>&rsquo;.
+</p>
+<span id="Primer-54"></span><h4 class="subsubheading">Пример</h4>
+
+<div class="example">
+<pre class="example">(gdb)
+-stack-select-frame 2
+^done
+(gdb)
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Zaprosy-GDB_002fMI-o-simvolakh.html" accesskey="n" rel="next">Запросы GDB/MI о символах</a>, Previous: <a href="Raznye-komandy-GDB_002fMI.html" accesskey="p" rel="prev">Разные команды GDB/MI</a>, Up: <a href="GDB_002fMI.html" accesskey="u" rel="up">GDB/MI</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Встроенные функции/процедуры (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Встроенные функции/процедуры (Отладка с помощью GDB)">
+<meta name="keywords" content="Встроенные функции/процедуры (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Modula_002d2.html" rel="up" title="Модула-2">
+<link href="Konstanty-Moduly_002d2.html" rel="next" title="Константы Модулы-2">
+<link href="Operatory-Moduly_002d2.html" rel="prev" title="Операторы Модулы-2">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0412_0441_0442_0440_043e_0435_043d_043d_044b_0435-_0444_0443_043d_043a_0446_0438_0438_002f_043f_0440_043e_0446_0435_0434_0443_0440_044b"></span><div class="header">
+<p>
+Next: <a href="Konstanty-Moduly_002d2.html" accesskey="n" rel="next">Константы Модулы-2</a>, Previous: <a href="Operatory-Moduly_002d2.html" accesskey="p" rel="prev">Операторы Модулы-2</a>, Up: <a href="Modula_002d2.html" accesskey="u" rel="up">Модула-2</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Vstroennye-funkcii-i-procedury"></span><h4 class="subsubsection">9.4.2.2 Встроенные функции и процедуры</h4>
+<span id="index-vstroennye-funkcii-Moduly_002d2"></span>
+
+<p>Модула-2 также делает доступными несколько встроенных процедур и
+функций.  При их описании используются следующие метапеременные:
+</p>
+<dl compact="compact">
+<dt><var>a</var></dt>
+<dd><p>представляет переменную типа <code>ARRAY</code>.
+</p>
+</dd>
+<dt><var>c</var></dt>
+<dd><p>представляет константу или переменную типа <code>CHAR</code>.
+</p>
+</dd>
+<dt><var>i</var></dt>
+<dd><p>представляет переменную или константу целого типа.
+</p>
+</dd>
+<dt><var>m</var></dt>
+<dd><p>представляет идентификатор, принадлежащий множеству.  Обычно
+используется в одной функции с метапеременной <var>s</var>.  Тип <var>s</var>
+должен быть <code>SET OF <var>метатип</var></code> (где <var>метатип</var> &mdash; тип <var>m</var>).
+</p>
+</dd>
+<dt><var>n</var></dt>
+<dd><p>представляет переменную или константу целого типа или
+типа с плавающей точкой.
+</p>
+</dd>
+<dt><var>r</var></dt>
+<dd><p>представляет переменную или константу типа с плавающей точкой.
+</p>
+</dd>
+<dt><var>t</var></dt>
+<dd><p>представляет тип.
+</p>
+</dd>
+<dt><var>v</var></dt>
+<dd><p>представляет переменную.
+</p>
+</dd>
+<dt><var>x</var></dt>
+<dd><p>представляет переменную или константу одного из нескольких типов.
+Смотрите пояснение к функции для дополнительной информации.
+</p></dd>
+</dl>
+
+<p>Ниже описаны все встроенные процедуры Модулы-2, возвращающие результат.
+</p>
+<dl compact="compact">
+<dt><code>ABS(<var>n</var>)</code></dt>
+<dd><p>Возвращает абсолютное значение <var>n</var>.
+</p>
+</dd>
+<dt><code>CAP(<var>c</var>)</code></dt>
+<dd><p>Если <var>c</var> &mdash; строчная буква, процедура возвращает ее эквивалент
+в верхнем регистре, иначе возвращает сам аргумент.
+</p>
+</dd>
+<dt><code>CHR(<var>i</var>)</code></dt>
+<dd><p>Возвращает знак, порядковое значение которого есть <var>i</var>.
+</p>
+</dd>
+<dt><code>DEC(<var>v</var>)</code></dt>
+<dd><p>Уменьшает значение переменной <var>v</var> на единицу.  Возвращает новое значение.
+</p>
+</dd>
+<dt><code>DEC(<var>v</var>,<var>i</var>)</code></dt>
+<dd><p>Уменьшает значение переменной <var>v</var> на <var>i</var>.  Возвращает новое значение.
+</p>
+</dd>
+<dt><code>EXCL(<var>m</var>,<var>s</var>)</code></dt>
+<dd><p>Удаляет элемент <var>m</var> из множества <var>s</var>.  Возвращает новое множество.
+</p>
+</dd>
+<dt><code>FLOAT(<var>i</var>)</code></dt>
+<dd><p>Возвращает эквивалент целого числа <var>i</var> в формате с плавающей точкой.
+</p>
+</dd>
+<dt><code>HIGH(<var>a</var>)</code></dt>
+<dd><p>Возвращает индекс последнего элемента <var>a</var>.
+</p>
+</dd>
+<dt><code>INC(<var>v</var>)</code></dt>
+<dd><p>Увеличивает значение переменной <var>v</var> на единицу.  Возвращает новое
+значение.
+</p>
+</dd>
+<dt><code>INC(<var>v</var>,<var>i</var>)</code></dt>
+<dd><p>Увеличивает значение переменной <var>v</var> на <var>i</var>.  Возвращает новое
+значение.
+</p>
+</dd>
+<dt><code>INCL(<var>m</var>,<var>s</var>)</code></dt>
+<dd><p>Добавляет элемент <var>m</var> в множество <var>s</var>, если его там еще нет.
+Возвращает новое множество.
+</p>
+</dd>
+<dt><code>MAX(<var>t</var>)</code></dt>
+<dd><p>Возвращает максимальное значение типа <var>t</var>.
+</p>
+</dd>
+<dt><code>MIN(<var>t</var>)</code></dt>
+<dd><p>Возвращает минимальное значение типа <var>t</var>.
+</p>
+</dd>
+<dt><code>ODD(<var>i</var>)</code></dt>
+<dd><p>Возвращает булево значение TRUE, если число <var>i</var> нечетно.
+</p>
+</dd>
+<dt><code>ORD(<var>x</var>)</code></dt>
+<dd><p>Возвращает порядковое значение своего аргумента.  Например, порядковое
+значение знака &mdash; его <small>ASCII</small>-значение (на машинах, поддерживающих
+набор знаков <small>ASCII</small>).  <var>x</var> должна принадлежать упорядоченному
+типу, что включает целочисленные, знаковый и перечислимый типы.
+</p>
+</dd>
+<dt><code>SIZE(<var>x</var>)</code></dt>
+<dd><p>Возвращает размер аргумента.  <var>x</var> может быть переменной или типом.
+</p>
+</dd>
+<dt><code>TRUNC(<var>r</var>)</code></dt>
+<dd><p>Возвращает целую часть <var>r</var>.
+</p>
+</dd>
+<dt><code>VAL(<var>t</var>,<var>i</var>)</code></dt>
+<dd><p>Возвращает элемент типа <var>t</var>, порядковое значение которого есть <var>i</var>.
+</p></dd>
+</dl>
+
+<blockquote>
+<p><em>Предупреждение:</em> Множества и операции над ними еще не
+поддерживаются, так что GDB рассматривает использование
+процедур <code>INCL</code> и <code>EXCL</code> как ошибку.
+</p></blockquote>
+
+<span id="index-konstanty-Moduly_002d2"></span>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Konstanty-Moduly_002d2.html" accesskey="n" rel="next">Константы Модулы-2</a>, Previous: <a href="Operatory-Moduly_002d2.html" accesskey="p" rel="prev">Операторы Модулы-2</a>, Up: <a href="Modula_002d2.html" accesskey="u" rel="up">Модула-2</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

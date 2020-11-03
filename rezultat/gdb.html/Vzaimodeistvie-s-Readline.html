@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Взаимодействие с Readline (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Взаимодействие с Readline (Отладка с помощью GDB)">
+<meta name="keywords" content="Взаимодействие с Readline (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Redaktirovanie-komandnoi-stroki.html" rel="up" title="Редактирование командной строки">
+<link href="Svedeniya-pervoi-neobkhodimosti.html" rel="next" title="Сведения первой необходимости">
+<link href="Vvedenie-i-oboznacheniya.html" rel="prev" title="Введение и обозначения">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0412_0437_0430_0438_043c_043e_0434_0435_0439_0441_0442_0432_0438_0435-_0441-Readline"></span><div class="header">
+<p>
+Next: <a href="Fail-inicializacii-Readline.html" accesskey="n" rel="next">Файл инициализации Readline</a>, Previous: <a href="Vvedenie-i-oboznacheniya.html" accesskey="p" rel="prev">Введение и обозначения</a>, Up: <a href="Redaktirovanie-komandnoi-stroki.html" accesskey="u" rel="up">Редактирование командной строки</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Vzaimodeistvie-s-Readline"></span><h3 class="section">21.2 Взаимодействие с Readline</h3>
+<span id="index-vzaimodeistvie-s-readline"></span>
+
+<p>Часто во время интерактивного сеанса вы вводите длинную строку
+текста и только потом замечаете, что первое слово набрано
+неправильно.  Библиотека Readline дает вам набор команд для
+управления текстом во время ввода, позволяя вам лишь исправить опечатку,
+а не набирать заново большую часть строки.  С помощью
+этих команд редактирования, вы перемещаете курсор в место,
+требующее исправления, и удаляете или вставляете текст для коррекции.
+Затем, когда строка полностью исправлена, вы просто нажимаете <tt class="key">RET</tt>.
+Чтобы нажать <tt class="key">RET</tt>, вам не обязательно находиться в конце строки; вся
+строка вводится независимо от расположения в ней курсора.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Svedeniya-pervoi-neobkhodimosti.html" accesskey="1">Сведения первой необходимости</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Минимум, который вам необходимо
+                                  знать о Readline.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Komandy-peremeshcheniya-Readline.html" accesskey="2">Команды перемещения Readline</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Перемещение по строке ввода.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Komandy-unichtozheniya-Readline.html" accesskey="3">Команды уничтожения Readline</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Как уничтожить текст, и как его восстановить.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Parametry-komand-Readline.html" accesskey="4">Параметры команд Readline</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Задание числовых аргументов командам.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Poisk-v-istorii.html" accesskey="5">Поиск в истории</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Поиск в предыдущих строках.
+</td></tr>
+</table>
+
+
+
+
+</body>
+</html>

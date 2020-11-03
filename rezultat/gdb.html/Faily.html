@@ -1,0 +1,352 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Файлы (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Файлы (Отладка с помощью GDB)">
+<meta name="keywords" content="Файлы (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Faily-GDB.html" rel="up" title="Файлы GDB">
+<link href="Oshibki-s-simvolami.html" rel="next" title="Ошибки с символами">
+<link href="Faily-GDB.html" rel="prev" title="Файлы GDB">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0424_0430_0439_043b_044b"></span><div class="header">
+<p>
+Next: <a href="Oshibki-s-simvolami.html" accesskey="n" rel="next">Ошибки с символами</a>, Up: <a href="Faily-GDB.html" accesskey="u" rel="up">Файлы GDB</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Komandy-dlya-zadaniya-failov"></span><h3 class="section">12.1 Команды для задания файлов</h3>
+
+<span id="index-tablica-simvolov"></span>
+<span id="index-fail-dampa-pamyati"></span>
+
+<p>Вы можете указать имена исполняемого файла и файла дампа памяти.
+Обычно это делается во время вызова GDB, используя
+параметры с командами запуска GDB (see <a href="Vyzov.html">Вход и выход из
+GDB</a>).
+</p>
+<p>Иногда во время сеанса GDB необходимо перейти к другому файлу.
+Или вы можете запустить GDB, забыв указать файл, который
+хотите использовать.  В таких ситуациях полезны команды GDB для
+задания новых файлов.
+</p>
+<dl compact="compact">
+<dd><span id="index-vypolnyaemyi-fail"></span>
+<span id="index-file"></span>
+</dd>
+<dt><code>file <var>имя-файла</var></code></dt>
+<dd><p>Использовать <var>имя-файла</var> в качестве программы для отладки.  Из нее
+читаются символы и содержание неизменяемой памяти.
+Также она является программой, которая выполняется при
+использовании команды <code>run</code>.  Если вы не укажете каталог, и файл
+не будет найден в рабочем каталоге GDB, он использует переменную
+среды <code>PATH</code> в качестве списка каталогов для поиска, точно так
+же, как это делает оболочка, когда ищет программу для выполнения.
+Используя команду <code>path</code>, вы можете изменить значение этой
+переменной как для GDB, так и для вашей программы.
+</p>
+<p>В системах с отображаемыми в память файлами, информация из таблицы
+символов для <var>имя-файла</var> может храниться во вспомогательном файле
+<samp><var>имя-файла</var>.syms</samp>.  Если это так, GDB осуществляет
+отображение таблицы символов из <samp><var>имя-файла</var>.syms</samp>, запускаясь
+намного быстрее.  Смотрите описания ключей файлов &lsquo;<samp>-mapped</samp>&rsquo; и
+&lsquo;<samp>-readnow</samp>&rsquo; (доступных с командной строки и в командах
+<code>file</code>, <code>symbol-file</code> или <code>add-symbol-file</code>, описанных
+ниже), для получения большей информации.
+</p>
+</dd>
+<dt><code>file</code></dt>
+<dd><p><code>file</code> без параметров велит GDB уничтожить любую имеющуюся
+информацию как об исполняемом файле, так и о таблице символов.
+</p>
+<span id="index-exec_002dfile"></span>
+</dd>
+<dt><code>exec-file <span class="roman">[</span> <var>имя-файла</var> <span class="roman">]</span></code></dt>
+<dd><p>Указывает, что программа, которая должна быть выполнена (но не
+таблица символов), находится в <var>имя-файла</var>.  Если необходимо,
+GDB ищет вашу программу с помощью переменной среды
+<code>PATH</code>.  Отсутствие <var>имя-файла</var> означает, что необходимо
+уничтожить информацию о выполняемом файле.
+</p>
+<span id="index-symbol_002dfile"></span>
+</dd>
+<dt><code>symbol-file <span class="roman">[</span> <var>имя-файла</var> <span class="roman">]</span></code></dt>
+<dd><p>Читать информацию таблицы символов из файла <var>имя-файла</var>.  При
+необходимости производится поиск с помощью переменной среды
+<code>PATH</code>.  Для получения таблицы символов и исполняемой программы из
+одного и того же файла, используйте команду <code>file</code>.
+</p>
+<p><code>symbol-file</code> без параметров сбрасывает информацию GDB о
+таблице символов вашей программы.
+</p>
+<p>Команда <code>symbol-file</code> велит GDB забыть содержимое своих
+вспомогательных переменных, историю значений и все точки останова и выражения
+автоматического отображения, так как они могут содержать указатели
+на внутренние данные, хранящие символы и типы данных, которые
+являются частью данных старой таблицы символов, уничтоженной внутри
+GDB.
+</p>
+<p><code>symbol-file</code> не повторяется, если вы снова нажимаете <tt class="key">RET</tt>
+после первого выполнения.
+</p>
+<p>Когда GDB сконфигурирован для определенной среды, он распознает
+отладочную информацию в том формате, который обычно генерируется
+для этой среды; вы можете использовать или компилятор <small>GNU</small>, или другие
+компиляторы, которые придерживаются местных соглашений.  Наилучшие
+результаты обычно достигаются с помощью компилятора <small>GNU</small>;
+например, используя <code>gcc</code>, вы можете создавать отладочную
+информацию для оптимизированного кода.
+</p>
+<p>Для большинства типов объектных файлов, за исключением старых систем
+SVR3, использующих COFF, команда <code>symbol-file</code> обычно не считывает
+таблицу символов сразу целиком.  Вместо этого, она быстро сканирует
+ее для определения, какие исходные файлы и символы в ней
+присутствуют.  Детали читаются позже, по одному исходному файлу за раз,
+по мере необходимости.
+</p>
+<p>Такая стратегия чтения в две стадии используется для того, чтобы
+GDB вызывался быстрее.  За исключением редких пауз, чтение
+деталей таблицы символов для конкретного исходного файла в большинстве
+случаев практически незаметно.  (Команда <code>set verbose</code>
+позволяет при желании превратить эти паузы в сообщения.
+See <a href="Soobshcheniya_002fpreduprezhdeniya.html">Необязательные предупреждения и сообщения</a>.)
+</p>
+<p>Мы еще не реализовали двухступенчатую стратегию чтения для COFF.  Когда
+таблица символов сохранена в формате COFF, <code>symbol-file</code> считывает данные
+таблицы символов сразу полностью.  Заметьте, что &ldquo;stabs-in-COFF&rdquo; все
+же реализует двухступенчатую стратегию, так как отладочная информация
+реально хранится в формате stabs.
+</p>
+<span id="index-readnow"></span>
+<span id="index-nemedlennoe-chtenie-simvolov"></span>
+<span id="index-simvoly_002c-nemedlennoe-chtenie"></span>
+<span id="index-mapped"></span>
+<span id="index-faily-simvolov_002c-otobrazhaemye-v-pamyatx"></span>
+<span id="index-sokhranenie-tablicy-simvolov"></span>
+</dd>
+<dt><code>symbol-file <var>имя-файла</var> <span class="roman">[</span> -readnow <span class="roman">]</span> <span class="roman">[</span> -mapped <span class="roman">]</span></code></dt>
+<dt><code>file <var>имя-файла</var> <span class="roman">[</span> -readnow <span class="roman">]</span> <span class="roman">[</span> -mapped <span class="roman">]</span></code></dt>
+<dd><p>Если вы хотите быть уверены, что у GDB есть вся таблица
+символов целиком, вы можете отменить двухступенчатую стратегию чтения
+таблицы символов, используя параметр &lsquo;<samp>-readnow</samp>&rsquo; с любой
+командой, загружающей информацию таблицы символов.
+</p>
+<p>Если на вашей системе можно отображать файлы в память через
+системный вызов <code>mmap</code>, вы можете использовать другой параметр,
+&lsquo;<samp>-mapped</samp>&rsquo;, чтобы GDB записывал символы для вашей программы
+в файл многократного использования.  Последующие сеансы отладки
+GDB отображают информацию о символах из этого вспомогательного
+файла (если программа не изменилась), вместо того, чтобы
+тратить время на чтение таблицы символов из исполняемой программы.
+Использование параметра &lsquo;<samp>-mapped</samp>&rsquo; производит такой же эффект, как
+вызов GDB с ключом командной строки &lsquo;<samp>-mapped</samp>&rsquo;.
+</p>
+<p>Вы можете использовать оба параметра вместе, чтобы быть уверенным,
+что вспомогательный файл символов содержит всю информацию о символах
+вашей программы.
+</p>
+<p>Вспомогательный файл символов для программы <var>прог</var> называется
+&lsquo;<samp><var>прог</var>.syms</samp>&rsquo;.  Если этот файл существует (и создан позже,
+чем соответствующая исполняемая программа), GDB всегда пытается
+использовать его при отладке <var>прог</var>; не требуется никаких
+специальных ключей или команд.
+</p>
+<p>Файл <samp>.syms</samp> является специфичным для рабочей машины, на которой вы
+вызываете GDB.  Он содержит точный образ внутренней таблицы
+символов GDB.  Он не может быть использован одновременно на
+разных рабочих платформах.
+</p>
+<span id="index-core"></span>
+<span id="index-core_002dfile"></span>
+</dd>
+<dt><code>core-file <span class="roman">[</span> <var>имя-файла</var> <span class="roman">]</span></code></dt>
+<dd><p>Определяет местонахождение файла дампа памяти, который будет использован
+как &ldquo;содержимое памяти&rdquo;.  Обычно файлы дампов памяти содержат только
+некоторые части адресного пространства процесса, создавшего их;
+GDB может обращаться к исполняемому файлу за другими частями.
+</p>
+<p><code>core-file</code> без параметра указывает, что файл дампа памяти
+использоваться не должен.
+</p>
+<p>Обратите внимание, что файл дампа памяти игнорируется, если в данное
+время ваша программа выполняется под управлением GDB.  Так что
+если вы выполняли программу и желаете вместо этого отладить файл
+дампа, вы должны убить подпроцесс, в котором выполняется ваша программа.
+Для этого используйте команду <code>kill</code> (see <a href="Unichtozhenie-processa.html">Уничтожение дочернего процесса</a>).
+</p>
+<span id="index-add_002dsymbol_002dfile"></span>
+<span id="index-dinamicheskaya-sborka"></span>
+</dd>
+<dt><code>add-symbol-file <var>имя-файла</var> <var>адрес</var></code></dt>
+<dt><code>add-symbol-file <var>имя-файла</var> <var>адрес</var> <span class="roman">[</span> -readnow <span class="roman">]</span> <span class="roman">[</span> -mapped <span class="roman">]</span></code></dt>
+<dt><code>add-symbol-file <var>имя-файла</var> <span class="roman">-s</span><var>раздел</var> <var>адрес</var></code></dt>
+<dd><p>Команда <code>add-symbol-file</code> считывает дополнительную информацию
+таблицы символов из файла <var>имя-файла</var>.  Вы должны использовать эту
+команду, если файл <var>имя-файла</var> был динамически загружен (другими
+средствами) в выполняющуюся программу.  <var>Адрес</var> должен быть адресом
+памяти, по которому был загружен файл; GDB сам его определить
+не может.  Вы можете указать дополнительно произвольное количество пар
+&lsquo;<samp><span class="roman">-s</span> <var>раздел</var> <var>адрес</var></samp>&rsquo;, чтобы явно указать имя раздела и
+базовый адрес для него.  Вы можете указать произвольный <var>адрес</var> как
+выражение.
+</p>
+<p>Таблица символов из файла <var>имя-файла</var> добавляется к таблице,
+изначально считанной по команде <code>symbol-file</code>.  Вы можете
+использовать команду <code>add-symbol-file</code> произвольное число раз;
+прочитанные таким образом символьные данные добавляются к старым.  Чтобы
+уничтожить все старые данные, используйте команду <code>symbol-file</code> без
+аргументов.
+</p>
+<p>Команда <code>add-symbol-file</code> не повторяется, если вы нажимаете
+<tt class="key">RET</tt> после ее использования.
+</p>
+<p>Чтобы изменить способ обработки GDB таблицы символов для
+<var>имя-файла</var>, вы можете использовать параметры &lsquo;<samp>-mapped</samp>&rsquo; и
+&lsquo;<samp>-readnow</samp>&rsquo; так же, как и с командой <code>symbol-file</code>.
+</p>
+<span id="index-add_002dshared_002dsymbol_002dfile"></span>
+</dd>
+<dt><code>add-shared-symbol-file</code></dt>
+<dd><p>Команда <code>add-shared-symbol-file</code> может быть использована только для
+Motorola 88k в операционной системе Harris CXUX.  GDB
+ищет разделяемые библиотеки автоматически, однако, если он не находит
+ваших, вы можете выполнить <code>add-shared-symbol-file</code>.  Эта команда
+не имеет аргументов.
+</p>
+<span id="index-section"></span>
+</dd>
+<dt><code>section</code></dt>
+<dd><p>Команда <code>section</code> изменяет базовый адрес раздела <var>раздел</var>
+выполняемого файла на <var>адрес</var>.  Это может быть использовано, если
+выполняемый файл не содержит адресов разделов (что имеет место для
+формата a.out), или когда адреса, указанные в самом файле, неверны.
+Каждый раздел должен изменяться отдельно.  Команда <code>info files</code>,
+описанная ниже, перечисляет все разделы и их адреса.
+</p>
+<span id="index-info-files"></span>
+<span id="index-info-target"></span>
+</dd>
+<dt><code>info files</code></dt>
+<dt><code>info target</code></dt>
+<dd><p>Команды <code>info files</code> и <code>info target</code> являются синонимами; они обе
+выводят текущую цель (see <a href="Otladochnye-celi.html">Определение отладочной
+цели</a>), включая имена выполняемого файла и файла дампа памяти, используемых
+GDB, и файлов, из которых были загружены символы.  Команда
+<code>help target</code> выводит все возможные цели, а не только текущую.
+</p>
+</dd>
+</dl>
+
+<p>Все команды для задания файлов допускают в качестве аргументов как
+абсолютные, так и относительные имена файлов.  GDB всегда
+преобразовывает имя файла к абсолютному и запоминает его в таком виде.
+</p>
+<span id="index-razdelyaemye-biblioteki"></span>
+<p>GDB поддерживает разделяемые библиотеки на HP-UX, SunOS, SVr4,
+Irix 5 и IBM RS/6000.
+</p>
+<p>Когда вы даете команду <code>run</code>, или когда исследуете
+файл дампа памяти, GDB автоматически загружает определения
+символов из разделяемых библиотек.  (Однако, если вы не отлаживаете файл дампа,
+GDB не понимает ссылки на функции из разделяемой библиотеки до
+того, как вы выполните команду <code>run</code>.)
+</p>
+<p>На HP-UX, если программа загружает разделяемую библиотеку явно,
+GDB автоматически загружает символы в момент вызова
+<code>shl_load</code>.
+</p>
+<dl compact="compact">
+<dd><span id="index-info-sharedlibrary"></span>
+<span id="index-info-share"></span>
+</dd>
+<dt><code>info share</code></dt>
+<dt><code>info sharedlibrary</code></dt>
+<dd><p>Вывести имена разделяемых библиотек, загруженных в данный момент.
+</p>
+<span id="index-sharedlibrary"></span>
+<span id="index-share"></span>
+</dd>
+<dt><code>sharedlibrary <var>рег-выр</var></code></dt>
+<dt><code>share <var>рег-выр</var></code></dt>
+<dd><p>Загрузить символы разделяемых библиотек для файлов,
+удовлетворяющих регулярному выражению Unix.  Также как и для
+автоматически загруженных файлов, это загружает только разделяемые
+библиотеки, требуемые вашей программой для файла дампа памяти или после
+ввода <code>run</code>.  Если <var>рег-выр</var> опущено, загружаются все разделяемые
+библиотеки, требуемые вашей программой.
+</p></dd>
+</dl>
+
+<p>В системах HP-UX, GDB сам определяет загрузку разделяемой
+библиотеки и автоматически считывает символы из нее до некоторого
+изначально установленного порогового значения, которое вы можете при
+желании изменить.
+</p>
+<p>После этого порогового значения символы из разделяемых библиотек должны
+загружаться явно.  Для загрузки этих символов используйте команду
+<code>sharedlibrary <var>имя-файла</var></code>.  Базовый адрес разделяемой
+библиотеки определяется GDB автоматически и вы не
+должны его задавать.
+</p>
+<p>Для отображения или установки порогового значения используйте следующие
+команды:
+</p>
+<dl compact="compact">
+<dd><span id="index-set-auto_002dsolib_002dadd"></span>
+</dd>
+<dt><code>set auto-solib-add <var>порог</var></code></dt>
+<dd><p>Устанавливает размер порога автоматической загрузки в мегабайтах.  Если
+<var>порог</var> ненулевой, символы из всех библиотек разделяемых объектов
+будут загружаться автоматически, когда программа начинает выполнение, или
+когда динамический компоновщик информирует GDB о том, что
+была загружена новая библиотека, до тех пор, пока таблица символов программы и
+библиотек не превысит этот порог.  В противном случае, символы должны
+загружаться вручную, при помощи команды <code>sharedlibrary</code>.  По
+умолчанию порог равен 100 мегабайтам.
+</p>
+<span id="index-show-auto_002dsolib_002dadd"></span>
+</dd>
+<dt><code>show auto-solib-add</code></dt>
+<dd><p>Отобразить величину текущего порога автоматической загрузки в мегабайтах.
+</p></dd>
+</dl>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Oshibki-s-simvolami.html" accesskey="n" rel="next">Ошибки с символами</a>, Up: <a href="Faily-GDB.html" accesskey="u" rel="up">Файлы GDB</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

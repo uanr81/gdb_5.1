@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Имена файлов (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Имена файлов (Отладка с помощью GDB)">
+<meta name="keywords" content="Имена файлов (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Perekhod-ot-odnogo-yazyka-k-drugomu.html" rel="up" title="Переход от одного языка к другому">
+<link href="Ustanovka-rabochego-yazyka.html" rel="next" title="Установка рабочего языка">
+<link href="Perekhod-ot-odnogo-yazyka-k-drugomu.html" rel="prev" title="Переход от одного языка к другому">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0418_043c_0435_043d_0430-_0444_0430_0439_043b_043e_0432"></span><div class="header">
+<p>
+Next: <a href="Ustanovka-rabochego-yazyka.html" accesskey="n" rel="next">Установка рабочего языка</a>, Up: <a href="Perekhod-ot-odnogo-yazyka-k-drugomu.html" accesskey="u" rel="up">Переход от одного языка к другому</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Sootvetstvie-rasshirenii-failov-i-yazykov"></span><h4 class="subsection">9.1.1 Соответствие расширений файлов и языков</h4>
+
+<p>Если имя исходного файла заканчивается одним из следующих расширений, то
+GDB воспринимает это как указание на обозначенный язык.
+</p>
+<dl compact="compact">
+<dt><samp>.c</samp></dt>
+<dd><p>Исходный файл Си
+</p>
+</dd>
+<dt><samp>.C</samp></dt>
+<dt><samp>.cc</samp></dt>
+<dt><samp>.cp</samp></dt>
+<dt><samp>.cpp</samp></dt>
+<dt><samp>.cxx</samp></dt>
+<dt><samp>.c++</samp></dt>
+<dd><p>Исходный файл Си++
+</p>
+</dd>
+<dt><samp>.f</samp></dt>
+<dt><samp>.F</samp></dt>
+<dd><p>Исходный файл Фортрана
+</p>
+</dd>
+<dt><samp>.ch</samp></dt>
+<dt><samp>.c186</samp></dt>
+<dt><samp>.c286</samp></dt>
+<dd><p>Исходный файл CHILL
+</p>
+</dd>
+<dt><samp>.mod</samp></dt>
+<dd><p>Исходный файл Модулы-2
+</p>
+</dd>
+<dt><samp>.s</samp></dt>
+<dt><samp>.S</samp></dt>
+<dd><p>Исходный файл Ассемблера.  В действительности, воспринимается почти
+также, как Си, но GDB не пропускает вводные части функций при
+пошаговом выполнении.
+</p></dd>
+</dl>
+
+<p>В дополнение к этому, вы можете установить язык, ассоциированный с
+расширением имени файла.  See <a href="Otobrazhenie-yazyka.html">Отображение языка
+программирования</a>.
+</p>
+
+
+
+</body>
+</html>

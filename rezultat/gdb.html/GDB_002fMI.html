@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>GDB/MI (Отладка с помощью GDB)</title>
+
+<meta name="description" content="GDB/MI (Отладка с помощью GDB)">
+<meta name="keywords" content="GDB/MI (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="index.html" rel="up" title="Top">
+<link href="Sintaksis-komand-GDB_002fMI.html" rel="next" title="Синтаксис команд GDB/MI">
+<link href="Dalxneishie-plany.html" rel="prev" title="Дальнейшие планы">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="GDB_002fMI"></span><div class="header">
+<p>
+Next: <a href="Oshibki-v-GDB.html" accesskey="n" rel="next">Ошибки в GDB</a>, Previous: <a href="Primechaniya.html" accesskey="p" rel="prev">Примечания</a>, Up: <a href="index.html" accesskey="u" rel="up">Top</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Interfeis-GDB_002fMI"></span><h2 class="chapter">19 Интерфейс <small>GDB/MI</small></h2>
+
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Sintaksis-komand-GDB_002fMI.html" accesskey="1">Синтаксис команд <small>GDB/MI</small></a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Sovmestimostx-GDB_002fMI-s-CLI.html" accesskey="2">Совместимость <small>GDB/MI</small> с CLI</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Vykhodnye-zapisi-GDB_002fMI.html" accesskey="3">Выходные записи <small>GDB/MI</small></a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Format-opisaniya-komand-GDB_002fMI.html" accesskey="4">Формат описания команд <small>GDB/MI</small></a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Komandy-GDB_002fMI-dlya-tablicy-tochek-ostanova.html" accesskey="5">Команды <small>GDB/MI</small> для таблицы точек останова</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Upravlenie-dannymi-GDB_002fMI.html" accesskey="6">Управление данными <small>GDB/MI</small></a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Upravlenie-programmoi-GDB_002fMI.html" accesskey="7">Управление программой <small>GDB/MI</small></a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Raznye-komandy-GDB_002fMI.html" accesskey="8">Разные команды GDB в <small>GDB/MI</small></a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Upravlenie-stekom-GDB_002fMI.html" accesskey="9">Команды <small>GDB/MI</small> управления стеком</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Zaprosy-GDB_002fMI-o-simvolakh.html">Команды <small>GDB/MI</small> запросов о символах</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Upravlenie-celxiu-GDB_002fMI.html">Команды <small>GDB/MI</small> управления целью</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Komandy-GDB_002fMI-dlya-nitei.html">Команды <small>GDB/MI</small> для нитей</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Komandy-GDB_002fMI-dlya-tochek-trassirovki.html">Команды <small>GDB/MI</small> для точек трассировки</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Izmenyaemye-obwekty-GDB_002fMI.html">Изменяемые объекты <small>GDB/MI</small></a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+<span id="Naznachenie-i-celx"></span><h3 class="unnumberedsec">Назначение и цель</h3>
+
+<span id="index-GDB_002fMI_002c-ego-naznachenie"></span>
+<p><small>GDB/MI</small> &mdash; это построчный машинно-ориентированный текстовый
+интерфейс к GDB.  Он предназначен специально для поддержки
+разработки систем, которые используют отладчик лишь как одну маленькую
+компоненту большой системы.
+</p>
+<p>Эта глава является спецификацией интерфейса <small>GDB/MI</small>.  Она написана в
+форме справочного руководства.
+</p>
+<p>Заметьте, что <small>GDB/MI</small> все еще находится в стадии разработки, так что
+некоторые описанные ниже возможности являются неполными и могут быть изменены.
+</p>
+<span id="Sistema-oboznachenii-i-terminologiya"></span><h3 class="unnumberedsec">Система обозначений и терминология</h3>
+
+<span id="index-soglasheniya_002c-ispolxzuemye-v-sisteme-oboznachenii_002c-dlya-GDB_002fMI"></span>
+<p>Эта глава использует следующую систему обозначений:
+</p>
+<ul>
+<li> <code>|</code> разделяет две альтернативы.
+
+</li><li> <code>[ <var>нечто</var> ]</code> указывает, что <var>нечто</var> является
+необязательным: оно может быть задано, а может и нет.
+
+</li><li> <code>( <var>группа</var> )*</code> означает, что <var>группа</var> в скобках может
+повторяться ноль и более раз.
+
+</li><li> <code>( <var>группа</var> )+</code> означает, что <var>группа</var> в скобках может 
+повторяться один и более раз.
+
+</li><li> <code>&quot;<var>строка</var>&quot;</code> обозначает текст <var>строка</var>.
+</li></ul>
+
+
+<span id="Vyrazheniya-priznatelxnosti"></span><h3 class="heading">Выражения признательности</h3>
+
+<p>В алфавитном порядке: Елена Заннони, Эндрю Кагни, Фернандо Нассер и
+Стан Шебс.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Sintaksis-komand-GDB_002fMI.html" accesskey="1">Синтаксис команд GDB/MI</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Sovmestimostx-GDB_002fMI-s-CLI.html" accesskey="2">Совместимость GDB/MI с CLI</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Vykhodnye-zapisi-GDB_002fMI.html" accesskey="3">Выходные записи GDB/MI</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Format-opisaniya-komand-GDB_002fMI.html" accesskey="4">Формат описания команд GDB/MI</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Komandy-GDB_002fMI-dlya-tablicy-tochek-ostanova.html" accesskey="5">Команды GDB/MI для таблицы точек останова</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Upravlenie-dannymi-GDB_002fMI.html" accesskey="6">Управление данными GDB/MI</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Upravlenie-programmoi-GDB_002fMI.html" accesskey="7">Управление программой GDB/MI</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Raznye-komandy-GDB_002fMI.html" accesskey="8">Разные команды GDB/MI</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Upravlenie-stekom-GDB_002fMI.html" accesskey="9">Управление стеком GDB/MI</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Zaprosy-GDB_002fMI-o-simvolakh.html">Запросы GDB/MI о символах</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Upravlenie-celxiu-GDB_002fMI.html">Управление целью GDB/MI</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Komandy-GDB_002fMI-dlya-nitei.html">Команды GDB/MI для нитей</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Komandy-GDB_002fMI-dlya-tochek-trassirovki.html">Команды GDB/MI для точек трассировки</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Izmenyaemye-obwekty-GDB_002fMI.html">Изменяемые объекты GDB/MI</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+</td></tr>
+</table>
+
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Oshibki-v-GDB.html" accesskey="n" rel="next">Ошибки в GDB</a>, Previous: <a href="Primechaniya.html" accesskey="p" rel="prev">Примечания</a>, Up: <a href="index.html" accesskey="u" rel="up">Top</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

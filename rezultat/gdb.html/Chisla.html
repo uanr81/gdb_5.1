@@ -1,0 +1,105 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Числа (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Числа (Отладка с помощью GDB)">
+<meta name="keywords" content="Числа (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Upravlenie-GDB.html" rel="up" title="Управление GDB">
+<link href="Soobshcheniya_002fpreduprezhdeniya.html" rel="next" title="Сообщения/предупреждения">
+<link href="Razmer-ekrana.html" rel="prev" title="Размер экрана">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0427_0438_0441_043b_0430"></span><div class="header">
+<p>
+Next: <a href="Soobshcheniya_002fpreduprezhdeniya.html" accesskey="n" rel="next">Сообщения/предупреждения</a>, Previous: <a href="Razmer-ekrana.html" accesskey="p" rel="prev">Размер экрана</a>, Up: <a href="Upravlenie-GDB.html" accesskey="u" rel="up">Управление GDB</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Chisla"></span><h3 class="section">15.5 Числа</h3>
+<span id="index-predstavlenie-chisel"></span>
+<span id="index-vvod-chisel"></span>
+
+<p>Вы всегда можете вводить в GDB числа в восьмеричной,
+десятичной или шестнадцатеричной системе в соответствии c обычными
+соглашениями: восьмеричные числа начинаются с &lsquo;<samp>0</samp>&rsquo;, десятичные числа
+оканчиваются на &lsquo;<samp>.</samp>&rsquo;, а шестнадцатеричные числа начинаются с
+&lsquo;<samp>0x</samp>&rsquo;.  Числа, которые не начинаются ни c одного из этих знаков, по
+умолчанию считаются десятичными; аналогично, отображение чисел по
+умолчанию &mdash; если не определен никакой конкретный формат &mdash; осуществляется
+по основанию 10.  Командой <code>set radix</code> вы можете изменять
+основание, устанавливаемое по умолчанию для ввода и вывода.
+</p>
+<dl compact="compact">
+<dd><span id="index-set-input_002dradix"></span>
+</dd>
+<dt><code>set input-radix <var>основание</var></code></dt>
+<dd><p>Установить основание по умолчанию для числового ввода.
+Поддерживаемые варианты для <var>основания</var> &mdash; 8, 10 или 16.  Само
+<var>основание</var> должно быть определено либо недвусмысленно, либо с
+использованием текущего основания системы счисления по умолчанию;
+например, любая из команд
+</p>
+<div class="example">
+<pre class="example">set radix 012
+set radix 10.
+set radix 0xa
+</pre></div>
+
+<p>устанавливает десятичное основание.  С другой стороны, &lsquo;<samp>set radix
+10</samp>&rsquo; оставляет основание системы счисления без изменений независимо от
+того, каким оно было.
+</p>
+<span id="index-show-output_002dradix"></span>
+</dd>
+<dt><code>set output-radix <var>основание</var></code></dt>
+<dd><p>Установить основание по умолчанию для числового вывода.
+Поддерживаемые варианты для <var>основания</var> &mdash; 8, 10 или 16.  Само
+<var>основание</var> должно быть определено либо недвусмысленно, либо с
+использованием текущего основания системы счисления по умолчанию.
+</p>
+<span id="index-show-input_002dradix"></span>
+</dd>
+<dt><code>show input-radix</code></dt>
+<dd><p>Отобразить текущее основание по умолчанию для числового ввода.
+</p>
+<span id="index-show-output_002dradix-1"></span>
+</dd>
+<dt><code>show output-radix</code></dt>
+<dd><p>Отобразить текущее основание по умолчанию для числового вывода.
+</p></dd>
+</dl>
+
+
+
+
+</body>
+</html>

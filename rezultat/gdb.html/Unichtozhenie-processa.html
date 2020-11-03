@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Уничтожение процесса (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Уничтожение процесса (Отладка с помощью GDB)">
+<meta name="keywords" content="Уничтожение процесса (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Vypolnenie.html" rel="up" title="Выполнение">
+<link href="Niti.html" rel="next" title="Нити">
+<link href="Prisoedinenie.html" rel="prev" title="Присоединение">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0423_043d_0438_0447_0442_043e_0436_0435_043d_0438_0435-_043f_0440_043e_0446_0435_0441_0441_0430"></span><div class="header">
+<p>
+Next: <a href="Niti.html" accesskey="n" rel="next">Нити</a>, Previous: <a href="Prisoedinenie.html" accesskey="p" rel="prev">Присоединение</a>, Up: <a href="Vypolnenie.html" accesskey="u" rel="up">Выполнение</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Unichtozhenie-dochernego-processa"></span><h3 class="section">4.8 Уничтожение дочернего процесса</h3>
+
+<dl compact="compact">
+<dd><span id="index-kill"></span>
+</dd>
+<dt><code>kill</code></dt>
+<dd><p>Уничтожить дочерний процесс, в котором ваша программа выполняется под
+управлением GDB.
+</p></dd>
+</dl>
+
+<p>Эта команда полезна, если вы хотите отладить дамп памяти, а не
+выполняющийся процесс.  GDB игнорирует любые дампы памяти, пока
+ваша программа выполняется.
+</p>
+<p>В некоторых операционных системах программа не может быть выполнена вне
+GDB, пока в ней есть точки останова, установленные
+отладчиком.  В этой ситуации вы можете использовать команду
+<code>kill</code>, чтобы разрешить выполнение вашей программы вне отладчика.
+</p>
+<p>Команда <code>kill</code> также полезна, если вы хотите перекомпилировать и
+перекомпоновать вашу программу, так как во многих системах невозможно
+модифицировать исполняемый файл во время выполнения процесса.  В этом
+случае, когда вы в следующий раз введете <code>run</code>, GDB
+заметит, что файл изменился, и заново прочитает символьную таблицу
+(стараясь при этом сохранить ваши точки останова).
+</p>
+
+
+
+</body>
+</html>

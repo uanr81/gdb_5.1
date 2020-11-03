@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Начальная загрузка (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Начальная загрузка (Отладка с помощью GDB)">
+<meta name="keywords" content="Начальная загрузка (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Udalennyi.html" rel="up" title="Удаленный">
+<link href="Seans-otladki.html" rel="next" title="Сеанс отладки">
+<link href="Soderzhimoe-zaglushki.html" rel="prev" title="Содержимое заглушки">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_041d_0430_0447_0430_043b_044c_043d_0430_044f-_0437_0430_0433_0440_0443_0437_043a_0430"></span><div class="header">
+<p>
+Next: <a href="Seans-otladki.html" accesskey="n" rel="next">Сеанс отладки</a>, Previous: <a href="Soderzhimoe-zaglushki.html" accesskey="p" rel="prev">Содержимое заглушки</a>, Up: <a href="Udalennyi.html" accesskey="u" rel="up">Удаленный</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Chto-vy-dolzhny-sdelatx-dlya-zaglushki"></span><h4 class="subsubsection">13.4.1.2 Что вы должны сделать для заглушки</h4>
+
+<span id="index-udalennaya-zaglushka_002c-podprogrammy-podderzhki"></span>
+<p>Отладочные заглушки, поставляемые с GDB, ориентированы на
+микропроцессоры определенной архитектуры, но они не имеют информации
+об остальной части вашей целевой отладочной машины.
+</p>
+<p>В первую очередь, вам нужно сообщить заглушке, как связаться с
+последовательным портом.
+</p>
+<dl compact="compact">
+<dt><code>int getDebugChar()</code></dt>
+<dd><span id="index-getDebugChar"></span>
+<p>Напишите эту подпрограмму для чтения одного знака из
+последовательного порта.  Она может быть идентична <code>getchar</code> для
+вашей целевой системы; разные имена используются, чтобы позволить
+вам их различать, если вы этого хотите.
+</p>
+</dd>
+<dt><code>void putDebugChar(int)</code></dt>
+<dd><span id="index-putDebugChar"></span>
+<p>Напишите эту подпрограмму для записи одного знака в
+последовательный порт.  Она может быть идентична <code>putchar</code> для
+вашей целевой системы; разные имена используются, чтобы позволить
+вам их различать, если вы этого хотите.
+</p></dd>
+</dl>
+
+<span id="index-control-C-i-udalennaya-otladka"></span>
+<span id="index-preryvanie-udalennykh-celei"></span>
+<p>Если вы хотите, чтобы GDB мог остановить вашу программу во
+время ее выполнения, вам нужно использовать управляемый прерываниями
+последовательный драйвер и настроить его для остановки при получении
+<code>^C</code> (&lsquo;<samp>\003</samp>&rsquo;, знак control-C).  Это тот знак, который
+GDB использует для указания удаленной системе остановиться.
+</p>
+<p>Указание отладочной цели вернуть GDB правильный статус,
+вероятно, потребует изменений в стандартной заглушке; один быстрый и
+неаккуратный способ состоит в выполнении лишь инструкции точки останова
+(&ldquo;неаккуратность&rdquo; состоит в том, что GDB выдает
+<code>SIGTRAP</code> вместо <code>SIGINT</code>).
+</p>
+<p>Вот другие процедуры, которые вы должны обеспечить:
+</p>
+<dl compact="compact">
+<dt><code>void exceptionHandler (int <var>номер-исключения</var>, void *<var>адрес-исключения</var>)</code></dt>
+<dd><span id="index-exceptionHandler"></span>
+<p>Напишите эту функцию для установки <var>адреса-исключения</var> в таблицы
+обработки исключительных ситуаций.  Вам нужно сделать это, потому
+что у заглушки нет способа узнать, как устроены таблицы обработки
+исключений в вашей целевой системе (например, процессорная
+таблица может находиться в <small>ПЗУ</small> и содержать элементы, указывающие на
+таблицу в <small>ОЗУ</small>).  <var>Номер-исключения</var> &mdash; это номер исключительной
+ситуации, которая должна быть изменена; его значение зависит от
+архитектуры (например, различные номера могут представлять
+деление на ноль, доступ с нарушением выравнивания и так далее).  Когда
+это исключение возникает, управление должно быть передано
+непосредственно <var>адресу-исключения</var>, и процессорное
+состояние (стек, регистры и так далее) должно быть таким же, как
+во время возникновения процессорного исключения.  Так что если вы хотите
+использовать инструкцию перехода для достижения <var>адреса-исключения</var>,
+это должен быть простой переход, не переход к подпрограмме.
+</p>
+<p>Для 386, <var>адрес-исключения</var> должен быть установлен как обработчик
+затвора вызова
+прерывания, чтобы во время его выполнения остальные прерывания маскировались.
+Он должен иметь уровень полномочий 0 (наибольшие полномочия).  Заглушки
+<small>SPARC</small> и 68k могут маскировать прерывания самостоятельно без помощи
+<code>exceptionHandler</code>.
+</p>
+</dd>
+<dt><code>void flush_i_cache()</code></dt>
+<dd><span id="index-flush_005fi_005fcache"></span>
+<p>Только для <small>SPARC</small> и <small>SPARCLITE</small>.  Напишите эту подпрограмму для
+очистки кеша инструкций на вашей целевой машине, если он есть.
+Если кеша инструкций нет, эта подпрограмма может ничего не делать.
+</p>
+<p>На целевых машинах, имеющих кеш инструкций, GDB требует эту
+функцию, чтобы удостовериться, что состояние вашей программы
+стабильно.
+</p></dd>
+</dl>
+
+<p>Вы должны также удостовериться, что доступна такая библиотечная процедура:
+</p>
+<dl compact="compact">
+<dt><code>void *memset(void *, int, int)</code></dt>
+<dd><span id="index-memset"></span>
+<p>Это стандартная библиотечная функция <code>memset</code>, которая
+устанавливает область памяти в заданное значение.  Если у вас есть
+одна из свободных версий <code>libc.a</code>, <code>memset</code> может быть найдена
+там; иначе вы должны или получить ее от изготовителя аппаратного
+обеспечения, или написать свою собственную.
+</p></dd>
+</dl>
+
+<p>Если вы не используете компилятор <small>GNU</small> Си, вам также могут
+понадобиться другие стандартные библиотечные подпрограммы; это
+меняется от одной заглушки к другой, но в общем, заглушки
+часто используют различные общие библиотечные подпрограммы, которые
+<code>gcc</code> генерирует как встроенный код.
+</p>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Seans-otladki.html" accesskey="n" rel="next">Сеанс отладки</a>, Previous: <a href="Soderzhimoe-zaglushki.html" accesskey="p" rel="prev">Содержимое заглушки</a>, Up: <a href="Udalennyi.html" accesskey="u" rel="up">Удаленный</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Ловушки (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Ловушки (Отладка с помощью GDB)">
+<meta name="keywords" content="Ловушки (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Posledovatelxnosti.html" rel="up" title="Последовательности">
+<link href="Komandnye-faily.html" rel="next" title="Командные файлы">
+<link href="Opredelyaemye-polxzovatelem-komandy.html" rel="prev" title="Определяемые пользователем команды">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_041b_043e_0432_0443_0448_043a_0438"></span><div class="header">
+<p>
+Next: <a href="Komandnye-faily.html" accesskey="n" rel="next">Командные файлы</a>, Previous: <a href="Opredelyaemye-polxzovatelem-komandy.html" accesskey="p" rel="prev">Определяемые пользователем команды</a>, Up: <a href="Posledovatelxnosti.html" accesskey="u" rel="up">Последовательности</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Opredelyaemye-polxzovatelem-komandy_002dlovushki"></span><h3 class="section">16.2 Определяемые пользователем команды-ловушки</h3>
+<span id="index-komandy_002dlovushki"></span>
+<span id="index-lovushki-dlya-komand"></span>
+<span id="index-lovushki_002c-do-komandy"></span>
+
+<span id="index-hook"></span>
+<span id="index-hook_002d"></span>
+<p>Вы можете определять <em>ловушки</em>, которые являются специальным
+видом определяемых пользователем команд.  Всякий раз, когда вы выполняете
+команду &lsquo;<samp>foo</samp>&rsquo;, перед ней выполняется определенная пользователем команда
+&lsquo;<samp>hook-foo</samp>&rsquo; (без параметров), если она существует.
+</p>
+<span id="index-lovushki_002c-posle-komandy"></span>
+<span id="index-hookpost"></span>
+<span id="index-hookpost_002d"></span>
+<p>Также может быть определена ловушка, которая вызывается после
+выполненной вами команды.  Когда вы выполняете команду &lsquo;<samp>foo</samp>&rsquo;, после
+нее вызывается (без аргументов) определенная пользователем команда
+&lsquo;<samp>hookpost-foo</samp>&rsquo;, если она существует.  Ловушки, срабатывающие после
+выполнения команды, могут существовать одновременно с ловушками,
+вызываемыми до выполнения той же команды.
+</p>
+<p>Ловушка может вызывать ту же команду, которую она ловит.  Если
+это происходит, ловушка заново не вызывается.  Тем самым избегаются
+бесконечные циклы.
+</p>
+<span id="index-stop_002c-psevdokomanda"></span>
+<p>Кроме того, существует псевдокоманда &lsquo;<samp>stop</samp>&rsquo;.  Определение
+(&lsquo;<samp>hook-stop</samp>&rsquo;) велит выполняться связанным с ней командам при каждом
+останове вашей программы: перед выполнением команд точек останова, перед
+выводом на экран сообщений или кадров стека.
+</p>
+<p>Например, чтобы игнорировать сигналы <code>SIGALRM</code> во время выполнения
+в пошаговом режиме, но обрабатывать их при нормальном выполнении, вы
+можете определить:
+</p>
+<div class="example">
+<pre class="example">define hook-stop
+handle SIGALRM nopass
+end
+
+define hook-run
+handle SIGALRM pass
+end
+
+define hook-continue
+handle SIGLARM pass
+end
+</pre></div>
+
+<p>В качестве другого примера, чтобы поймать начало и конец команды
+<code>echo</code> и добавить дополнительный текст до и после сообщения, вы
+можете определить:
+</p>
+<div class="example">
+<pre class="example">define hook-echo
+echo &lt;&lt;&lt;---
+end
+
+define hookpost-echo
+echo ---&gt;&gt;&gt;\n
+end
+
+(gdb) echo Hello World
+&lt;&lt;&lt;---Hello World---&gt;&gt;&gt;
+(gdb)
+
+</pre></div>
+
+<p>Вы можете определить ловушку для любой однословной команды
+GDB, но не для синонимов команды; вам следует определить
+ловушку для базового имени команды, например, <code>backtrace</code>, но не
+<code>bt</code>.  Если во время выполнения вашей ловушки возникает ошибка,
+выполнение команд GDB останавливается, и
+он выдает приглашение (до того, как введенная вами
+команда начнет выполняться).
+</p>
+<p>Если вы попытаетесь определить ловушку, не соответствующую никакой
+известной команде, вы получите предупреждение от команды <code>define</code>.
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Komandnye-faily.html" accesskey="n" rel="next">Командные файлы</a>, Previous: <a href="Opredelyaemye-polxzovatelem-komandy.html" accesskey="p" rel="prev">Определяемые пользователем команды</a>, Up: <a href="Posledovatelxnosti.html" accesskey="u" rel="up">Последовательности</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

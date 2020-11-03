@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Примечания к исходному тексту (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Примечания к исходному тексту (Отладка с помощью GDB)">
+<meta name="keywords" content="Примечания к исходному тексту (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Primechaniya.html" rel="up" title="Примечания">
+<link href="Dalxneishie-plany.html" rel="next" title="Дальнейшие планы">
+<link href="Primechaniya-k-vypolneniiu.html" rel="prev" title="Примечания к выполнению">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_041f_0440_0438_043c_0435_0447_0430_043d_0438_044f-_043a-_0438_0441_0445_043e_0434_043d_043e_043c_0443-_0442_0435_043a_0441_0442_0443"></span><div class="header">
+<p>
+Next: <a href="Dalxneishie-plany.html" accesskey="n" rel="next">Дальнейшие планы</a>, Previous: <a href="Primechaniya-k-vypolneniiu.html" accesskey="p" rel="prev">Примечания к выполнению</a>, Up: <a href="Primechaniya.html" accesskey="u" rel="up">Примечания</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Vyvod-iskhodnogo-teksta"></span><h3 class="section">18.11 Вывод исходного текста</h3>
+<span id="index-primechaniya-k-otobrazheniiu-iskhodnogo-teksta"></span>
+
+<span id="index-source"></span>
+<p>Следующие примечания используются вместо вывода исходного текста:
+</p>
+<div class="example">
+<pre class="example">^Z^Zsource <var>имя-файла</var>:<var>строка</var>:<var>знак</var>:<var>середина</var>:<var>адрес</var>
+</pre></div>
+
+<p>где <var>имя-файла</var> указывает абсолютное имя файла,
+<var>строка</var> &mdash; это номер строки в этом файле (первая строка имеет номер 1),
+<var>знак</var> &mdash; позиция знака в файле (первый знак в исходном файле
+имеет номер 0) (для большинства отладочных форматов это будет
+обязательно указывать на начало строки), <var>середина</var> есть
+&lsquo;<samp>middle</samp>&rsquo;, если <var>адрес</var> находится в середине строки, или
+&lsquo;<samp>beg</samp>&rsquo;, если <var>адрес</var> находится в начале строки, а <var>адрес</var>
+является адресом в целевой программе, ассоциированным с выводимым
+исходным текстом.  <var>Адрес</var> записывается в форме &lsquo;<samp>0x</samp>&rsquo;, за которым
+следует одна или несколько шестнадцатеричных цифр в нижнем регистре
+(заметьте, что это не зависит от языка).
+</p>
+
+
+
+</body>
+</html>

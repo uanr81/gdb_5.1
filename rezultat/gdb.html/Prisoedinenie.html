@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Присоединение (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Присоединение (Отладка с помощью GDB)">
+<meta name="keywords" content="Присоединение (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Vypolnenie.html" rel="up" title="Выполнение">
+<link href="Unichtozhenie-processa.html" rel="next" title="Уничтожение процесса">
+<link href="Vvod_002dvyvod.html" rel="prev" title="Ввод-вывод">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_041f_0440_0438_0441_043e_0435_0434_0438_043d_0435_043d_0438_0435"></span><div class="header">
+<p>
+Next: <a href="Unichtozhenie-processa.html" accesskey="n" rel="next">Уничтожение процесса</a>, Previous: <a href="Vvod_002dvyvod.html" accesskey="p" rel="prev">Ввод-вывод</a>, Up: <a href="Vypolnenie.html" accesskey="u" rel="up">Выполнение</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Otladka-zapushchennogo-ranee-processa"></span><h3 class="section">4.7 Отладка запущенного ранее процесса</h3>
+<span id="index-attach"></span>
+<span id="index-prisoedinenie"></span>
+
+<dl compact="compact">
+<dt><code>attach <var>идент-процесса</var></code></dt>
+<dd><p>Эта команда присоединяется к выполняющемуся процессу &mdash; процессу, который
+был запущен вне GDB.  (Команда <code>info files</code> показывает ваши
+активные цели.)  В качестве аргумента эта команда получает идентификатор
+процесса.  Обычный способ узнать идентификатор
+Unix-процесса &mdash; воспользоваться утилитой <code>ps</code> или командой оболочки
+&lsquo;<samp>jobs -l</samp>&rsquo;.
+</p>
+<p><code>attach</code> не повторяется, если вы нажмете <tt class="key">RET</tt> второй раз
+после выполнения команды.
+</p></dd>
+</dl>
+
+<p>Чтобы использовать <code>attach</code>, ваша программа должна выполняться в
+среде, поддерживающей процессы; например, <code>attach</code> не работает на
+специальных машинах, не имеющих операционной системы.  Вы также должны
+обладать полномочиями для посылки сигнала процессу.
+</p>
+<p>Когда вы используете <code>attach</code>, отладчик находит программу
+выполняющегося процесса, производя поиск сперва в текущем рабочем
+каталоге, а затем (если программа не найдена), используя пути поиска
+исходных файлов (see <a href="Puti-dlya-iskhodnykh-failov.html">Определение каталогов с
+исходными файлами</a>).  Также, для загрузки программы вы можете
+использовать команду <code>file</code>.  See <a href="Faily.html">Команды для задания
+файлов</a>.
+</p>
+<p>Первое, что GDB делает после подготовки указанного процесса к
+отладке &mdash; останавливает его.  Вы можете исследовать и изменять
+присоединенный процесс всеми командами GDB, которые обычно
+доступны, когда вы запускаете процессы с помощью <code>run</code>.  Вы можете
+устанавливать точки останова; вы можете пошагово выполнять программу и
+продолжить ее обычное выполнение, вы можете изменять области данных.
+Если вы решите продолжить выполнение процесса после присоединения к нему
+GDB, вы можете использовать команду <code>continue</code>.
+</p>
+<dl compact="compact">
+<dd><span id="index-detach"></span>
+</dd>
+<dt><code>detach</code></dt>
+<dd><p>Когда вы закончили отлаживать присоединенный процесс, для его
+освобождения из-под управления GDB вы можете использовать
+команду <code>detach</code>.  Отсоединение процесса продолжает его
+выполнение.  После команды <code>detach</code>, этот процесс и
+GDB снова становятся совершенно независимыми, и вы готовы
+присоединить или запустить с помощью <code>run</code> другой процесс.
+<code>detach</code> не повторяется, если вы нажмете <tt class="key">RET</tt> еще раз.
+</p></dd>
+</dl>
+
+<p>Если вы выйдете из GDB или используете команду <code>run</code>, пока
+у вас есть присоединенный процесс, вы убьете этот процесс.  По
+умолчанию, GDB запрашивает подтверждение, если вы пытаетесь
+сделать одну из этих вещей; вы можете контролировать, нужно вам это
+подтверждение или нет, используя команду <code>set confirm</code>
+(see <a href="Soobshcheniya_002fpreduprezhdeniya.html">Необязательные предупреждения и
+сообщения</a>).
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Unichtozhenie-processa.html" accesskey="n" rel="next">Уничтожение процесса</a>, Previous: <a href="Vvod_002dvyvod.html" accesskey="p" rel="prev">Ввод-вывод</a>, Up: <a href="Vypolnenie.html" accesskey="u" rel="up">Выполнение</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

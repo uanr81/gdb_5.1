@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Проверка (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Проверка (Отладка с помощью GDB)">
+<meta name="keywords" content="Проверка (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="YAzyki.html" rel="up" title="Языки">
+<link href="Proverka-tipov.html" rel="next" title="Проверка типов">
+<link href="Otobrazhenie-yazyka.html" rel="prev" title="Отображение языка">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_041f_0440_043e_0432_0435_0440_043a_0430"></span><div class="header">
+<p>
+Next: <a href="Podderzhka.html" accesskey="n" rel="next">Поддержка</a>, Previous: <a href="Otobrazhenie-yazyka.html" accesskey="p" rel="prev">Отображение языка</a>, Up: <a href="YAzyki.html" accesskey="u" rel="up">Языки</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Proverka-diapazona-i-prinadlezhnosti-tipu"></span><h3 class="section">9.3 Проверка диапазона и принадлежности типу</h3>
+
+<blockquote>
+<p><em>Предупреждение:</em> В этот выпуск включены команды GDB для
+проверки диапазона и соответствия типов, но они пока не оказывают
+никакого действия.  Этот раздел описывает их предполагаемые возможности.
+</p></blockquote>
+
+<p>Некоторые языки обеспечивают защиту от достаточно общих ошибок
+с помощью набора проверок времени компиляции и времени выполнения.  Это
+включает проверку типов аргументов функций и операторов и обеспечивает
+проверку математического переполнения во время выполнения.  Проверки
+такого рода помогают убедиться в корректности программы после ее
+компиляции путем устранения несоответствия типов, и предоставляя
+активную проверку ошибок выхода за пределы диапазона во время
+выполнения.
+</p>
+<p>По вашему желанию, GDB может проводить подобные проверки.  Хотя
+GDB не проверяет операторы вашей программы, он может, например, проверять
+выражения, введенные непосредственно в GDB для вычисления
+командой <code>print</code>.  Как и в случае рабочего языка,
+GDB может также автоматически решить, выполнять проверку или нет,
+основываясь на исходном языке вашей программы.  See <a href="Podderzhka.html">Поддерживаемые языки</a>, для информации об установках по умолчанию для
+поддерживаемых языков.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Proverka-tipov.html" accesskey="1">Проверка типов</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Обзор проверки типов
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Proverka-diapazona.html" accesskey="2">Проверка диапазона</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Обзор проверки диапазона
+</td></tr>
+</table>
+
+<span id="index-proverka-tipov"></span>
+<span id="index-tipy_002c-proverka"></span>
+
+
+
+</body>
+</html>

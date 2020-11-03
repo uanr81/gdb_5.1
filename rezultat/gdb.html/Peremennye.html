@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Переменные (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Переменные (Отладка с помощью GDB)">
+<meta name="keywords" content="Переменные (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Dannye.html" rel="up" title="Данные">
+<link href="Massivy.html" rel="next" title="Массивы">
+<link href="Vyrazheniya.html" rel="prev" title="Выражения">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_041f_0435_0440_0435_043c_0435_043d_043d_044b_0435"></span><div class="header">
+<p>
+Next: <a href="Massivy.html" accesskey="n" rel="next">Массивы</a>, Previous: <a href="Vyrazheniya.html" accesskey="p" rel="prev">Выражения</a>, Up: <a href="Dannye.html" accesskey="u" rel="up">Данные</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Peremennye-programmy"></span><h3 class="section">8.2 Переменные программы</h3>
+
+<p>Чаще всего в качестве выражения используется имя переменной вашей
+программы.
+</p>
+<p>Переменные в выражениях трактуются в контексте выбранного кадра стека
+(see <a href="Vybor.html">Выбор кадра стека</a>); они могут быть либо
+</p>
+<ul>
+<li> глобальными (или статическими)
+</li></ul>
+
+<p>либо
+</p>
+<ul>
+<li> видимыми из точки выполнения в данном кадре, в соответствии с правилами
+определения области видимости языка программирования.
+</li></ul>
+
+<p>Это означает, что в функции
+</p>
+<div class="example">
+<pre class="example">foo (a)
+     int a;
+{
+  bar (a);
+  {
+    int b = test ();
+    bar (b);
+  }
+}
+</pre></div>
+
+<p>вы можете исследовать и использовать переменную <code>a</code> всякий раз,
+когда ваша программа выполняется в пределах функции <code>foo</code>, но
+переменную <code>b</code> можно использовать или исследовать только тогда,
+когда ваша программа выполняется внутри блока, в котором она объявлена.
+</p>
+<span id="index-konflikt-imen-peremennykh"></span>
+<p>Есть исключение: вы можете ссылаться на переменную или функцию, областью
+видимости которой является единственный исходный файл, даже если точка
+текущего выполнения в нем не находится.  Допускается существование
+нескольких переменных или функций с одинаковым именем (в различных
+исходных файлах).  Если это так, обращение к этому имени приводит к
+непредсказуемым результатам.  Если хотите, вы можете указать
+статическую переменную в конкретной функции или в файле, используя
+двойное двоеточие:
+</p>
+<span id="index-dvoinoe-dvoetochie_002c-kontekst-dlya-peremennykh_002ffunkcii"></span>
+<div class="example">
+<pre class="example"><var>файл</var>::<var>переменная</var>
+<var>функция</var>::<var>переменная</var>
+</pre></div>
+
+<p>Здесь <var>файл</var> или <var>функция</var> &mdash; название контекста для статической
+<var>переменной</var>.  В первом случае вы можете использовать кавычки, чтобы
+GDB рассматривал имя файла как одно слово; например, чтобы вывести
+глобальное значение переменной <code>x</code>, определенной в <samp>f2.c</samp>:
+</p>
+<div class="example">
+<pre class="example">(gdb) p 'f2.c'::x
+</pre></div>
+
+<span id="index-opredelenie-oblasti-vidimosti-v-Si_002b_002b"></span>
+<p>Такое использование &lsquo;<samp>::</samp>&rsquo; крайне редко конфликтует с похожим
+использованием той же записи в Си++.  GDB также поддерживает
+использование оператора определения области видимости Си++ в выражениях.
+</p>
+<span id="index-nevernye-znacheniya"></span>
+<span id="index-znacheniya-peremennykh_002c-nevernye"></span>
+<blockquote>
+<p><em>Предупреждение:</em> В некоторых случаях, в определенной точке функции
+(сразу после входа в новую область видимости и непосредственно перед
+выходом из нее)
+может показаться, что локальная переменная имеет неверное значение.
+</p></blockquote>
+
+<p>Вы можете столкнуться с этой проблемой при пошаговом выполнении по
+одной машинной инструкции.  Она возникает из-за того, что на большинстве
+машин процедура установки кадра стека (включая определения локальных
+переменных) занимает более одной инструкции; если вы
+производите пошаговое выполнение по одной машинной инструкции, может
+показаться, что переменная имеет неверное значение, пока кадр стека не
+будет полностью построен.  При выходе, для уничтожения кадра стека
+обычно также требуется более одной инструкции; после начала
+пошагового выполнения этой группы инструкций определения локальных переменных
+могут пропасть.
+</p>
+<p>Это также может случиться, когда компилятор делает значительную
+оптимизацию.  Чтобы быть уверенным, что вы всегда видите точные
+значения, отключите всю оптимизацию при компиляции.
+</p>
+<span id="index-_0060_0060No-symbol-_0022foo_0022-in-current-context_0027_0027"></span>
+<p>Другой возможный эффект оптимизации компилятора заключается в уничтожении
+неиспользуемых переменных или в присвоении переменных регистрам (а не
+адресам памяти).  В зависимости от поддержки таких ситуаций,
+предоставляемой форматом отладочной информации, который использует
+компилятор, GDB может не вывести значения таких локальных
+переменных.  Если это происходит, GDB выведет сообщение,
+подобное этому:
+</p>
+<div class="example">
+<pre class="example">No symbol &quot;foo&quot; in current context.
+</pre></div>
+
+<p>Для решения таких проблем или перекомпилируйте программу без
+оптимизации, или используйте другой формат отладочной информации, если
+компилятор поддерживает несколько таких форматов.  Например
+GCC, компилятор <small>GNU</small> Си/Си++, обычно поддерживает ключ
+&lsquo;<samp>-gstabs</samp>&rsquo;.  &lsquo;<samp>-gstabs</samp>&rsquo; создает отладочную информацию в формате,
+являющимся развитием таких форматов, как COFF.  У вас может быть
+возможность использовать DWARF2 (&lsquo;<samp>-gdwarf-2</samp>&rsquo;), который тоже
+является эффективной формой представления отладочной информации.
+Смотрите <a href="https://gcc.gnu.org/onlinedocs/gcc/_041a_043b_044e_0447_0438-_0434_043b_044f-_043e_0442_043b_0430_0434_043a_0438.html#g_t_041a_043b_044e_0447_0438-_0434_043b_044f-_043e_0442_043b_0430_0434_043a_0438">Ключи для отладки вашей программы или
+<small>GNU</small> CC</a> in <cite>Использование <small>GNU</small> CC</cite>, для дополнительной
+информации.
+</p>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Massivy.html" accesskey="n" rel="next">Массивы</a>, Previous: <a href="Vyrazheniya.html" accesskey="p" rel="prev">Выражения</a>, Up: <a href="Dannye.html" accesskey="u" rel="up">Данные</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

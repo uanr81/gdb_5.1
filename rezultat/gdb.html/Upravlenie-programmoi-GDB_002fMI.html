@@ -1,0 +1,699 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Управление программой GDB/MI (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Управление программой GDB/MI (Отладка с помощью GDB)">
+<meta name="keywords" content="Управление программой GDB/MI (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="GDB_002fMI.html" rel="up" title="GDB/MI">
+<link href="Raznye-komandy-GDB_002fMI.html" rel="next" title="Разные команды GDB/MI">
+<link href="Upravlenie-dannymi-GDB_002fMI.html" rel="prev" title="Управление данными GDB/MI">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0423_043f_0440_0430_0432_043b_0435_043d_0438_0435-_043f_0440_043e_0433_0440_0430_043c_043c_043e_0439-GDB_002fMI"></span><div class="header">
+<p>
+Next: <a href="Raznye-komandy-GDB_002fMI.html" accesskey="n" rel="next">Разные команды GDB/MI</a>, Previous: <a href="Upravlenie-dannymi-GDB_002fMI.html" accesskey="p" rel="prev">Управление данными GDB/MI</a>, Up: <a href="GDB_002fMI.html" accesskey="u" rel="up">GDB/MI</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Upravlenie-programmoi-GDB_002fMI"></span><h3 class="section">19.7 Управление программой <small>GDB/MI</small></h3>
+
+<span id="Zavershenie-programmy"></span><h4 class="subsubheading">Завершение программы</h4>
+
+<p>В процессе выполнения, подчиненная программа может достигнуть конца,
+если она не встретит ни одной точки останова.  В этом случае вывод будет
+включать код завершения, если программа завершилась ненормально.
+</p>
+<span id="Primery"></span><h4 class="subsubheading">Примеры</h4>
+
+<p>Программа завершилась нормально:
+</p>
+<div class="example">
+<pre class="example">(gdb)
+-exec-run
+^running
+(gdb)
+x = 55
+*stopped,reason=&quot;exited-normally&quot;
+(gdb)
+</pre></div>
+
+<p>Программа завершилась ненормально:
+</p>
+<div class="example">
+<pre class="example">(gdb)
+-exec-run
+^running
+(gdb)
+x = 55
+*stopped,reason=&quot;exited&quot;,exit-code=&quot;01&quot;
+(gdb)
+</pre></div>
+
+<p>Кроме того, программа может завершиться так, как если бы она получила
+сигнал, например <code>SIGINT</code>.  В этом случае <small>GDB/MI</small> отображает
+следующее:
+</p>
+<div class="example">
+<pre class="example">(gdb)
+*stopped,reason=&quot;exited-signalled&quot;,signal-name=&quot;SIGINT&quot;,
+signal-meaning=&quot;Interrupt&quot;
+</pre></div>
+
+
+<span id="Komanda-_002dexec_002dabort"></span><h4 class="subheading">Команда <code>-exec-abort</code></h4>
+<span id="index-_002dexec_002dabort"></span>
+
+<span id="Kratkoe-opisanie-25"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -exec-abort
+</pre></div>
+
+<p>Убить выполняющуюся подчиненную программу.
+</p>
+<span id="Komanda-GDB-24"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>kill</samp>&rsquo;.
+</p>
+<span id="Primer-25"></span><h4 class="subsubheading">Пример</h4>
+<p>Н.П.
+</p>
+
+<span id="Komanda-_002dexec_002darguments"></span><h4 class="subheading">Команда <code>-exec-arguments</code></h4>
+<span id="index-_002dexec_002darguments"></span>
+
+<span id="Kratkoe-opisanie-26"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -exec-arguments <var>арг</var>
+</pre></div>
+
+<p>Установить аргументы подчиненной программы, которые должны быть
+использованы при следующем &lsquo;<samp>-exec-run</samp>&rsquo;.
+</p>
+<span id="Komanda-GDB-25"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>set args</samp>&rsquo;.
+</p>
+<span id="Primer-26"></span><h4 class="subsubheading">Пример</h4>
+
+<p>Пока нет.
+</p>
+
+<span id="Komanda-_002dexec_002dcontinue"></span><h4 class="subheading">Команда <code>-exec-continue</code></h4>
+<span id="index-_002dexec_002dcontinue"></span>
+
+<span id="Kratkoe-opisanie-27"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -exec-continue
+</pre></div>
+
+<p>Асинхронная команда.  Возобновляет выполнение подчиненной программы до
+тех пор, пока не будет встречена точка останова, или пока подчиненная
+программа не завершится.
+</p>
+<span id="Komanda-GDB-26"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>continue</samp>&rsquo;.
+</p>
+<span id="Primer-27"></span><h4 class="subsubheading">Пример</h4>
+
+<div class="example">
+<pre class="example">-exec-continue
+^running
+(gdb)
+@Hello world
+*stopped,reason=&quot;breakpoint-hit&quot;,bkptno=&quot;2&quot;,frame={func=&quot;foo&quot;,args=[],
+file=&quot;hello.c&quot;,line=&quot;13&quot;}
+(gdb)
+</pre></div>
+
+
+<span id="Komanda-_002dexec_002dfinish"></span><h4 class="subheading">Команда <code>-exec-finish</code></h4>
+<span id="index-_002dexec_002dfinish"></span>
+
+<span id="Kratkoe-opisanie-28"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -exec-finish
+</pre></div>
+
+<p>Асинхронная команда.  Возобновляет выполнение подчиненной программы до
+тех пор, пока не завершится текущая функция.  Отображает результаты,
+возвращенные функцией.
+</p>
+<span id="Komanda-GDB-27"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>finish</samp>&rsquo;.
+</p>
+<span id="Primer-28"></span><h4 class="subsubheading">Пример</h4>
+
+<p>Функция, возвращающая <code>void</code>.
+</p>
+<div class="example">
+<pre class="example">-exec-finish
+^running
+(gdb)
+@hello from foo
+*stopped,reason=&quot;function-finished&quot;,frame={func=&quot;main&quot;,args=[],
+file=&quot;hello.c&quot;,line=&quot;7&quot;}
+(gdb)
+</pre></div>
+
+<p>Функция, возвращающая что-либо отличное от <code>void</code>.  Печатается имя
+внутренней переменной GDB, хранящей результат, а также и сам
+результат.
+</p>
+<div class="example">
+<pre class="example">-exec-finish
+^running
+(gdb)
+*stopped,reason=&quot;function-finished&quot;,frame={addr=&quot;0x000107b0&quot;,func=&quot;foo&quot;,
+args=[{name=&quot;a&quot;,value=&quot;1&quot;],{name=&quot;b&quot;,value=&quot;9&quot;}},
+file=&quot;recursive2.c&quot;,line=&quot;14&quot;},
+gdb-result-var=&quot;$1&quot;,return-value=&quot;0&quot;
+(gdb)
+</pre></div>
+
+
+<span id="Komanda-_002dexec_002dinterrupt"></span><h4 class="subheading">Команда <code>-exec-interrupt</code></h4>
+<span id="index-_002dexec_002dinterrupt"></span>
+
+<span id="Kratkoe-opisanie-29"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -exec-interrupt
+</pre></div>
+
+<p>Асинхронная команда.  Прерывает фоновое исполнение цели.  Заметьте, что
+лексема, ассоциированная с сообщением об останове, совпадает с лексемой
+для выполнения команды, которая была прервана.  Лексема для самого
+прерывания появляется только в выводе &lsquo;<samp>^done</samp>&rsquo;.  Если пользователь
+пытается прервать невыполняющуюся программу, будет выведено сообщение об
+ошибке.
+</p>
+<span id="Komanda-GDB-28"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>interrupt</samp>&rsquo;.
+</p>
+<span id="Primer-29"></span><h4 class="subsubheading">Пример</h4>
+
+<div class="example">
+<pre class="example">(gdb)
+111-exec-continue
+111^running
+
+(gdb)
+222-exec-interrupt
+222^done
+(gdb)
+111*stopped,signal-name=&quot;SIGINT&quot;,signal-meaning=&quot;Interrupt&quot;,
+frame={addr=&quot;0x00010140&quot;,func=&quot;foo&quot;,args=[],file=&quot;try.c&quot;,line=&quot;13&quot;}
+(gdb)
+
+(gdb)
+-exec-interrupt
+^error,msg=&quot;mi_cmd_exec_interrupt: Inferior not executing.&quot;
+(gdb)
+</pre></div>
+
+
+<span id="Komanda-_002dexec_002dnext"></span><h4 class="subheading">Команда <code>-exec-next</code></h4>
+<span id="index-_002dexec_002dnext"></span>
+
+<span id="Kratkoe-opisanie-30"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -exec-next
+</pre></div>
+
+<p>Асинхронная команда.  Возобновляет выполнение подчиненной программы,
+останавливая ее, когда достигается начало следующей строки исходного
+текста.
+</p>
+<span id="Komanda-GDB-29"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>next</samp>&rsquo;.
+</p>
+<span id="Primer-30"></span><h4 class="subsubheading">Пример</h4>
+
+<div class="example">
+<pre class="example">-exec-next
+^running
+(gdb)
+*stopped,reason=&quot;end-stepping-range&quot;,line=&quot;8&quot;,file=&quot;hello.c&quot;
+(gdb)
+</pre></div>
+
+
+<span id="Komanda-_002dexec_002dnext_002dinstruction"></span><h4 class="subheading">Команда <code>-exec-next-instruction</code></h4>
+<span id="index-_002dexec_002dnext_002dinstruction"></span>
+
+<span id="Kratkoe-opisanie-31"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -exec-next-instruction
+</pre></div>
+
+<p>Асинхронная команда.  Выполняет одну машинную инструкцию.  Если
+инструкция является вызовом функции, выполнение продолжается до возврата
+из функции.  Если программа останавливается на инструкции в середине
+строки исходного текста, печатается также адрес.
+</p>
+<span id="Komanda-GDB-30"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>nexti</samp>&rsquo;.
+</p>
+<span id="Primer-31"></span><h4 class="subsubheading">Пример</h4>
+
+<div class="example">
+<pre class="example">(gdb)
+-exec-next-instruction
+^running
+
+(gdb)
+*stopped,reason=&quot;end-stepping-range&quot;,
+addr=&quot;0x000100d4&quot;,line=&quot;5&quot;,file=&quot;hello.c&quot;
+(gdb)
+</pre></div>
+
+
+<span id="Komanda-_002dexec_002dreturn"></span><h4 class="subheading">Команда <code>-exec-return</code></h4>
+<span id="index-_002dexec_002dreturn"></span>
+
+<span id="Kratkoe-opisanie-32"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -exec-return
+</pre></div>
+
+<p>Велит текущей функции немедленно вернуться.  Не выполняет подчиненную
+программу.  Отображает новый текущий кадр.
+</p>
+<span id="Komanda-GDB-31"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>return</samp>&rsquo;.
+</p>
+<span id="Primer-32"></span><h4 class="subsubheading">Пример</h4>
+
+<div class="example">
+<pre class="example">(gdb)
+200-break-insert callee4
+200^done,bkpt={number=&quot;1&quot;,addr=&quot;0x00010734&quot;,
+file=&quot;../../../devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot;8&quot;}
+(gdb)
+000-exec-run
+000^running
+(gdb)
+000*stopped,reason=&quot;breakpoint-hit&quot;,bkptno=&quot;1&quot;,
+frame={func=&quot;callee4&quot;,args=[],
+file=&quot;../../../devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot;8&quot;}
+(gdb)
+205-break-delete
+205^done
+(gdb)
+111-exec-return
+111^done,frame={level=&quot;0 &quot;,func=&quot;callee3&quot;,
+args=[{name=&quot;strarg&quot;,
+value=&quot;0x11940 \&quot;A string argument.\&quot;&quot;}],
+file=&quot;../../../devo/gdb/testsuite/gdb.mi/basics.c&quot;,line=&quot;18&quot;}
+(gdb)
+</pre></div>
+
+
+<span id="Komanda-_002dexec_002drun"></span><h4 class="subheading">Команда <code>-exec-run</code></h4>
+<span id="index-_002dexec_002drun"></span>
+
+<span id="Kratkoe-opisanie-33"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -exec-run
+</pre></div>
+
+<p>Асинхронная команда.  Начинает выполнение подчиненной программы с начала.
+Она выполняется до тех пор, пока либо не встретится точка останова, либо
+программа не завершится.
+</p>
+<span id="Komanda-GDB-32"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>run</samp>&rsquo;.
+</p>
+<span id="Primer-33"></span><h4 class="subsubheading">Пример</h4>
+
+<div class="example">
+<pre class="example">(gdb)
+-break-insert main
+^done,bkpt={number=&quot;1&quot;,addr=&quot;0x0001072c&quot;,file=&quot;recursive2.c&quot;,line=&quot;4&quot;}
+(gdb)
+-exec-run
+^running
+(gdb)
+*stopped,reason=&quot;breakpoint-hit&quot;,bkptno=&quot;1&quot;,
+frame={func=&quot;main&quot;,args=[],file=&quot;recursive2.c&quot;,line=&quot;4&quot;}
+(gdb)
+</pre></div>
+
+
+<span id="Komanda-_002dexec_002dshow_002darguments"></span><h4 class="subheading">Команда <code>-exec-show-arguments</code></h4>
+<span id="index-_002dexec_002dshow_002darguments"></span>
+
+<span id="Kratkoe-opisanie-34"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -exec-show-arguments
+</pre></div>
+
+<p>Печатает аргументы программы.
+</p>
+<span id="Komanda-GDB-33"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>show args</samp>&rsquo;.
+</p>
+<span id="Primer-34"></span><h4 class="subsubheading">Пример</h4>
+<p>Н.П.
+</p>
+
+<span id="Komanda-_002dexec_002dstep"></span><h4 class="subheading">Команда <code>-exec-step</code></h4>
+<span id="index-_002dexec_002dstep"></span>
+
+<span id="Kratkoe-opisanie-35"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -exec-step
+</pre></div>
+
+<p>Асинхронная команда.  Возобновляет выполнение подчиненной программы,
+останавливая ее, когда будет достигнуто начало следующей строки исходного
+файла, при условии, что она не является вызовом функции.  Если же
+следующая строка является вызовом функции, программа останавливается на
+первой инструкции этой функции.
+</p>
+<span id="Komanda-GDB-34"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>step</samp>&rsquo;.
+</p>
+<span id="Primer-35"></span><h4 class="subsubheading">Пример</h4>
+
+<p>Пошаговый вход в функцию:
+</p>
+<div class="example">
+<pre class="example">-exec-step
+^running
+(gdb)
+*stopped,reason=&quot;end-stepping-range&quot;,
+frame={func=&quot;foo&quot;,args=[{name=&quot;a&quot;,value=&quot;10&quot;},
+{name=&quot;b&quot;,value=&quot;0&quot;}],file=&quot;recursive2.c&quot;,line=&quot;11&quot;}
+(gdb)
+</pre></div>
+
+<p>Обычное пошаговое выполнение:
+</p>
+<div class="example">
+<pre class="example">-exec-step
+^running
+(gdb)
+*stopped,reason=&quot;end-stepping-range&quot;,line=&quot;14&quot;,file=&quot;recursive2.c&quot;
+(gdb)
+</pre></div>
+
+
+<span id="Komanda-_002dexec_002dstep_002dinstruction"></span><h4 class="subheading">Команда <code>-exec-step-instruction</code></h4>
+<span id="index-_002dexec_002dstep_002dinstruction"></span>
+
+<span id="Kratkoe-opisanie-36"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -exec-step-instruction
+</pre></div>
+
+<p>Асинхронная команда.  Возобновляет выполнение подчиненной программы,
+выполняя одну машинную инструкцию.  Вывод, когда GDB
+остановится, будет различаться в зависимости от того, остановились мы в
+середине исходной строки или нет.  В первом случае, адрес, по которому
+программа остановлена, также будет напечатан.
+</p>
+<span id="Komanda-GDB-35"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>stepi</samp>&rsquo;.
+</p>
+<span id="Primer-36"></span><h4 class="subsubheading">Пример</h4>
+
+<div class="example">
+<pre class="example">(gdb)
+-exec-step-instruction
+^running
+
+(gdb)
+*stopped,reason=&quot;end-stepping-range&quot;,
+frame={func=&quot;foo&quot;,args=[],file=&quot;try.c&quot;,line=&quot;10&quot;}
+(gdb)
+-exec-step-instruction
+^running
+
+(gdb)
+*stopped,reason=&quot;end-stepping-range&quot;,
+frame={addr=&quot;0x000100f4&quot;,func=&quot;foo&quot;,args=[],file=&quot;try.c&quot;,line=&quot;10&quot;}
+(gdb)
+</pre></div>
+
+
+<span id="Komanda-_002dexec_002duntil"></span><h4 class="subheading">Команда <code>-exec-until</code></h4>
+<span id="index-_002dexec_002duntil"></span>
+
+<span id="Kratkoe-opisanie-37"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -exec-until [ <var>местоположение</var> ]
+</pre></div>
+
+<p>Асинхронная команда.  Выполняет подчиненную программу до тех пор, пока
+не будет достигнуто указанное в аргументе <var>местоположение</var>.  Если
+аргумента нет, подчиненная программа выполняется, пока не будет
+достигнута строка исходного текста, превышающая текущую.  В этом случае,
+причиной остановки будет &lsquo;<samp>location-reached</samp>&rsquo;.
+</p>
+<span id="Komanda-GDB-36"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>until</samp>&rsquo;.
+</p>
+<span id="Primer-37"></span><h4 class="subsubheading">Пример</h4>
+
+<div class="example">
+<pre class="example">(gdb)
+-exec-until recursive2.c:6
+^running
+(gdb)
+x = 55
+*stopped,reason=&quot;location-reached&quot;,frame={func=&quot;main&quot;,args=[],
+file=&quot;recursive2.c&quot;,line=&quot;6&quot;}
+(gdb)
+</pre></div>
+
+
+
+<span id="Komanda-_002dfile_002dexec_002dand_002dsymbols"></span><h4 class="subheading">Команда <code>-file-exec-and-symbols</code></h4>
+<span id="index-_002dfile_002dexec_002dand_002dsymbols"></span>
+
+<span id="Kratkoe-opisanie-38"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -file-exec-and-symbols <var>файл</var>
+</pre></div>
+
+<p>Указать выполняемый файл для отладки.  Это тот файл, из которого также
+читается таблица символов.  Если файл не указан, команда очищает
+информацию о выполняемом файле и символах.  Если при использовании этой
+команды без аргументов установлены точки останова, GDB выдаст
+сообщение об ошибке.  В противном случае, никакого вывода не будет, за
+исключением уведомления о завершении.
+</p>
+<span id="Komanda-GDB-37"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>file</samp>&rsquo;.
+</p>
+<span id="Primer-38"></span><h4 class="subsubheading">Пример</h4>
+
+<div class="example">
+<pre class="example">(gdb)
+-file-exec-file /kwikemart/marge/ezannoni/TRUNK/mbx/hello.mbx
+^done
+(gdb)
+</pre></div>
+
+
+<span id="Komanda-_002dfile_002dexec_002dfile"></span><h4 class="subheading">Команда <code>-file-exec-file</code></h4>
+<span id="index-_002dfile_002dexec_002dfile"></span>
+
+<span id="Kratkoe-opisanie-39"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -file-exec-file <var>файл</var>
+</pre></div>
+
+<p>Указать выполняемый файл для отладки.  В отличие от
+&lsquo;<samp>-file-exec-and-symbols</samp>&rsquo;, таблица символов <em>не</em> считывается из
+этого файла.  При использовании без аргумента, GDB очищает
+информацию о выполняемом файле.  Никакого вывода не производится, за
+исключением уведомления о завершении.
+</p>
+<span id="Komanda-GDB-38"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>exec-file</samp>&rsquo;.
+</p>
+<span id="Primer-39"></span><h4 class="subsubheading">Пример</h4>
+
+<div class="example">
+<pre class="example">(gdb)
+-file-exec-file /kwikemart/marge/ezannoni/TRUNK/mbx/hello.mbx
+^done
+(gdb)
+</pre></div>
+
+
+<span id="Komanda-_002dfile_002dlist_002dexec_002dsections"></span><h4 class="subheading">Команда <code>-file-list-exec-sections</code></h4>
+<span id="index-_002dfile_002dlist_002dexec_002dsections"></span>
+
+<span id="Kratkoe-opisanie-40"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -file-list-exec-sections
+</pre></div>
+
+<p>Перечисляет разделы текущего выполняемого файла.
+</p>
+<span id="Komanda-GDB-39"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Команда GDB &lsquo;<samp>info file</samp>&rsquo; показывает, помимо всего прочего,
+ту же информацию, что и эта команда.  <code>gdbtk</code> имеет соответствующую
+команду &lsquo;<samp>gdb_load_info</samp>&rsquo;.
+</p>
+<span id="Primer-40"></span><h4 class="subsubheading">Пример</h4>
+<p>Н.П.
+</p>
+
+<span id="Komanda-_002dfile_002dlist_002dexec_002dsource_002dfiles"></span><h4 class="subheading">Команда <code>-file-list-exec-source-files</code></h4>
+<span id="index-_002dfile_002dlist_002dexec_002dsource_002dfiles"></span>
+
+<span id="Kratkoe-opisanie-41"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -file-list-exec-source-files
+</pre></div>
+
+<p>Перечисляет исходные файлы для текущего выполняемого файла.
+</p>
+<span id="Komanda-GDB-40"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>В GDB нет команды, непосредственно соответствующей этой.
+<code>gdbtk</code> имеет аналогичную команду &lsquo;<samp>gdb_listfiles</samp>&rsquo;.
+</p>
+<span id="Primer-41"></span><h4 class="subsubheading">Пример</h4>
+<p>Н.П.
+</p>
+
+<span id="Komanda-_002dfile_002dlist_002dshared_002dlibraries"></span><h4 class="subheading">Команда <code>-file-list-shared-libraries</code></h4>
+<span id="index-_002dfile_002dlist_002dshared_002dlibraries"></span>
+
+<span id="Kratkoe-opisanie-42"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -file-list-shared-libraries
+</pre></div>
+
+<p>Перечисляет используемые программой разделяемые библиотеки.
+</p>
+<span id="Komanda-GDB-41"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>info shared</samp>&rsquo;.
+</p>
+<span id="Primer-42"></span><h4 class="subsubheading">Пример</h4>
+<p>Н.П.
+</p>
+
+<span id="Komanda-_002dfile_002dlist_002dsymbol_002dfiles"></span><h4 class="subheading">Команда <code>-file-list-symbol-files</code></h4>
+<span id="index-_002dfile_002dlist_002dsymbol_002dfiles"></span>
+
+<span id="Kratkoe-opisanie-43"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -file-list-symbol-files
+</pre></div>
+
+<p>Перечисляет файлы символов.
+</p>
+<span id="Komanda-GDB-42"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>info file</samp>&rsquo; (ее
+часть).
+</p>
+<span id="Primer-43"></span><h4 class="subsubheading">Пример</h4>
+<p>Н.П.
+</p>
+
+<span id="Komanda-_002dfile_002dsymbol_002dfile"></span><h4 class="subheading">Команда <code>-file-symbol-file</code></h4>
+<span id="index-_002dfile_002dsymbol_002dfile"></span>
+
+<span id="Kratkoe-opisanie-44"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -file-symbol-file <var>файл</var>
+</pre></div>
+
+<p>Прочитать информацию символьной таблицы из указанного в аргументе
+<var>файла</var>.  Будучи использованной без аргументов, очищает таблицу
+символьной информации GDB.  Никакого вывода не производится,
+кроме уведомления о завершении.
+</p>
+<span id="Komanda-GDB-43"></span><h4 class="subsubheading">Команда GDB</h4>
+
+<p>Соответствующей командой GDB является &lsquo;<samp>symbol-file</samp>&rsquo;.
+</p>
+<span id="Primer-44"></span><h4 class="subsubheading">Пример</h4>
+
+<div class="example">
+<pre class="example">(gdb)
+-file-symbol-file /kwikemart/marge/ezannoni/TRUNK/mbx/hello.mbx
+^done
+(gdb)
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Raznye-komandy-GDB_002fMI.html" accesskey="n" rel="next">Разные команды GDB/MI</a>, Previous: <a href="Upravlenie-dannymi-GDB_002fMI.html" accesskey="p" rel="prev">Управление данными GDB/MI</a>, Up: <a href="GDB_002fMI.html" accesskey="u" rel="up">GDB/MI</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Команды уничтожения Readline (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Команды уничтожения Readline (Отладка с помощью GDB)">
+<meta name="keywords" content="Команды уничтожения Readline (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Vzaimodeistvie-s-Readline.html" rel="up" title="Взаимодействие с Readline">
+<link href="Parametry-komand-Readline.html" rel="next" title="Параметры команд Readline">
+<link href="Komandy-peremeshcheniya-Readline.html" rel="prev" title="Команды перемещения Readline">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_041a_043e_043c_0430_043d_0434_044b-_0443_043d_0438_0447_0442_043e_0436_0435_043d_0438_044f-Readline"></span><div class="header">
+<p>
+Next: <a href="Parametry-komand-Readline.html" accesskey="n" rel="next">Параметры команд Readline</a>, Previous: <a href="Komandy-peremeshcheniya-Readline.html" accesskey="p" rel="prev">Команды перемещения Readline</a>, Up: <a href="Vzaimodeistvie-s-Readline.html" accesskey="u" rel="up">Взаимодействие с Readline</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Komandy-unichtozheniya-Readline"></span><h4 class="subsection">21.2.3 Команды уничтожения Readline</h4>
+
+<span id="index-unichtozhenie-teksta"></span>
+<span id="index-vosstanovlenie-teksta"></span>
+
+<p><em>Уничтожение</em> текста означает уничтожение текста из строки, но
+сохранение его для дальнейшего использования, обычно для
+<em>восстановления</em> (повторной вставки) обратно в строку.  (&lsquo;Вырезать&rsquo;
+и &lsquo;вставить&rsquo; являются более современными жаргонными синонимами для
+&lsquo;уничтожить&rsquo; и &lsquo;восстановить&rsquo;.)
+</p>
+<p>Если в описании команды сказано, что она &lsquo;уничтожает&rsquo; текст,
+то вы можете быть уверены, что позже его можно будет получить обратно в
+другом (или том же самом) месте.
+</p>
+<p>Когда вы используете команду уничтожения, текст сохраняется в
+<em>кольцевом списке уничтожений</em>.  Любое число последовательных уничтожений
+сохраняет весь уничтоженный текст вместе, так что когда вы
+восстанавливаете его назад, вы получите все.  Список уничтожений не
+имеет привязки к строкам; текст, уничтоженный вами в предыдущей строке
+ввода, доступен для восстановления позже, когда вы вводите другую
+строку.
+<span id="index-kolxcevoi-spisok-unichtozhenii"></span>
+</p>
+<p>Вот список команд для уничтожения текста.
+</p>
+<dl compact="compact">
+<dt><kbd>C-k</kbd></dt>
+<dd><p>Уничтожить текст от текущей позиции курсора до конца строки.
+</p>
+</dd>
+<dt><kbd>M-d</kbd></dt>
+<dd><p>Уничтожить от курсора до конца текущего слова или, если курсор
+находится между словами, до конца следующего слова.
+Границы слов такие же, как и используемые <kbd>M-f</kbd>.
+</p>
+</dd>
+<dt><kbd>M-<span class="key">DEL</span></kbd></dt>
+<dd><p>Уничтожить от курсора до начала текущего слова или, если курсор
+находится между словами, до начала предыдущего слова.
+Границы слов такие же, как и используемые <kbd>M-b</kbd>.
+</p>
+</dd>
+<dt><kbd>C-w</kbd></dt>
+<dd><p>Уничтожить от курсора до предыдущего пробельного символа.  Это отличается от
+M-<tt class="key">DEL</tt>, так как границы слова различаются.
+</p>
+</dd>
+</dl>
+
+<p>Вот как можно <em>восстановить</em> текст обратно в строку.  Восстановление
+означает копирование последнего уничтоженного текста из буфера
+уничтожений.
+</p>
+<dl compact="compact">
+<dt><kbd>C-y</kbd></dt>
+<dd><p>Восстановить последний уничтоженный текст в буфер перед курсором.
+</p>
+</dd>
+<dt><kbd>M-y</kbd></dt>
+<dd><p>Циклический сдвиг по кольцевому списку уничтожений и восстановление
+новой вершины.  Вы можете использовать это, только если предыдущая команда
+была <kbd>C-y</kbd> или <kbd>M-y</kbd>.
+</p></dd>
+</dl>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Parametry-komand-Readline.html" accesskey="n" rel="next">Параметры команд Readline</a>, Previous: <a href="Komandy-peremeshcheniya-Readline.html" accesskey="p" rel="prev">Команды перемещения Readline</a>, Up: <a href="Vzaimodeistvie-s-Readline.html" accesskey="u" rel="up">Взаимодействие с Readline</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

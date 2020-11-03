@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Подача сигналов (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Подача сигналов (Отладка с помощью GDB)">
+<meta name="keywords" content="Подача сигналов (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Izmeneniya.html" rel="up" title="Изменения">
+<link href="Vozvrat.html" rel="next" title="Возврат">
+<link href="Perekhody.html" rel="prev" title="Переходы">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_041f_043e_0434_0430_0447_0430-_0441_0438_0433_043d_0430_043b_043e_0432"></span><div class="header">
+<p>
+Next: <a href="Vozvrat.html" accesskey="n" rel="next">Возврат</a>, Previous: <a href="Perekhody.html" accesskey="p" rel="prev">Переходы</a>, Up: <a href="Izmeneniya.html" accesskey="u" rel="up">Изменения</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Podacha-signala-vashei-programme"></span><h3 class="section">11.3 Подача сигнала вашей программе</h3>
+
+<dl compact="compact">
+<dd><span id="index-signal-1"></span>
+</dd>
+<dt><code>signal <var>сигнал</var></code></dt>
+<dd><p>Возобновить выполнение с места остановки вашей программы, но немедленно
+подать ей сигнал <var>сигнал</var>.  <var>Сигнал</var> может быть именем или номером
+сигнала.  Например, во многих системах <code>signal 2</code> и <code>signal
+SIGINT</code> &mdash; два способа подать сигнал прерывания.
+</p>
+<p>Наоборот, если <var>сигнал</var> является нулем, выполнение продолжается без
+подачи сигнала.  Это полезно, если ваша программа остановилась из-за
+сигнала и в обычном случае увидит его при возобновлении выполнения командой
+<code>continue</code>; &lsquo;<samp>signal 0</samp>&rsquo; продолжит выполнение без сигнала.
+</p>
+<p><code>signal</code> не повторяется, когда вы нажимаете <tt class="key">RET</tt> второй раз
+после выполнения команды.
+</p></dd>
+</dl>
+
+<p>Вызов команды <code>signal</code> отличается от вызова утилиты <code>kill</code> из
+оболочки.  Подача сигнала посредством <code>kill</code> заставляет
+GDB решать, что делать с сигналом, в зависимости от таблиц
+обработки сигналов (see <a href="Signaly.html">Сигналы</a>).  Команда <code>signal</code> передает
+сигнал непосредственно вашей программе.
+</p>
+
+
+
+
+</body>
+</html>

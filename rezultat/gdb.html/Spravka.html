@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Справка (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Справка (Отладка с помощью GDB)">
+<meta name="keywords" content="Справка (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Komandy.html" rel="up" title="Команды">
+<link href="Vypolnenie.html" rel="next" title="Выполнение">
+<link href="Zavershenie.html" rel="prev" title="Завершение">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0421_043f_0440_0430_0432_043a_0430"></span><div class="header">
+<p>
+Previous: <a href="Zavershenie.html" accesskey="p" rel="prev">Завершение</a>, Up: <a href="Komandy.html" accesskey="u" rel="up">Команды</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Poluchenie-spravki"></span><h3 class="section">3.3 Получение справки</h3>
+<span id="index-dokumentaciya"></span>
+<span id="index-help"></span>
+
+<p>Используя команду <code>help</code>, вы всегда можете запросить информацию о
+командах у самого GDB.
+</p>
+
+<dl compact="compact">
+<dd><span id="index-h-_0028help_0029"></span>
+</dd>
+<dt><code>help</code></dt>
+<dt><code>h</code></dt>
+<dd><p>Вы можете использовать <code>help</code> (сокращенно <code>h</code>) без параметров
+для отображения короткого списка именованных классов команд:
+</p>
+<div class="example">
+<pre class="example">(gdb) help
+List of classes of commands:
+
+aliases -- Aliases of other commands
+breakpoints -- Making program stop at certain points
+data -- Examining data
+files -- Specifying and examining files
+internals -- Maintenance commands
+obscure -- Obscure features
+running -- Running the program
+stack -- Examining the stack
+status -- Status inquiries
+support -- Support facilities
+tracepoints -- Tracing of program execution without
+               stopping the program
+user-defined -- User-defined commands
+
+Type &quot;help&quot; followed by a class name for a list of
+commands in that class.
+Type &quot;help&quot; followed by command name for full
+documentation.
+Command name abbreviations are allowed if unambiguous.
+(gdb)
+</pre></div>
+
+</dd>
+<dt><code>help <var>класс</var></code></dt>
+<dd><p>Используя один из общих классов справки как параметр, вы можете получить
+список отдельных команд этого класса.  Вот, например, отображение справки
+для класса <code>status</code>:
+</p>
+<div class="example">
+<pre class="example">(gdb) help status
+Status inquiries.
+
+List of commands:
+
+info -- Generic command for showing things
+ about the program being debugged
+show -- Generic command for showing things
+ about the debugger
+
+Type &quot;help&quot; followed by command name for full
+documentation.
+Command name abbreviations are allowed if unambiguous.
+(gdb)
+</pre></div>
+
+</dd>
+<dt><code>help <var>команда</var></code></dt>
+<dd><p>Если указать имя команды в качестве параметра <code>help</code>, GDB
+выведет короткую справку о том, как ей пользоваться.
+</p>
+<span id="index-apropos"></span>
+</dd>
+<dt><code>apropos <var>арг</var></code></dt>
+<dd><p>Команда <code>apropos <var>арг</var></code> производит поиск по регулярному
+выражению, заданному в <var>арг</var>, во всех командах GDB и их
+документации.  Она выводит все найденные совпадения.  Например:
+</p>
+<div class="example">
+<pre class="example">apropos reload
+</pre></div>
+
+<p>выводит:
+</p>
+<div class="example">
+<pre class="example">set symbol-reloading -- Set dynamic symbol table reloading
+                                 multiple times in one run
+show symbol-reloading -- Show dynamic symbol table reloading
+                                 multiple times in one run
+</pre></div>
+
+<span id="index-complete"></span>
+</dd>
+<dt><code>complete <var>арг</var></code></dt>
+<dd><p>Команда <code>complete <var>арг</var></code> перечисляет все возможные завершения для
+начала команды.  Используйте <var>арг</var> для задания начала команды,
+которую вы хотите завершить.  Например,
+</p>
+<div class="example">
+<pre class="example">complete i
+</pre></div>
+
+<p>приводит к:
+</p>
+<div class="example">
+<pre class="example">if
+ignore
+info
+inspect
+</pre></div>
+
+<p>Это предназначено для использования <small>GNU</small> Emacs.
+</p></dd>
+</dl>
+
+<p>В дополнение к <code>help</code>, вы можете использовать команды GDB
+<code>info</code> и <code>show</code> для получения информации о состоянии вашей программы,
+или о состоянии самого GDB.  Каждая команда поддерживает много
+тем запросов; это руководство описывает каждую тему в соответствующем месте.
+Списки в разделах <code>info</code> и <code>show</code> в Алфавитном указателе
+указывают на все подкоманды.  See <a href="Alfavitnyi-ukazatelx.html">Алфавитный указатель</a>.
+</p>
+<dl compact="compact">
+<dd><span id="index-info"></span>
+<span id="index-i-_0028info_0029"></span>
+</dd>
+<dt><code>info</code></dt>
+<dd><p>Эта команда (сокращенно <code>i</code>) предназначена для описания состояния
+вашей программы.  Например, вы можете с помощью <code>info args</code>
+просмотреть аргументы, переданные вашей программе, с помощью <code>info
+registers</code> перечислить используемые в настоящий момент регистры или
+используя <code>info breakpoints</code> вывести установленные вами точки
+останова.  Вы можете получить полный список подкоманд команды
+<code>info</code> с помощью <code>help&nbsp;info</code><!-- /@w -->.
+</p>
+<span id="index-set"></span>
+</dd>
+<dt><code>set</code></dt>
+<dd><p>Вы можете присвоить переменной среды результат выражения с помощью
+<code>set</code>.  Например, вы можете сделать приглашением GDB
+знак $ используя <code>set prompt $</code>.
+</p>
+<span id="index-show"></span>
+</dd>
+<dt><code>show</code></dt>
+<dd><p>В отличие от <code>info</code>, команда <code>show</code> предназначена для описания
+состояния самого GDB.  Вы можете изменить почти все, что
+показывает <code>show</code>, используя соответствующую команду <code>set</code>.
+Например, командой <code>set radix</code> вы можете указать, какую систему
+счисления использовать для вывода, или просто узнать, какая система
+используется в данный момент с помощью команды <code>show radix</code>.
+</p>
+<span id="index-info-set"></span>
+<p>Для отображения всех устанавливаемых параметров и их текущих значений
+вы можете использовать <code>show</code> без аргументов; также можно
+использовать <code>info set</code>.  Обе команды приводят к одинаковому
+результату.
+</p></dd>
+</dl>
+
+<p>Вот три еще подкоманды <code>show</code>; они отличаются от остальных тем, не имеют
+соответствующих <code>set</code>-команд:
+</p>
+<dl compact="compact">
+<dd><span id="index-show-version"></span>
+<span id="index-nomer-versii"></span>
+</dd>
+<dt><code>show version</code></dt>
+<dd><p>Показывает, какая версия GDB запущена.  Вам следует включать
+эту информацию в отчеты об ошибках в GDB.  Если вы
+используете несколько версий GDB, вам может потребоваться
+определить, какая из них запущена; по мере развития отладчика
+появляются новые команды, а старые могут исчезнуть.  Кроме того, многие
+распространители операционных систем поставляют модифицированные версии
+GDB, также существуют модифицированные версии GDB в
+<small>GNU</small>/Linux.  Номер версии &mdash; это номер, появляющийся при старте.
+</p>
+<span id="index-show-copying"></span>
+</dd>
+<dt><code>show copying</code></dt>
+<dd><p>Выводит информацию о правах на распространение GDB.
+</p>
+<span id="index-show-warranty"></span>
+</dd>
+<dt><code>show warranty</code></dt>
+<dd><p>Отображает заявление <small>GNU</small> об отсутствии гарантий, или заявление 
+о гарантиях, если ваша версия GDB поставляется с гарантиями.
+</p>
+</dd>
+</dl>
+
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Zavershenie.html" accesskey="p" rel="prev">Завершение</a>, Up: <a href="Komandy.html" accesskey="u" rel="up">Команды</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

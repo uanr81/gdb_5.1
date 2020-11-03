@@ -1,0 +1,360 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Изменяемые объекты GDB/MI (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Изменяемые объекты GDB/MI (Отладка с помощью GDB)">
+<meta name="keywords" content="Изменяемые объекты GDB/MI (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="GDB_002fMI.html" rel="up" title="GDB/MI">
+<link href="Oshibki-v-GDB.html" rel="next" title="Ошибки в GDB">
+<link href="Komandy-GDB_002fMI-dlya-tochek-trassirovki.html" rel="prev" title="Команды GDB/MI для точек трассировки">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0418_0437_043c_0435_043d_044f_0435_043c_044b_0435-_043e_0431_044a_0435_043a_0442_044b-GDB_002fMI"></span><div class="header">
+<p>
+Previous: <a href="Komandy-GDB_002fMI-dlya-tochek-trassirovki.html" accesskey="p" rel="prev">Команды GDB/MI для точек трассировки</a>, Up: <a href="GDB_002fMI.html" accesskey="u" rel="up">GDB/MI</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Izmenyaemye-obwekty-GDB_002fMI"></span><h3 class="section">19.14 Изменяемые объекты <small>GDB/MI</small></h3>
+
+
+<span id="Obosnovanie-dlya-izmenyaemykh-obwektov-v-GDB_002fMI"></span><h4 class="subheading">Обоснование для изменяемых объектов в <small>GDB/MI</small></h4>
+
+<p>Для реализации изменяемого отладочного окна (локальные переменные,
+наблюдаемые выражения, и т.д.), мы предлагаем модификацию существующего
+кода, используемого в <code>Insight</code>.
+</p>
+<p>Вот две основные причины для этого:
+</p>
+<ol>
+<li> Он был проверен на практике (это уже его второе поколение).
+
+</li><li> Это сократит время разработки (не стоит говорить, как это сейчас важно).
+</li></ol>
+
+<p>Первоначальный интерфейс был разработан для использования из кода на Tcl, так
+что он был немного изменен, чтобы его можно было использовать через
+<small>GDB/MI</small>.  Этот раздел описывает операции <small>GDB/MI</small>, которые будут
+доступны, и дает некоторые советы по их использованию.
+</p>
+<p><em>Замечание</em>: В дополнение к описанному здесь набору операций, мы
+ожидаем, что <small>GUI</small>-реализация изменяемого окна будет требовать, как
+минимум, следующие операции:
+</p>
+<ul>
+<li> <code>-gdb-show</code> <code>output-radix</code>
+</li><li> <code>-stack-list-arguments</code>
+</li><li> <code>-stack-list-locals</code>
+</li><li> <code>-stack-select-frame</code>
+</li></ul>
+
+<span id="Vvedenie-v-izmenyaemye-obwekty-v-GDB_002fMI"></span><h4 class="subheading">Введение в изменяемые объекты в <small>GDB/MI</small></h4>
+
+<span id="index-izmenyaemye-obwekty-v-GDB_002fMI"></span>
+<p>Основной идеей изменяемых объектов является создание именованного
+объекта для представления переменной, выражения, местоположения в памяти
+или даже регистра ЦП.  Для каждого созданного объекта существует набор
+операций для изучения или изменения его свойств.
+</p>
+<p>Более того, сложные типы данных, такие как структуры Си, представлены в
+древовидном формате.  Например, переменная типа <code>struct</code> является
+корнем, а потомки будут представлять элементы этой структуры.  Если
+потомок сам является сложным типом, он также будет иметь своих потомков.
+Соответствующие различия языков учитываются для Си, Си<tt>++</tt> и Java.
+</p>
+<p>При возврате реальных значений объектов, эта возможность позволяет
+отдельно выбирать формат отображения, используемый при создании
+результата.  Формат может быть таким: двоичный, десятичный,
+шестнадцатеричный, восьмеричный и обычный.  Обычный &mdash; это формат
+по умолчанию, выбираемый автоматически в зависимости от типа переменной
+(например, десятичный для <code>int</code>, шестнадцатеричный для указателей,
+и т.д.).
+</p>
+<p>Далее следует полный набор операций <small>GDB/MI</small>, определенный для
+доступа к этим возможностям:
+</p>
+<table>
+<tr><td width="40%"><strong>Операция</strong></td><td width="60%"><strong>Описание</strong></td></tr>
+<tr><td width="40%"><code>-var-create</code></td><td width="60%">создать изменяемый объект</td></tr>
+<tr><td width="40%"><code>-var-delete</code></td><td width="60%">удалить изменяемый объект и его потомков</td></tr>
+<tr><td width="40%"><code>-var-set-format</code></td><td width="60%">установить формат отображения для этой переменной</td></tr>
+<tr><td width="40%"><code>-var-show-format</code></td><td width="60%">показать формат отображения для этой переменной</td></tr>
+<tr><td width="40%"><code>-var-info-num-children</code></td><td width="60%">сообщает, сколько потомков имеет данный объект</td></tr>
+<tr><td width="40%"><code>-var-list-children</code></td><td width="60%">возвращает список потомков объекта</td></tr>
+<tr><td width="40%"><code>-var-info-type</code></td><td width="60%">показать тип этого изменяемого объекта</td></tr>
+<tr><td width="40%"><code>-var-info-expression</code></td><td width="60%">напечатать, что представляет этот изменяемый объект</td></tr>
+<tr><td width="40%"><code>-var-show-attributes</code></td><td width="60%">является ли эта переменная редактируемой? она здесь существует?</td></tr>
+<tr><td width="40%"><code>-var-evaluate-expression</code></td><td width="60%">получить значение этой переменной</td></tr>
+<tr><td width="40%"><code>-var-assign</code></td><td width="60%">установить значение этой переменной</td></tr>
+<tr><td width="40%"><code>-var-update</code></td><td width="60%">скорректировать переменную и ее потомков</td></tr>
+</table>
+
+<p>В следующем подразделе мы подробно описываем каждую операцию и
+предлагаем возможный способ ее использования.
+</p>
+<span id="Opisanie-i-ispolxzovanie-operacii-dlya-izmenyaemykh-obwektov"></span><h4 class="subheading">Описание и использование операций для изменяемых объектов</h4>
+
+<span id="Komanda-_002dvar_002dcreate"></span><h4 class="subheading">Команда <code>-var-create</code></h4>
+<span id="index-_002dvar_002dcreate"></span>
+
+<span id="Kratkoe-opisanie-78"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -var-create {<var>имя</var> | &quot;-&quot;}
+    {<var>адрес-кадра</var> | &quot;*&quot;} <var>выражение</var>
+</pre></div>
+
+<p>Данная операция создает изменяемый объект.  Это позволяет наблюдать за
+переменной, результатом выражения, ячейкой памяти или регистром ЦП.
+</p>
+<p>Параметр <var>имя</var> является строкой, по которой можно ссылаться на
+объект.  Она должна быть уникальной.  Если указан &lsquo;<samp>-</samp>&rsquo;, система
+изменяемых объектов автоматически сгенерирует строку &ldquo;varNNNNNN&rdquo;.  Она
+будет уникальной, при условии, что <var>имя</var> не будет указано в этом
+формате.  Команда завершается ошибкой, если найдено повторяющееся имя.
+</p>
+<p>В <var>адресе-кадра</var> может быть задан кадр, в котором должно быть
+вычислено выражение.  &lsquo;<samp>*</samp>&rsquo; указывает, что должен использоваться
+текущий кадр.
+</p>
+<p><var>Выражение</var> &mdash; это произвольное выражение, правильное в текущем
+наборе языков (не должно начинаться со &lsquo;<samp>*</samp>&rsquo;), или одно из
+следующего:
+</p>
+<ul>
+<li> &lsquo;<samp>*<var>адрес</var></samp>&rsquo;, где <var>адрес</var> есть адрес ячейки памяти
+
+</li><li> &lsquo;<samp>*<var>адрес</var>-<var>адрес</var></samp>&rsquo; &mdash; диапазон адресов памяти (TBD)
+
+</li><li> &lsquo;<samp>$<var>имя-рег</var></samp>&rsquo; &mdash; имя регистра ЦП
+</li></ul>
+
+<span id="Rezulxtat-3"></span><h4 class="subsubheading">Результат</h4>
+
+<p>Эта операция возвращает имя, число потомков и тип созданного объекта.
+Тип возвращается как строка, как будто она создана GDB CLI:
+</p>
+<div class="example">
+<pre class="example"> name=&quot;<var>имя</var>&quot;,numchild=&quot;N&quot;,type=&quot;<var>тип</var>&quot;
+</pre></div>
+
+
+<span id="Komanda-_002dvar_002ddelete"></span><h4 class="subheading">Команда <code>-var-delete</code></h4>
+<span id="index-_002dvar_002ddelete"></span>
+
+<span id="Kratkoe-opisanie-79"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -var-delete <var>имя</var>
+</pre></div>
+
+<p>Удаляет созданный ранее изменяемый объект и всех его потомков.
+</p>
+<p>Возвращает ошибку, если объект с именем <var>имя</var> не найден.
+</p>
+
+<span id="Komanda-_002dvar_002dset_002dformat"></span><h4 class="subheading">Команда <code>-var-set-format</code></h4>
+<span id="index-_002dvar_002dset_002dformat"></span>
+
+<span id="Kratkoe-opisanie-80"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -var-set-format <var>имя</var> <var>специф-формата</var>
+</pre></div>
+
+<p>Устанавливает формат вывода в <var>специф-формата</var> для значения объекта
+<var>имя</var>.
+</p>
+<p>Синтаксис <var>специф-формата</var> следующий:
+</p>
+<div class="example">
+<pre class="example"> <var>специф-формата</var> &rarr;
+ {binary | decimal | hexadecimal | octal | natural}
+</pre></div>
+
+
+<span id="Komanda-_002dvar_002dshow_002dformat"></span><h4 class="subheading">Команда <code>-var-show-format</code></h4>
+<span id="index-_002dvar_002dshow_002dformat"></span>
+
+<span id="Kratkoe-opisanie-81"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -var-show-format <var>имя</var>
+</pre></div>
+
+<p>Возвращает формат, используемый для отображения значений объекта <var>имя</var>.
+</p>
+<div class="example">
+<pre class="example"> <var>формат</var> &rarr;
+ <var>специф-формата</var>
+</pre></div>
+
+
+<span id="Komanda-_002dvar_002dinfo_002dnum_002dchildren"></span><h4 class="subheading">Команда <code>-var-info-num-children</code></h4>
+<span id="index-_002dvar_002dinfo_002dnum_002dchildren"></span>
+
+<span id="Kratkoe-opisanie-82"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -var-info-num-children <var>имя</var>
+</pre></div>
+
+<p>Возвращает число потомков изменяемого объекта с именем <var>имя</var>:
+</p>
+<div class="example">
+<pre class="example"> numchild=<var>n</var>
+</pre></div>
+
+
+<span id="Komanda-_002dvar_002dlist_002dchildren"></span><h4 class="subheading">Команда <code>-var-list-children</code></h4>
+<span id="index-_002dvar_002dlist_002dchildren"></span>
+
+<span id="Kratkoe-opisanie-83"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -var-list-children <var>имя</var>
+</pre></div>
+
+<p>Возвращает список потомков указанного изменяемого объекта:
+</p>
+<div class="example">
+<pre class="example"> numchild=<var>n</var>,children={{name=<var>имя</var>,
+ numchild=<var>n</var>,type=<var>тип</var>},<span class="roman">(повторяется N раз)</span>}
+</pre></div>
+
+
+<span id="Komanda-_002dvar_002dinfo_002dtype"></span><h4 class="subheading">Команда <code>-var-info-type</code></h4>
+<span id="index-_002dvar_002dinfo_002dtype"></span>
+
+<span id="Kratkoe-opisanie-84"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -var-info-type <var>имя</var>
+</pre></div>
+
+<p>Возвращает тип указанного изменяемого объекта <var>имя</var>.  Тип
+возвращается как строка в том же формате, в котором она выдается
+GDB CLI:
+</p>
+<div class="example">
+<pre class="example"> type=<var>имя-типа</var>
+</pre></div>
+
+
+<span id="Komanda-_002dvar_002dinfo_002dexpression"></span><h4 class="subheading">Команда <code>-var-info-expression</code></h4>
+<span id="index-_002dvar_002dinfo_002dexpression"></span>
+
+<span id="Kratkoe-opisanie-85"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -var-info-expression <var>имя</var>
+</pre></div>
+
+<p>Возвращает то, что представляет изменяемый объект с именем <var>имя</var>:
+</p>
+<div class="example">
+<pre class="example"> lang=<var>специф-языка</var>,exp=<var>выражение</var>
+</pre></div>
+
+<p>где <var>специф-языка</var> есть <code>{&quot;C&quot; | &quot;C++&quot; | &quot;Java&quot;}</code>.
+</p>
+<span id="Komanda-_002dvar_002dshow_002dattributes"></span><h4 class="subheading">Команда <code>-var-show-attributes</code></h4>
+<span id="index-_002dvar_002dshow_002dattributes"></span>
+
+<span id="Kratkoe-opisanie-86"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -var-show-attributes <var>имя</var>
+</pre></div>
+
+<p>Перечисляет атрибуты заданного изменяемого объекта <var>имя</var>:
+</p>
+<div class="example">
+<pre class="example"> status=<var>атр</var> [ ( ,<var>атр</var> )* ]
+</pre></div>
+
+<p>где <var>атр</var> есть <code>{ { editable | noneditable } | TBD }</code>.
+</p>
+<span id="Komanda-_002dvar_002devaluate_002dexpression"></span><h4 class="subheading">Команда <code>-var-evaluate-expression</code></h4>
+<span id="index-_002dvar_002devaluate_002dexpression"></span>
+
+<span id="Kratkoe-opisanie-87"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -var-evaluate-expression <var>имя</var>
+</pre></div>
+
+<p>Вычисляет выражение, которое представлено указанным изменяемым объектом
+и возвращает его значение в виде строки в текущем формате, определенном
+для объекта:
+</p>
+<div class="example">
+<pre class="example"> value=<var>значение</var>
+</pre></div>
+
+<span id="Komanda-_002dvar_002dassign"></span><h4 class="subheading">Команда <code>-var-assign</code></h4>
+<span id="index-_002dvar_002dassign"></span>
+
+<span id="Kratkoe-opisanie-88"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -var-assign <var>имя</var> <var>выражение</var>
+</pre></div>
+
+<p>Присваивает значение <var>выражения</var> изменяемому объекту, заданному
+<var>именем</var>.  Объект должен быть в состоянии &lsquo;<samp>editable</samp>&rsquo;.
+</p>
+<span id="Komanda-_002dvar_002dupdate"></span><h4 class="subheading">Команда <code>-var-update</code></h4>
+<span id="index-_002dvar_002dupdate"></span>
+
+<span id="Kratkoe-opisanie-89"></span><h4 class="subsubheading">Краткое описание</h4>
+
+<div class="example">
+<pre class="example"> -var-update {<var>имя</var> | &quot;*&quot;}
+</pre></div>
+
+<p>Обновить значение изменяемого объекта с именем <var>имя</var> путем
+вычисления его выражения, после получения всех новых значений из памяти
+или регистров.  &lsquo;<samp>*</samp>&rsquo; приводит к обновлению всех существующих
+изменяемых объектов.
+</p>
+
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Komandy-GDB_002fMI-dlya-tochek-trassirovki.html" accesskey="p" rel="prev">Команды GDB/MI для точек трассировки</a>, Up: <a href="GDB_002fMI.html" accesskey="u" rel="up">GDB/MI</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

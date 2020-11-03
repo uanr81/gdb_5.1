@@ -1,0 +1,170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Автоматическое отображение (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Автоматическое отображение (Отладка с помощью GDB)">
+<meta name="keywords" content="Автоматическое отображение (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Dannye.html" rel="up" title="Данные">
+<link href="Parametry-vyvoda.html" rel="next" title="Параметры вывода">
+<link href="Pamyatx.html" rel="prev" title="Память">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0410_0432_0442_043e_043c_0430_0442_0438_0447_0435_0441_043a_043e_0435-_043e_0442_043e_0431_0440_0430_0436_0435_043d_0438_0435"></span><div class="header">
+<p>
+Next: <a href="Parametry-vyvoda.html" accesskey="n" rel="next">Параметры вывода</a>, Previous: <a href="Pamyatx.html" accesskey="p" rel="prev">Память</a>, Up: <a href="Dannye.html" accesskey="u" rel="up">Данные</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Avtomaticheskoe-otobrazhenie"></span><h3 class="section">8.6 Автоматическое отображение</h3>
+<span id="index-avtomaticheskoe-otobrazhenie"></span>
+<span id="index-otobrazhenie-vyrazhenii"></span>
+
+<p>Если вам необходимо часто выводить значение какого-либо выражения
+(чтобы увидеть, как оно меняется), вы можете добавить его в
+<em>список автоматического отображения</em>, чтобы GDB выводил его
+значение каждый раз при остановке вашей программы.  Каждому выражению,
+добавленному в список, присваивается идентификационный номер; чтобы
+удалить выражение из списка, вы указываете этот номер.  Автоматическое
+отображение выглядит следующим образом:
+</p>
+<div class="example">
+<pre class="example">2: foo = 38
+3: bar[5] = (struct hack *) 0x3804
+</pre></div>
+
+<p>Это отображение показывает номера элементов, выражения и их текущие
+значения.  Как и при отображении, запрашиваемом вручную с помощью <code>x</code>
+или <code>print</code>, вы можете указать предпочитаемый формат вывода;
+фактически, <code>display</code> выбирает между <code>print</code>
+и <code>x</code> в зависимости от того, насколько детально задана
+спецификация формата: <code>x</code> используется, если вы указываете размер
+элемента или один из двух форматов (&lsquo;<samp>i</samp>&rsquo; и <code>s</code>), которые
+поддерживаются только <code>x</code>; в остальных случаях применяется <code>print</code>.
+</p>
+<dl compact="compact">
+<dd><span id="index-display"></span>
+</dd>
+<dt><code>display <code>выраж</code></code></dt>
+<dd><p>Добавляет выражение <var>выраж</var> к списку выражений, отображаемых каждый
+раз, когда ваша программа останавливается.  See <a href="Vyrazheniya.html">Выражения</a>.
+</p>
+<p><code>display</code> не повторяется, если вы повторно нажимаете
+<tt class="key">RET</tt> после ее использования.
+</p>
+</dd>
+<dt><code>display/<var>формат</var> <var>выраж</var></code></dt>
+<dd><p>Если <var>формат</var> определяет только формат вывода, а не размер или
+счетчик повторений, выражение <var>выраж</var> добавляется в список
+автоматического отображения, но его отображение осуществляется в
+указанном формате <var>формат</var>.  See <a href="Formaty-vyvoda.html">Форматы вывода</a>.
+</p>
+</dd>
+<dt><code>display/<var>формат</var> <var>адрес</var></code></dt>
+<dd><p>Если <var>форматом</var> является &lsquo;<samp>i</samp>&rsquo; или &lsquo;<samp>s</samp>&rsquo;, или он включает в себя размер
+элементов или их число, выражение <var>адрес</var> добавляется как адрес
+памяти для исследования при каждой остановке вашей программы.  Под
+исследованием в данном случае подразумевается выполнение
+&lsquo;<samp>x/<var>формат</var> <var>адрес</var></samp>&rsquo;.  See <a href="Pamyatx.html">Исследование памяти</a>.
+</p></dd>
+</dl>
+
+<p>Например, команда &lsquo;<samp>display/i $pc</samp>&rsquo; может быть полезна, чтобы при каждой
+остановке видеть машинную инструкцию, которая будет
+выполняться следующей (&lsquo;<samp>$pc</samp>&rsquo; &mdash; это общее обозначение счетчика
+программы; see <a href="Registry.html">Регистры</a>).
+</p>
+<dl compact="compact">
+<dd><span id="index-delete-display"></span>
+<span id="index-undisplay"></span>
+</dd>
+<dt><code>undisplay <var>номера</var>&hellip;</code></dt>
+<dt><code>delete display <var>номера</var>&hellip;</code></dt>
+<dd><p>Удалить элементы с номерами <var>номера</var> из списка выражений, подлежащих
+отображению.
+</p>
+<p><code>undisplay</code> не повторяется при последующем нажатии <tt class="key">RET</tt>.
+(Иначе вы сразу получили бы сообщение об ошибке &lsquo;<samp>No display number
+&hellip;</samp>&rsquo;.)
+</p>
+<span id="index-disable-display"></span>
+</dd>
+<dt><code>disable display <var>номера</var>&hellip;</code></dt>
+<dd><p>Отключить отображение элементов с номерами <var>номера</var>.  Отключенные
+элементы не выводятся автоматически, но и не забываются.
+Впоследствии их можно снова включить.
+</p>
+<span id="index-enable-display"></span>
+</dd>
+<dt><code>enable display <var>номера</var>&hellip;</code></dt>
+<dd><p>Включить отображение элементов с номерами <var>номера</var>.  Выражения,
+соответствующие этим номерам, снова будут выводиться автоматически, пока
+вы не укажете обратное.
+</p>
+</dd>
+<dt><code>display</code></dt>
+<dd><p>Отобразить текущие значения выражений из списка, точно так же,
+как это происходит при остановке вашей программы.
+</p>
+<span id="index-info-display"></span>
+</dd>
+<dt><code>info display</code></dt>
+<dd><p>Вывести список выражений, ранее установленных для автоматического
+отображения, каждое с его номером элемента, но не показывая значений.  Список
+включает отключенные выражения, с соответствующей пометкой.  Он также
+включает в себя выражения, которые не могут быть показаны прямо сейчас,
+потому что обращаются к автоматическим переменным, недоступным
+в данный момент.
+</p></dd>
+</dl>
+
+<p>Если отображаемое выражение обращается к локальным переменным, оно
+не имеет смысла вне того лексического контекста, для которого оно
+устанавливалось.  Такое выражения отключается, как только выполнение
+входит в контекст, где одна из его переменных становится неопределенной.
+Например, если вы дадите команду <code>display last_char</code>, находясь
+внутри функции с аргументом <code>last_char</code>, GDB будет
+отображать этот аргумент, пока программа останавливается внутри этой
+функции.  Как только она остановится где-то еще &mdash; где нет переменной
+<code>last_char</code> &mdash; отображение будет отключено автоматически.  Вы
+можете снова включить его при следующей остановке программы там, где
+<code>last_char</code> будет вновь иметь смысл.
+</p>
+<hr>
+<div class="header">
+<p>
+Next: <a href="Parametry-vyvoda.html" accesskey="n" rel="next">Параметры вывода</a>, Previous: <a href="Pamyatx.html" accesskey="p" rel="prev">Память</a>, Up: <a href="Dannye.html" accesskey="u" rel="up">Данные</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

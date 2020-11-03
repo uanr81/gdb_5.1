@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Проверка диапазона (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Проверка диапазона (Отладка с помощью GDB)">
+<meta name="keywords" content="Проверка диапазона (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Proverka.html" rel="up" title="Проверка">
+<link href="Podderzhka.html" rel="next" title="Поддержка">
+<link href="Proverka-tipov.html" rel="prev" title="Проверка типов">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_041f_0440_043e_0432_0435_0440_043a_0430-_0434_0438_0430_043f_0430_0437_043e_043d_0430"></span><div class="header">
+<p>
+Previous: <a href="Proverka-tipov.html" accesskey="p" rel="prev">Проверка типов</a>, Up: <a href="Proverka.html" accesskey="u" rel="up">Проверка</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Kratkii-obzor-proverki-diapazona"></span><h4 class="subsection">9.3.2 Краткий обзор проверки диапазона</h4>
+
+<p>В некоторых языках (например, в Модуле-2), выход за границы диапазона типа
+считается ошибкой; эти ошибки отслеживаются с помощью контроля времени
+выполнения.  Эти проверки диапазона служат для того, чтобы избежать
+переполнения при вычислениях и не допустить превышения индексами
+элементов массива границ индексации.
+</p>
+<p>В выражениях, используемых вами в командах GDB, вы можете указать
+GDB обрабатывать ошибки диапазона одним из трех способов:
+игнорировать их, всегда рассматривать как ошибки и прерывать
+обработку выражения, или выводить предупреждение и продолжать вычисление
+выражения.
+</p>
+<p>Ошибки диапазона могут возникать при числовом переполнении, при
+превышении границы индексации массива или при использовании константы, не
+принадлежащей ни одному типу.  Однако, некоторые языки не
+считают переполнение ошибкой.  Во многих реализациях Си
+математическое переполнение вызывает &ldquo;циклический переход&rdquo; к меньшему
+значению.  Например, если <var>m</var> &mdash; наибольшее целое значение, а
+<var>s</var> &mdash; наименьшее, то
+</p>
+<div class="example">
+<pre class="example"><var>m</var> + 1 &rArr; <var>s</var>
+</pre></div>
+
+<p>Это также является специфичным для конкретных языков, а в некоторых
+случаях &mdash; для отдельного компилятора или машины.
+Для дальнейших сведений по отдельным языкам, See <a href="Podderzhka.html">Поддерживаемые языки</a>.
+</p>
+<p>GDB обеспечивает некоторые дополнительные команды для контроля
+проверки диапазона:
+</p>
+<span id="index-set-check_002c-diapazon"></span>
+<span id="index-set-check-range"></span>
+<span id="index-show-check-range"></span>
+<dl compact="compact">
+<dt><code>set check range auto</code></dt>
+<dd><p>Включить или отключить контроль диапазона, в зависимости от
+текущего рабочего языка.  See <a href="Podderzhka.html">Поддерживаемые языки</a>,
+для получения информации об установках по умолчанию для каждого языка.
+</p>
+</dd>
+<dt><code>set check range on</code></dt>
+<dt><code>set check range off</code></dt>
+<dd><p>Включить или отключить контроль типов, пренебрегая установкой
+по умолчанию для текущего рабочего языка.
+Если установка не соответствует используемой по умолчанию, выводится
+предупреждающее сообщение.  Если происходит ошибка диапазона и контроль
+включен, выводится сообщение и вычисление выражения прерывается.
+</p>
+</dd>
+<dt><code>set check range warn</code></dt>
+<dd><p>При выявлении ошибки диапазона GDB выведет предупреждающее
+сообщение, но попытается вычислить выражение.  Тем не менее,
+вычисление выражения может быть невозможным по другим причинам,
+таким как обращение к памяти, которой процесс не владеет (типичный
+пример для многих систем Unix).
+</p>
+</dd>
+<dt><code>show range</code></dt>
+<dd><p>Показать текущую установку проверки диапазона, и была ли она установлена
+GDB автоматически.
+</p></dd>
+</dl>
+
+<hr>
+<div class="header">
+<p>
+Previous: <a href="Proverka-tipov.html" accesskey="p" rel="prev">Проверка типов</a>, Up: <a href="Proverka.html" accesskey="u" rel="up">Проверка</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

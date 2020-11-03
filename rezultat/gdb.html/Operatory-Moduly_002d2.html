@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Операторы Модулы-2 (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Операторы Модулы-2 (Отладка с помощью GDB)">
+<meta name="keywords" content="Операторы Модулы-2 (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Modula_002d2.html" rel="up" title="Модула-2">
+<link href="Vstroennye-funkcii_002fprocedury.html" rel="next" title="Встроенные функции/процедуры">
+<link href="Modula_002d2.html" rel="prev" title="Модула-2">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_041e_043f_0435_0440_0430_0442_043e_0440_044b-_041c_043e_0434_0443_043b_044b_002d2"></span><div class="header">
+<p>
+Next: <a href="Vstroennye-funkcii_002fprocedury.html" accesskey="n" rel="next">Встроенные функции/процедуры</a>, Up: <a href="Modula_002d2.html" accesskey="u" rel="up">Модула-2</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Operatory-Moduly_002d2"></span><h4 class="subsubsection">9.4.2.1 Операторы Модулы-2</h4>
+<span id="index-operatory-Moduly_002d2"></span>
+
+<p>Операторы должны быть определены на значениях определенных типов.
+Например, <code>+</code> определен на числах, но не на структурах.
+Операторы часто определяются на группах типов.  Для целей Модулы-2,
+имеют место следующие определения:
+</p>
+<ul>
+<li> <em>Целые типы</em> состоят из <code>INTEGER</code>, <code>CARDINAL</code>
+и их поддиапазонов.
+
+</li><li> <em>Знаковые типы</em> состоят из <code>CHAR</code> и его поддиапазонов.
+
+</li><li> <em>Типы с плавающей точкой</em> состоят из <code>REAL</code>.
+
+</li><li> <em>Типы-указатели</em> состоят из всего, объявленного как <code>POINTER TO
+<var>тип</var></code>.
+
+</li><li> <em>Скалярные типы</em> включают все вышеперечисленное.
+
+</li><li> <em>Типы-множества</em> состоят из типов <code>SET</code> и <code>BITSET</code>.
+
+</li><li> <em>Булевый тип</em> состоит из <code>BOOLEAN</code>.
+</li></ul>
+
+<p>Поддерживаются следующие операторы; они представлены в порядке
+возрастания приоритета:
+</p>
+<dl compact="compact">
+<dt><code>,</code></dt>
+<dd><p>Разделитель аргументов функции или индексов массива.
+</p>
+</dd>
+<dt><code>:=</code></dt>
+<dd><p>Присваивание.  Значением <code><var>перем</var> := <var>знач</var></code> является
+<var>знач</var>.
+</p>
+</dd>
+<dt><code>&lt;<span class="roman">, </span>&gt;</code></dt>
+<dd><p>Меньше чем, больше чем для целочисленных типов, типов с
+плавающей точкой и перечислимых типов.
+</p>
+</dd>
+<dt><code>&lt;=<span class="roman">, </span>&gt;=</code></dt>
+<dd><p>Меньше или равно, больше или равно.  Определено на
+целочисленных типах, типах с плавающей точкой и перечислимых типах.
+Включение для множеств.  Такой же приоритет, как у <code>&lt;</code>.
+</p>
+</dd>
+<dt><code>=<span class="roman">, </span>&lt;&gt;<span class="roman">, </span>#</code></dt>
+<dd><p>Равенство и два способа выражения неравенства; допустимо на
+скалярных типах.  Такой же приоритет, как у <code>&lt;</code>.  В сценариях
+GDB, для неравенства допустимо только <code>&lt;&gt;</code>, так как
+<code>#</code> конфликтует со знаком комментария.
+</p>
+</dd>
+<dt><code>IN</code></dt>
+<dd><p>Установка принадлежности.  Определено на множествах и
+типах их элементов.  Такой же приоритет, как у <code>&lt;</code>.
+</p>
+</dd>
+<dt><code>OR</code></dt>
+<dd><p>Дизъюнкция (логическое ИЛИ).  Определена на булевых типах.
+</p>
+</dd>
+<dt><code>AND<span class="roman">, </span>&amp;</code></dt>
+<dd><p>Конъюнкция (логическое И).  Определена на булевых типах.
+</p>
+</dd>
+<dt><code>@</code></dt>
+<dd><p>Оператор &ldquo;искусственного массива&rdquo; GDB (see <a href="Vyrazheniya.html">Выражения</a>).
+</p>
+</dd>
+<dt><code>+<span class="roman">, </span>-</code></dt>
+<dd><p>Сложение и вычитание на целочисленных типах и типах с плавающей
+точкой или объединение и разность на множественных типах.
+</p>
+</dd>
+<dt><code>*</code></dt>
+<dd><p>Умножение на целочисленных типах и типах с плавающей точкой или
+пересечение на типах-множествах.
+</p>
+</dd>
+<dt><code>/</code></dt>
+<dd><p>Деление на типах с плавающей точкой.  Симметрическая разность
+множеств на типах-множествах.  Такой же приоритет, как у <code>*</code>.
+</p>
+</dd>
+<dt><code>DIV<span class="roman">, </span>MOD</code></dt>
+<dd><p>Целочисленное деление и остаток.  Определены на целочисленных
+типах.  Такой же приоритет, как у <code>*</code>.
+</p>
+</dd>
+<dt><code>-</code></dt>
+<dd><p>Отрицание.  Определено на данных типов <code>INTEGER</code> и <code>REAL</code>.
+</p>
+</dd>
+<dt><code>^</code></dt>
+<dd><p>Разыменовывание указателя.  Определено на типах-указателях.
+</p>
+</dd>
+<dt><code>NOT</code></dt>
+<dd><p>Булево отрицание.  Определено на булевых типах.  Такой же приоритет, как
+у <code>^</code>.
+</p>
+</dd>
+<dt><code>.</code></dt>
+<dd><p>Селектор полей <code>RECORD</code>.  Определен для данных типа <code>RECORD</code>.
+Такое же приоритет, как у <code>^</code>.
+</p>
+</dd>
+<dt><code>[]</code></dt>
+<dd><p>Индексация массива.  Определена для данных типа <code>ARRAY</code>.  Такой же
+приоритет, как у <code>^</code>.
+</p>
+</dd>
+<dt><code>()</code></dt>
+<dd><p>Список параметров процедуры.  Определен на объектах <code>PROCEDURE</code>.
+Такой же приоритет, как у <code>^</code>.
+</p>
+</dd>
+<dt><code>::<span class="roman">, </span>.</code></dt>
+<dd><p>Операторы GDB и Модулы-2 определения области видимости.
+</p></dd>
+</dl>
+
+<blockquote>
+<p><em>Предупреждение:</em> Множества и операции над ними еще не
+поддерживаются, так что GDB трактует использование оператора
+<code>IN</code> или операторов <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>,
+<code>=</code>, , <code>&lt;&gt;</code>, <code>#</code>, <code>&lt;=</code>, и <code>&gt;=</code> на
+множествах как ошибку.
+</p></blockquote>
+
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Vstroennye-funkcii_002fprocedury.html" accesskey="n" rel="next">Встроенные функции/процедуры</a>, Up: <a href="Modula_002d2.html" accesskey="u" rel="up">Модула-2</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

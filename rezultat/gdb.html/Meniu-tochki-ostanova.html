@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Меню точки останова (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Меню точки останова (Отладка с помощью GDB)">
+<meta name="keywords" content="Меню точки останова (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Tochki-ostanova.html" rel="up" title="Точки останова">
+<link href="Oshibki-v-tochkakh-ostanova.html" rel="next" title="Ошибки в точках останова">
+<link href="Komandy-ostanova.html" rel="prev" title="Команды останова">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_041c_0435_043d_044e-_0442_043e_0447_043a_0438-_043e_0441_0442_0430_043d_043e_0432_0430"></span><div class="header">
+<p>
+Next: <a href="Oshibki-v-tochkakh-ostanova.html" accesskey="n" rel="next">Ошибки в точках останова</a>, Previous: <a href="Komandy-ostanova.html" accesskey="p" rel="prev">Команды останова</a>, Up: <a href="Tochki-ostanova.html" accesskey="u" rel="up">Точки останова</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Meniu-tochki-ostanova"></span><h4 class="subsection">5.1.8 Меню точки останова</h4>
+<span id="index-peregruzka"></span>
+<span id="index-peregruzka-simvolov"></span>
+
+<p>Некоторые языки программирования (особенно Си++) допускают, чтобы одно и
+то же имя функции было определено несколько раз, для применения в
+различных контекстах.  Это называется <em>перегрузкой</em>.  Когда имя
+функции перегружается, простой записи &lsquo;<samp>break <var>функция</var></samp>&rsquo; недостаточно, чтобы
+указать GDB, где вы хотите установить точку останова.
+Если вы столкнулись с этой проблемой, вы можете использовать что-то вроде
+&lsquo;<samp>break <var>функция</var>(<var>типы</var>)</samp>&rsquo; для указания, какую конкретную
+версию функции вы имеете в виду.  В противном случае, GDB
+предлагает вам выбор из пронумерованных вариантов для различных
+возможных точек останова и ждет вашего выбора с приглашением
+&lsquo;<samp>&gt;</samp>&rsquo;.  Первыми двумя вариантами всегда являются &lsquo;<samp>[0] cancel</samp>&rsquo;
+и &lsquo;<samp>[1] all</samp>&rsquo;.  Ввод <kbd>1</kbd> устанавливает точку останова на каждом
+определении <var>функции</var>, а ввод <kbd>0</kbd> прерывает команду <code>break</code>
+без установки новых точек останова.
+</p>
+<p>Например, следующая выдержка из сеанса иллюстрирует попытку установить
+точку останова на перегруженном символе <code>String::after</code>.  Мы
+выбрали три конкретных определения имени функции:
+</p>
+<div class="example">
+<pre class="example">(gdb) b String::after
+[0] cancel
+[1] all
+[2] file:String.cc; line number:867
+[3] file:String.cc; line number:860
+[4] file:String.cc; line number:875
+[5] file:String.cc; line number:853
+[6] file:String.cc; line number:846
+[7] file:String.cc; line number:735
+&gt; 2 4 6
+Breakpoint 1 at 0xb26c: file String.cc, line 867.
+Breakpoint 2 at 0xb344: file String.cc, line 875.
+Breakpoint 3 at 0xafcc: file String.cc, line 846.
+Multiple breakpoints were set.
+Use the &quot;delete&quot; command to delete unwanted
+ breakpoints.
+(gdb)
+</pre></div>
+
+
+
+
+</body>
+</html>

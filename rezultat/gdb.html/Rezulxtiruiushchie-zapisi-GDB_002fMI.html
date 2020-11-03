@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Результирующие записи GDB/MI (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Результирующие записи GDB/MI (Отладка с помощью GDB)">
+<meta name="keywords" content="Результирующие записи GDB/MI (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Vykhodnye-zapisi-GDB_002fMI.html" rel="up" title="Выходные записи GDB/MI">
+<link href="Potochnye-zapisi-GDB_002fMI.html" rel="next" title="Поточные записи GDB/MI">
+<link href="Vykhodnye-zapisi-GDB_002fMI.html" rel="prev" title="Выходные записи GDB/MI">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0420_0435_0437_0443_043b_044c_0442_0438_0440_0443_044e_0449_0438_0435-_0437_0430_043f_0438_0441_0438-GDB_002fMI"></span><div class="header">
+<p>
+Next: <a href="Potochnye-zapisi-GDB_002fMI.html" accesskey="n" rel="next">Поточные записи GDB/MI</a>, Up: <a href="Vykhodnye-zapisi-GDB_002fMI.html" accesskey="u" rel="up">Выходные записи GDB/MI</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Rezulxtiruiushchie-zapisi-GDB_002fMI"></span><h4 class="subsection">19.3.1 Результирующие записи <small>GDB/MI</small></h4>
+
+<span id="index-rezulxtiruiushchie-zapisi-v-GDB_002fMI"></span>
+<span id="index-GDB_002fMI_002c-rezulxtiruiushchie-zapisi"></span>
+<p>В дополнение к множеству внеочередных уведомлений, ответ на команду
+<small>GDB/MI</small> включает один из следующих указателей результата:
+</p>
+<dl compact="compact">
+<dd><span id="index-_005edone"></span>
+</dd>
+<dt><code>&quot;^done&quot; [ &quot;,&quot; <var>результаты</var> ]</code></dt>
+<dd><p>Синхронная операция прошла успешно, возвращаемыми значениями являются
+<code><var>результаты</var></code>.
+</p>
+</dd>
+<dt><code>&quot;^running&quot;</code></dt>
+<dd><span id="index-_005erunning"></span>
+<p>Асинхронная операция была успешно начата.  Цель выполняется.
+</p>
+</dd>
+<dt><code>&quot;^error&quot; &quot;,&quot; <var>строка-си</var></code></dt>
+<dd><span id="index-_005eerror"></span>
+<p>Операция завершилась с ошибкой.  <code><var>Строка-си</var></code> содержит
+соответствующее сообщение об ошибке.
+</p></dd>
+</dl>
+
+
+
+
+</body>
+</html>

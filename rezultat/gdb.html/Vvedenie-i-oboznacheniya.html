@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Введение и обозначения (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Введение и обозначения (Отладка с помощью GDB)">
+<meta name="keywords" content="Введение и обозначения (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Redaktirovanie-komandnoi-stroki.html" rel="up" title="Редактирование командной строки">
+<link href="Vzaimodeistvie-s-Readline.html" rel="next" title="Взаимодействие с Readline">
+<link href="Redaktirovanie-komandnoi-stroki.html" rel="prev" title="Редактирование командной строки">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0412_0432_0435_0434_0435_043d_0438_0435-_0438-_043e_0431_043e_0437_043d_0430_0447_0435_043d_0438_044f"></span><div class="header">
+<p>
+Next: <a href="Vzaimodeistvie-s-Readline.html" accesskey="n" rel="next">Взаимодействие с Readline</a>, Up: <a href="Redaktirovanie-komandnoi-stroki.html" accesskey="u" rel="up">Редактирование командной строки</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Vvedenie-v-redaktirovanie-strok"></span><h3 class="section">21.1 Введение в редактирование строк</h3>
+
+<p>Следующие абзацы описывают нотацию, используемую для обозначения
+нажатия клавиш.
+</p>
+<p>Текст <kbd>C-k</kbd> читается как &lsquo;Control-K&rsquo; и описывает знак, получаемый
+нажатием клавиши <tt class="key">k</tt> при нажатой клавише Control.
+</p>
+<p>Текст <kbd>M-k</kbd> читается как &lsquo;Meta-K&rsquo; и описывает знак, вводимый
+нажатием клавиши <tt class="key">k</tt> при нажатой клавише Meta (если у вас она
+имеется).  На многих клавиатурах клавиша Meta надписана как
+<tt class="key">ALT</tt>.  На клавиатурах с двумя клавишами <tt class="key">ALT</tt>
+(обычно по разные стороны от пробела), <tt class="key">ALT</tt> на левой стороне обычно
+устанавливается для работы клавишей Meta.  Правый <tt class="key">ALT</tt>
+также может быть сконфигурирован для работы Meta, или он может быть
+сконфигурирован как другой модификатор, например как клавиша Compose для
+ввода букв с акцентами.
+</p>
+<p>Если у вас нет клавиши Meta или <tt class="key">ALT</tt> или другой клавиши,
+работающей как Meta, идентичное нажатие клавиш можно получить
+нажав <i>сначала</i> <tt class="key">ESC</tt>, а затем <tt class="key">k</tt>.  Эти процессы
+называются <em>метафикацией</em> клавиши <tt class="key">k</tt>.
+</p>
+<p>Текст <kbd>M-C-k</kbd> читается как &lsquo;Meta-Control-k&rsquo; и описывает знак,
+получаемый посредством <em>метафикации</em> <kbd>C-k</kbd>.
+</p>
+<p>Кроме того, некоторые клавиши имеют собственные имена.  Именно,
+<tt class="key">DEL</tt>, <tt class="key">ESC</tt>, <tt class="key">LFD</tt>, <tt class="key">SPC</tt>, <tt class="key">RET</tt> и <tt class="key">TAB</tt> в этом
+тексте или в файле инициализации обозначают сами себя (see <a href="Fail-inicializacii-Readline.html">Файл инициализации Readline</a>).
+Если на вашей клавиатуре нет клавиши <tt class="key">LFD</tt>, нажатие <kbd>C-j</kbd>
+приведет к вводу желаемого знака.
+Клавиша <tt class="key">RET</tt> на некоторых клавиатурах может быть отмечена как
+<tt class="key">Return</tt> или <tt class="key">Enter</tt>.
+</p>
+
+
+
+</body>
+</html>

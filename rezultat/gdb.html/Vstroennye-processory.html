@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Встроенные процессоры (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Встроенные процессоры (Отладка с помощью GDB)">
+<meta name="keywords" content="Встроенные процессоры (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Konfiguracii.html" rel="up" title="Конфигурации">
+<link href="Vstroennyi-A29K.html" rel="next" title="Встроенный A29K">
+<link href="Prisoedinenie-k-VxWorks.html" rel="prev" title="Присоединение к VxWorks">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0412_0441_0442_0440_043e_0435_043d_043d_044b_0435-_043f_0440_043e_0446_0435_0441_0441_043e_0440_044b"></span><div class="header">
+<p>
+Next: <a href="Arkhitektury.html" accesskey="n" rel="next">Архитектуры</a>, Previous: <a href="Vstroennaya-OS.html" accesskey="p" rel="prev">Встроенная ОС</a>, Up: <a href="Konfiguracii.html" accesskey="u" rel="up">Конфигурации</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Vstroennye-processory"></span><h3 class="section">14.3 Встроенные процессоры</h3>
+
+<p>Этот раздел описывает детали, специфичные для определенных встроенных
+конфигураций.
+</p>
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Vstroennyi-A29K.html" accesskey="1">Встроенный A29K</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Встроенный AMD A29K
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ARM.html" accesskey="2">ARM</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">ARM
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="H8_002f300.html" accesskey="3">H8/300</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Hitachi H8/300
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="H8_002f500.html" accesskey="4">H8/500</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Hitachi H8/500
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="i960.html" accesskey="5">i960</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Intel i960
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="M32R_002fD.html" accesskey="6">M32R/D</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Mitsubushi M32R/D
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="M68K.html" accesskey="7">M68K</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Motorola M68K
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="M88K.html" accesskey="8">M88K</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Motorola M88K
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Vstroennyi-MIPS.html" accesskey="9">Встроенный MIPS</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Встроенный MIPS
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="PowerPC.html">PowerPC</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">PowerPC
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="PA.html">PA</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Встроенный HP PA
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="SH.html">SH</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Hitachi SH
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Sparclet.html">Sparclet</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Tsqware Spacrlet
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Sparclite.html">Sparclite</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Fujitsu Sparclite
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="ST2000.html">ST2000</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Tandem ST2000
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Z8000.html">Z8000</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Zilog Z8000
+</td></tr>
+</table>
+
+
+
+
+</body>
+</html>

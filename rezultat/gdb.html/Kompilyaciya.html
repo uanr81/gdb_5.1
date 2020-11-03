@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Компиляция (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Компиляция (Отладка с помощью GDB)">
+<meta name="keywords" content="Компиляция (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Vypolnenie.html" rel="up" title="Выполнение">
+<link href="Nachalo-vypolneniya.html" rel="next" title="Начало выполнения">
+<link href="Vypolnenie.html" rel="prev" title="Выполнение">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_041a_043e_043c_043f_0438_043b_044f_0446_0438_044f"></span><div class="header">
+<p>
+Next: <a href="Nachalo-vypolneniya.html" accesskey="n" rel="next">Начало выполнения</a>, Up: <a href="Vypolnenie.html" accesskey="u" rel="up">Выполнение</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Kompilyaciya-dlya-otladki"></span><h3 class="section">4.1 Компиляция для отладки</h3>
+
+<p>Для эффективной отладки программы, при компиляции вы должны
+сгенерировать отладочную информацию.  Эта отладочная информация
+сохраняется в объектном файле; она описывает тип данных
+каждой переменной или функции и соответствие между номерами строк
+исходного текста и адресами в выполняемом коде.
+</p>
+<p>Чтобы запросить генерацию отладочной информации, укажите ключ &lsquo;<samp>-g</samp>&rsquo;
+при вызове компилятора.
+</p>
+<p>Многие компиляторы Си не могут обрабатывать ключи &lsquo;<samp>-g</samp>&rsquo; и &lsquo;<samp>-O</samp>&rsquo;
+вместе.  Используя такие компиляторы, вы не можете создавать
+оптимизированные выполняемые файлы, содержащие отладочную информацию.
+</p>
+<p>GCC, <small>GNU</small> компилятор Си, поддерживает &lsquo;<samp>-g</samp>&rsquo; вместе с ключом
+&lsquo;<samp>-O</samp>&rsquo; или без него, что делает возможной отладку оптимизированного кода.  Мы
+рекомендуем вам <em>всегда</em> использовать &lsquo;<samp>-g</samp>&rsquo; при
+компиляции программ.  Вы можете думать, что ваша программа правильная,
+но нет никакого смысла испытывать удачу.
+</p>
+<span id="index-optimizirovannyi-kod_002c-otladka"></span>
+<span id="index-otladka-optimizirovannogo-koda"></span>
+<p>Когда вы отлаживаете программу, откомпилированную с &lsquo;<samp>-g -O</samp>&rsquo;,
+помните, что оптимизатор перестраивает ваш код; отладчик же показывает то, что
+там находится в действительности.  Не удивляйтесь, если
+порядок выполнения не будет в точности соответствовать вашему исходному
+файлу!  Крайний пример: если вы определяете переменную, но нигде ее не
+используете, GDB никогда не увидит этой переменной, потому
+что при оптимизации компилятор ее исключит.
+</p>
+<p>Некоторые вещи не работают с &lsquo;<samp>-g -O</samp>&rsquo; так же хорошо, как с одним &lsquo;<samp>-g</samp>&rsquo;,
+в частности, на машинах с планированием инструкций.
+Если сомневаетесь, перекомпилируйте с одним ключом &lsquo;<samp>-g</samp>&rsquo;, и если это
+устранит проблему, пожалуйста, сообщите нам об этом как об ошибке
+(включите тестовый пример!).
+</p>
+<p>Ранние версии компилятора <small>GNU</small> Си допускали вариант ключа для отладочной
+информации &lsquo;<samp><span class="nolinebreak">-gg</span></samp>&rsquo;<!-- /@w -->.  GDB больше не поддерживает этот
+формат; если этот ключ есть у вашего компилятора <small>GNU</small> Си, не
+используйте его.
+</p>
+
+
+
+</body>
+</html>

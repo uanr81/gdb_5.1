@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Hitachi ICE (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Hitachi ICE (Отладка с помощью GDB)">
+<meta name="keywords" content="Hitachi ICE (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="H8_002f300.html" rel="up" title="H8/300">
+<link href="Specialxno-dlya-Hitachi.html" rel="next" title="Специально для Hitachi">
+<link href="Platy-Hitachi.html" rel="prev" title="Платы Hitachi">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="Hitachi-ICE"></span><div class="header">
+<p>
+Next: <a href="Specialxno-dlya-Hitachi.html" accesskey="n" rel="next">Специально для Hitachi</a>, Previous: <a href="Platy-Hitachi.html" accesskey="p" rel="prev">Платы Hitachi</a>, Up: <a href="H8_002f300.html" accesskey="u" rel="up">H8/300</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Ispolxzovanie-vstroennogo-emulyatora-E7000"></span><h4 class="subsubsection">14.3.3.2 Использование встроенного эмулятора E7000</h4>
+
+<span id="index-target-e7000_002c-c-Hitachi-ICE"></span>
+<p>Вы можете использовать встроенный эмулятор E7000 для разработки кода либо
+для Hitachi SH, либо для H8/300H.  Используйте одну из этих форм команды
+&lsquo;<samp>target e7000</samp>&rsquo; для соединения GDB с вашей E7000:
+</p>
+<dl compact="compact">
+<dt><code>target e7000 <var>порт</var> <var>скорость</var></code></dt>
+<dd><p>Используйте эту форму, если ваша E7000 присоединена к последовательному
+порту.  Аргумент <var>порт</var> идентифицирует, какой последовательный порт
+использовать (например, &lsquo;<samp>com2</samp>&rsquo;).  Третий аргумент является
+скоростью линии в битах в секунду (например, &lsquo;<samp>9600</samp>&rsquo;).
+</p>
+</dd>
+<dt><code>target e7000 <var>имя-узла</var></code></dt>
+<dd><p>Если ваша E7000 установлена как узел сети TCP/IP, вы можете просто
+указать его имя; GDB использует для соединения <code>telnet</code>.
+</p></dd>
+</dl>
+
+
+
+
+</body>
+</html>

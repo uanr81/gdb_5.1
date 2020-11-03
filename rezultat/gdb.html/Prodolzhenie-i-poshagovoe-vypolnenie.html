@@ -1,0 +1,288 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Продолжение и пошаговое выполнение (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Продолжение и пошаговое выполнение (Отладка с помощью GDB)">
+<meta name="keywords" content="Продолжение и пошаговое выполнение (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Ostanovka.html" rel="up" title="Остановка">
+<link href="Signaly.html" rel="next" title="Сигналы">
+<link href="Oshibki-v-tochkakh-ostanova.html" rel="prev" title="Ошибки в точках останова">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_041f_0440_043e_0434_043e_043b_0436_0435_043d_0438_0435-_0438-_043f_043e_0448_0430_0433_043e_0432_043e_0435-_0432_044b_043f_043e_043b_043d_0435_043d_0438_0435"></span><div class="header">
+<p>
+Next: <a href="Signaly.html" accesskey="n" rel="next">Сигналы</a>, Previous: <a href="Tochki-ostanova.html" accesskey="p" rel="prev">Точки останова</a>, Up: <a href="Ostanovka.html" accesskey="u" rel="up">Остановка</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Prodolzhenie-i-vypolnenie-po-shagam"></span><h3 class="section">5.2 Продолжение и выполнение по шагам</h3>
+
+<span id="index-poshagovoe-vypolnenie"></span>
+<span id="index-prodolzhenie"></span>
+<span id="index-vozobnovlenie-vypolneniya"></span>
+<p><em>Продолжение</em> означает возобновление выполнения программы до ее
+нормального завершения.  Напротив, <em>пошаговое выполнение</em> означает
+выполнение еще одного &ldquo;шага&rdquo; вашей программы, где &ldquo;шаг&rdquo; быть либо
+одной строкой исходного кода, либо одной машинной инструкцией (в
+зависимости от того, какую именно команду вы используете).  И в
+случае продолжения, и в случае выполнения по шагам, ваша программа
+может остановиться и раньше, вследствие точки останова или сигнала.
+(Если она останавливается по сигналу, вы можете использовать
+<code>handle</code>, или &lsquo;<samp>signal 0</samp>&rsquo; для возобновления выполнения.
+See <a href="Signaly.html">Сигналы</a>.)
+</p>
+<dl compact="compact">
+<dd><span id="index-continue"></span>
+<span id="index-c-_0028prodolzhitx_0029"></span>
+<span id="index-fg-_0028prodolzhitx-vypolnenie-v-fonovom-rezhime_0029"></span>
+</dd>
+<dt><code>continue <span class="roman">[</span><var>счетчик-игнор</var><span class="roman">]</span></code></dt>
+<dt><code>c <span class="roman">[</span><var>счетчик-игнор</var><span class="roman">]</span></code></dt>
+<dt><code>fg <span class="roman">[</span><var>счетчик-игнор</var><span class="roman">]</span></code></dt>
+<dd><p>Возобновить выполнение программы с того адреса, где она
+остановилась последний раз; все точки останова, установленные по этому
+адресу, пропускаются.  Необязательный аргумент <var>счетчик-игнор</var>
+позволяет вам задать количество последующих игнорирований точки останова
+в этом месте; его действие совпадает с действием <code>ignore</code>
+(see <a href="Usloviya.html">Условия останова</a>).
+</p>
+<p>Аргумент <var>счетчик-игнор</var> имеет смысл, только если ваша программа
+остановилась в точке останова.  В остальных случаях аргумент к
+<code>continue</code> игнорируется.
+</p>
+<p>Синонимы <code>c</code> и <code>fg</code> (от <em>foreground</em>, так как отлаживаемая
+программа считается фоновой), предоставляются исключительно для
+удобства и имеют в точности тот же смысл, что и <code>continue</code>.
+</p></dd>
+</dl>
+
+<p>Чтобы возобновить выполнение с другого места, вы можете использовать
+<code>return</code> (see <a href="Vozvrat.html">Возврат из функции</a>) чтобы вернуться
+назад к вызывающей функции; или <code>jump</code> (see <a href="Perekhody.html">Продолжение с другого адреса</a>) для перехода к произвольному месту в
+вашей программе.
+</p>
+<p>Типичная техника для использования пошагового выполнения заключается в
+установке точки останова (see <a href="../точки
+наблюдения и точки перехвата/_0422_043e_0447_043a_0438-_043e_0441_0442_0430_043d_043e_0432_0430.html#g_t_0422_043e_0447_043a_0438-_043e_0441_0442_0430_043d_043e_0432_0430">(точки
+наблюдения и точки перехвата)Точки останова</a>) на начале функции или раздела вашей программы,
+где предположительно находится ошибка, выполнении вашей программы до
+остановки на этой точке останова, и затем пошаговом выполнении
+подозреваемого участка, с исследованием интересуемых переменных, пока вы
+не увидите, что случилась ошибка.
+</p>
+<dl compact="compact">
+<dd><span id="index-step"></span>
+<span id="index-s-_0028step_0029"></span>
+</dd>
+<dt><code>step</code></dt>
+<dd><p>Продолжить выполнение вашей программы, пока управление не достигнет
+другой строки исходного текста, затем остановить ее и вернуть
+управление GDB.  Эту команду можно сокращать как <code>s</code>.
+</p>
+<blockquote>
+<p><em>Предупреждение:</em> Если вы используете команду <code>step</code>, когда
+управление находится внутри функции, которая была скомпилирована без
+отладочной информации, выполнение продолжается, пока управление не
+достигнет функции, которая <em>имеет</em> ее.  Аналогично, пошаговое
+выполнение не будет заходить в функцию, скомпилированную без отладочной
+информации.  Для пошагового выполнения таких функций
+используйте команду <code>stepi</code>, описанную ниже.
+</p></blockquote>
+
+<p>Команда <code>step</code> останавливается только на первой инструкции строки
+исходного текста.  Это предотвращает множественные остановки, которые
+в противном случае могут возникнуть в операторе <code>switch</code>, цикле
+<code>for</code>, и так далее.  <code>step</code> продолжает останавливаться, если
+функция, имеющая отладочную информацию, вызывается внутри строки.
+Другими словами, <code>step</code> <em>заходит внутрь</em> функций, вызываемых в
+данной строке.
+</p>
+<p>Также, команда <code>step</code> входит в функцию, только если для нее существует
+информация о номерах строк.  Иначе она действует, как команда
+<code>next</code>.  Это позволяет избежать проблем, появляющихся при
+использовании <code>cc -gl</code> на машинах MIPS.  Раньше <code>step</code>
+заходила в подпрограмму, если о ней существовала хоть какая-нибудь отладочная
+информация.
+</p>
+</dd>
+<dt><code>step <code>число</code></code></dt>
+<dd><p>Продолжает выполнение, как по команде <code>step</code>, но делает это
+указанное <var>число</var> раз.  Если до завершения указанного <var>числа</var>
+шагов достигается точка останова, или приходит сигнал, не связанный с
+пошаговым выполнением, пошаговое выполнение сразу останавливается.
+</p>
+<span id="index-next"></span>
+<span id="index-n-_0028next_0029"></span>
+</dd>
+<dt><code>next <span class="roman">[</span><var>число</var><span class="roman">]</span></code></dt>
+<dd><p>Продолжает выполнение до следующей строки исходного текста в текущем
+(внутреннем) кадре стека.  Это аналогично <code>step</code>, но вызовы
+функций, которые появляются внутри строки кода, выполняются без
+остановки.  Выполнение останавливается, когда управление достигает другой
+строки кода в исходном уровне стека, который выполнялся, когда вы дали
+команду <code>next</code>.  Эта команда сокращается как <code>n</code>.
+</p>
+<p>Аргумент <var>число</var> является счетчиком повторений, как для <code>step</code>.
+</p>
+<p>Команда <code>next</code> останавливается только на первой инструкции исходной
+строки.  Это предотвращает множественные остановки, которые
+иначе могут возникнуть в операторах <code>switch</code>, циклах <code>for</code> и
+так далее.
+</p>
+<span id="index-set-step_002dmode"></span>
+</dd>
+<dt><code>set step-mode</code></dt>
+<dd><span id="index-funkcii-bez-informacii-o-strokakh_002c-i-poshagovoe-vypolnenie"></span>
+<span id="index-poshagovyi-vkhod-v-funkcii-bez-informacii-o-strokakh"></span>
+</dd>
+<dt><code>set step-mode on</code></dt>
+<dd><p>Команда <code>set step-mode on</code> велит команде <code>step</code>
+останавливаться на первой инструкции в функции, не содержащей
+отладочной информации о строках, а не выполнять ее без остановки.
+</p>
+<p>Это полезно в случаях, когда вы можете быть заинтересованы в изучении
+машинных инструкций функции, не имеющей символьной информации, и не
+хотите, чтобы GDB автоматически ее проскочил.
+</p>
+</dd>
+<dt><code>set step-mode off</code></dt>
+<dd><p>Велит команде <code>step</code> выполнять все функции, не
+содержащие отладочной информации, без остановки.  Это значение
+используется по умолчанию.
+</p>
+<span id="index-finish"></span>
+</dd>
+<dt><code>finish</code></dt>
+<dd><p>Продолжить выполнение до возврата из функции в выбранном кадре стека.
+Напечатать возвращенное значение (если таковое существует).
+</p>
+<p>Сравните это с командой <code>return</code> (see <a href="Vozvrat.html">Возврат из
+функции</a>).
+</p>
+<span id="index-until"></span>
+<span id="index-u-_0028until_0029"></span>
+</dd>
+<dt><code>until</code></dt>
+<dt><code>u</code></dt>
+<dd><p>Продолжить выполнение до достижения строки исходного текста, следующей за
+текущей, в текущем кадре стека.  Эта команда используется для избежания
+выполнения цикла по шагам больше одного раза.
+Она похожа на команду <code>next</code>, за исключением
+того, что когда <code>until</code> встречает переход, она автоматически
+продолжает выполнение, пока счетчик выполнения программы не станет
+больше, чем адрес перехода.
+</p>
+<p>Это означает, что когда вы достигаете конца цикла после его выполнения по
+шагам, <code>until</code> продолжает выполнение вашей программы, пока она не
+выйдет из цикла.  Напротив, команда <code>next</code> в конце цикла просто
+переходит назад в начало цикла, что заставляет вас выполнять по
+шагам следующую итерацию.
+</p>
+<p><code>until</code> всегда останавливает вашу программу, если она пытается выйти
+из текущего кадра стека.
+</p>
+<p><code>until</code> может привести к несколько неожиданным результатам, если
+порядок машинных кодов не совпадает с порядком строк исходного текста.
+Например, в следующем отрывке сеанса отладки, команда <code>f</code>
+(<code>frame</code>) показывает, что выполнение остановилось на строке
+<code>206</code>; хотя, когда мы используем <code>until</code>, мы переходим к строке
+<code>195</code>:
+</p>
+<div class="example">
+<pre class="example">(gdb) f
+#0  main (argc=4, argv=0xf7fffae8) at m4.c:206
+206                 expand_input();
+(gdb) until
+195             for ( ; argc &gt; 0; NEXTARG) {
+</pre></div>
+
+<p>Это произошло потому, что для эффективности выполнения компилятор
+сгенерировал код для проверки окончания цикла в конце, а не в начале
+цикла &mdash; даже если проверка в цикле <code>for</code> Си написана до тела
+цикла.  Кажется, что команда <code>until</code> переместилась назад к началу
+цикла, когда двигалась к этому выражению; однако, в действительности она
+не переходила к более раннему оператору &mdash; в терминах фактического
+машинного кода.
+</p>
+<p><code>until</code> без аргументов работает посредством пошагового выполнения
+отдельных инструкций, и, следовательно, является более медленной, чем
+<code>until</code> с аргументом.
+</p>
+</dd>
+<dt><code>until <var>положение</var></code></dt>
+<dt><code>u <var>положение</var></code></dt>
+<dd><p>Продолжить выполнение вашей программы, пока либо указанное место не
+будет достигнуто, либо не произойдет возврат из текущего кадра стека.
+<var>положение</var> может быть любой из доступных форм аргумента для
+<code>break</code> (see <a href="Ustanovka-tochek-ostanova.html">Установка точек
+останова</a>).  Эта форма команды использует точки останова и,
+следовательно, является более быстрой, чем <code>until</code> без аргумента.
+</p>
+<span id="index-stepi"></span>
+<span id="index-si-_0028stepi_0029"></span>
+</dd>
+<dt><code>stepi</code></dt>
+<dt><code>stepi <var>арг</var></code></dt>
+<dt><code>si</code></dt>
+<dd><p>Выполнить одну машинную инструкцию, затем остановиться и вернуться в
+отладчик.
+</p>
+<p>При пошаговом выполнении машинных инструкций, часто бывает полезным
+сделать &lsquo;<samp>display/i $pc</samp>&rsquo;.  Это велит GDB автоматически
+отображать инструкцию, которая будет выполняться следующей, каждый раз,
+когда ваша программа останавливается.  See <a href="Avtomaticheskoe-otobrazhenie.html">Автоматическое отображение</a>.
+</p>
+<p>Аргумент является счетчиком повторений, как для <code>step</code>.
+</p>
+<span id="index-nexti"></span>
+<span id="index-ni-_0028nexti_0029"></span>
+</dd>
+<dt><code>nexti</code></dt>
+<dt><code>nexti <var>арг</var></code></dt>
+<dt><code>ni</code></dt>
+<dd><p>Выполнить одну машинную инструкцию, но если это вызов функции,
+продолжать до возврата из нее.
+</p>
+<p>Аргумент является счетчиком повторений, как для <code>next</code>.
+</p></dd>
+</dl>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Signaly.html" accesskey="n" rel="next">Сигналы</a>, Previous: <a href="Tochki-ostanova.html" accesskey="p" rel="prev">Точки останова</a>, Up: <a href="Ostanovka.html" accesskey="u" rel="up">Остановка</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

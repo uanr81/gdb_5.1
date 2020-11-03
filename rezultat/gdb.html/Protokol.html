@@ -1,0 +1,486 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Протокол (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Протокол (Отладка с помощью GDB)">
+<meta name="keywords" content="Протокол (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Udalennyi.html" rel="up" title="Удаленный">
+<link href="Server.html" rel="next" title="Сервер">
+<link href="Seans-otladki.html" rel="prev" title="Сеанс отладки">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_041f_0440_043e_0442_043e_043a_043e_043b"></span><div class="header">
+<p>
+Next: <a href="Server.html" accesskey="n" rel="next">Сервер</a>, Previous: <a href="Seans-otladki.html" accesskey="p" rel="prev">Сеанс отладки</a>, Up: <a href="Udalennyi.html" accesskey="u" rel="up">Удаленный</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Kommunikacionnyi-protokol"></span><h4 class="subsubsection">13.4.1.4 Коммуникационный протокол</h4>
+
+<span id="index-otladochnaya-zaglushka_002c-primer"></span>
+<span id="index-udalennaya-zaglushka_002c-primer"></span>
+<span id="index-primer-zaglushki_002c-udalennaya-otladka"></span>
+<p>Файлы заглушек, поставляемые с GDB, реализуют коммуникационный
+протокол со стороны целевой машины, а со стороны GDB он
+реализуется в исходном файле GDB <samp>remote.c</samp>.  Обычно вы
+можете просто позволить этим программам взаимодействовать и
+не вдаваться в детали.  (Если вы разрабатываете свой собственный файл
+заглушки, вы также можете игнорировать детали: начните с одного из
+существующих файлов заглушки.  <samp>sparc-stub.c</samp> организован наилучшим
+образом, и потому его легче всего читать.)
+</p>
+<p>Однако, бывают случаи, когда вам необходимо кое-что знать о
+протоколе &mdash; например, если существует только один последовательный порт
+на вашей целевой машине, вы можете захотеть, чтобы ваша программа делала
+что-нибудь особенное, если она распознает предназначенный для GDB
+пакет.
+</p>
+<p>В следующих примерах, &lsquo;<samp>&lt;-</samp>&rsquo; и &lsquo;<samp>-&gt;</samp>&rsquo; используются для обозначения
+переданных и полученных данных соответственно.
+</p>
+<span id="index-protokol_002c-udalennyi-posledovatelxnyi-GDB"></span>
+<span id="index-posledovatelxnyi-protokol_002c-udalennyi-GDB"></span>
+<span id="index-udalennyi-posledovatelxnyi-protokol"></span>
+<p>Все команды и ответы GDB (не подтверждения)
+посылаются в виде <var>пакета</var>.  <var>Пакет</var> представлен знаком &lsquo;<samp>$</samp>&rsquo;,
+реальными <var>данными-пакета</var> и завершающим знаком &lsquo;<samp>#</samp>&rsquo;, за которым
+следуют две цифры <var>контрольной-суммы</var>:
+</p>
+<div class="example">
+<pre class="example"><code>$</code><var>данные-пакета</var><code>#</code><var>контрольная-сумма</var>
+</pre></div>
+
+<span id="index-kontrolxnaya-summa_002c-dlya-udalennogo-GDB"></span>
+<p>Двузначная <var>контрольная-сумма</var> вычисляется как сумма по модулю 256
+всех знаков между начальным &lsquo;<samp>$</samp>&rsquo; и конечным &lsquo;<samp>#</samp>&rsquo; (восьмибитная
+беззнаковая контрольная сумма).
+</p>
+<p>Разработчикам следует учесть, что до GDB версии 5.0
+спецификация протокола также включала необязательный двузначный
+<var>ид-последов</var>:
+</p>
+<div class="example">
+<pre class="example"><code>$</code><var>ид-последов</var><code>:</code><var>данные-пакета</var><code>#</code><var>контрольная-сумма</var>
+</pre></div>
+
+<span id="index-identifikator-posledovatelxnosti_002c-dlya-udalennogo-GDB"></span>
+<p>Этот <var>ид-последов</var> добавлялся к подтверждению.
+GDB никогда не генерировал <var>ид-последов</var>.
+Заглушки, занимающиеся обработкой пакетов, добавленные в GDB
+начиная с версии 5.0, не должны принимать пакеты с
+<var>ид-последов</var>.
+</p>
+<span id="index-podtverzhdenie_002c-dlya-udalennogo-GDB"></span>
+<p>Когда или рабочая, или целевая машина получает пакет, первым ожидаемым
+ответом является подтверждение: или &lsquo;<samp>+</samp>&rsquo; (для указания, что пакет
+получен корректно), или &lsquo;<samp>-</samp>&rsquo; (чтобы запросить повторную передачу):
+</p>
+<div class="example">
+<pre class="example">&lt;- <code>$</code><var>данные-пакета</var><code>#</code><var>контрольная-сумма</var>
+-&gt; <code>+</code>
+</pre></div>
+
+<p>Рабочая машина (GDB) посылает <var>команды</var>, а целевая (отладочная
+заглушка, включенная в вашу программу) посылает <var>ответ</var>.  В случае
+<var>команд</var> пошагового выполнения и продолжения, ответ посылается
+только тогда, когда операция закончена (цель снова остановлена).
+</p>
+<p><var>Данные-пакета</var> состоят из последовательности знаков, за исключением
+&lsquo;<samp>#</samp>&rsquo; и &lsquo;<samp>$</samp>&rsquo; (для дополнительных исключений, смотрите пакет
+&lsquo;<samp>X</samp>&rsquo;).
+</p>
+<p>Поля внутри пакета должны разделяться при помощи &lsquo;<samp>,</samp>&rsquo;, &lsquo;<samp>;</samp>&rsquo; или
+&lsquo;<samp>:</samp>&rsquo;.  Если не оговорено противное, все числа представлены в
+шестнадцатеричном виде без начальных нулей.
+</p>
+<p>Разработчикам следует учесть, что до GDB версии 5.0, знак
+&lsquo;<samp>:</samp>&rsquo; не мог появляться третьим знаком в пакете (так как
+потенциально это могло привести к конфликту с
+<var>ид-последов</var>).
+</p>
+<p><var>данные</var> ответа могут быть для экономии закодированы
+методом длины серий.  &lsquo;<samp>*</samp>&rsquo; означает, что следующий знак является
+<small>ASCII</small>-кодом, который обозначает количество повторений знака,
+предшествующего &lsquo;<samp>*</samp>&rsquo;.  Кодировкой является <code>n+29</code>, что дает печатный
+знак для <code>n &gt;=3</code> (когда кодировка переменной длины начинает давать
+преимущество).  Печатные знаки &lsquo;<samp>$</samp>&rsquo;, &lsquo;<samp>#</samp>&rsquo;, &lsquo;<samp>+</samp>&rsquo;, &lsquo;<samp>-</samp>&rsquo;
+или знаки с номерами, большими 126, использоваться не должны.
+</p>
+<p>Некоторые удаленные системы использовали другой механизм кодировки с
+переменной длиной, иногда называемый cisco-кодировкой.  За &lsquo;<samp>*</samp>&rsquo;
+следуют две шестнадцатеричные цифры, обозначающие размер пакета.
+</p>
+<p>Итак:
+</p><div class="example">
+<pre class="example">&quot;<code>0* </code>&quot;
+</pre></div>
+<p>означает то же, что и &quot;0000&quot;.
+</p>
+<p>При ошибке, ответ, возвращаемый для некоторых пакетов, включает
+двузначный номер ошибки.  Этот номер определен смутно.
+</p>
+<p>Для любой <var>команды</var>, не поддерживаемой заглушкой, должен быть
+возвращен пустой ответ (&lsquo;<samp>$#00</samp>&rsquo;).  Таким образом, протокол можно
+расширять.  По этому ответу новые версии GDB могут определить,
+поддерживается тот или иной пакет.
+</p>
+<p>От заглушки требуется поддержка <var>команд</var> &lsquo;<samp>g</samp>&rsquo;, &lsquo;<samp>G</samp>&rsquo;,
+&lsquo;<samp>m</samp>&rsquo;, &lsquo;<samp>M</samp>&rsquo;, &lsquo;<samp>c</samp>&rsquo; и &lsquo;<samp>s</samp>&rsquo;.  Все остальные <var>команды</var>
+являются необязательными.
+</p>
+<p>Вот полный список всех определенных на данный момент <var>команд</var> и
+соответствующих им ответов <var>данные</var>:
+</p><table>
+<tr><td width="30%">Пакет</td><td width="30%">Запрос</td><td width="40%">Описание</td></tr>
+<tr><td width="30%">расширенные операции</td><td width="30%"><code>!</code></td><td width="40%">Использовать расширенный удаленный протокол.  Имеет постоянное
+действие &mdash; требует установки только один раз.  Расширенный удаленный
+протокол поддерживает пакеты &lsquo;<samp>R</samp>&rsquo;.</td></tr>
+<tr><td width="30%"></td><td width="30%">ответ &lsquo;<samp></samp>&rsquo;</td><td width="40%">Заглушки, поддерживающие расширенный удаленный протокол, возвращают
+&lsquo;<samp></samp>&rsquo;, что, к сожалению, совпадает с ответом, возвращаемым заглушками,
+которые не поддерживают расширения протокола.</td></tr>
+<tr><td width="30%">последний сигнал</td><td width="30%"><code>?</code></td><td width="40%">Указывает причину, по которой цель остановилась.  Ответ такой же, как
+для пошагового выполнения и продолжения.</td></tr>
+<tr><td width="30%"></td><td width="30%">ответ</td><td width="40%">смотрите ниже</td></tr>
+<tr><td width="30%">зарезервировано</td><td width="30%"><code>a</code></td><td width="40%">Зарезервировано для использования в будущем</td></tr>
+<tr><td width="30%">установить аргументы программы <strong>(зарезервировано)</strong></td><td width="30%"><code>A</code><var>длина-арг</var><code>,</code><var>число-арг</var><code>,</code><var>арг</var><code>,&hellip;</code></td><td width="40%"></td></tr>
+<tr><td width="30%"></td><td width="30%"></td><td width="40%">В программу передается инициализированный массив &lsquo;<samp>argv[]</samp>&rsquo;.
+<var>Длина-арг</var> задает число байт в закодированном в шестнадцатеричный
+вид потоке байт <var>арг</var>.  Смотрите <samp>gdbserver</samp> для
+дополнительной информации.</td></tr>
+<tr><td width="30%"></td><td width="30%">ответ <code>OK</code></td></tr>
+<tr><td width="30%"></td><td width="30%">ответ <code>E</code><var>NN</var></td></tr>
+<tr><td width="30%">установить скорость <strong>(не рекомендовано)</strong></td><td width="30%"><code>b</code><var>бод</var></td><td width="40%">Установить скорость последовательной линии в <var>бод</var>.</td></tr>
+<tr><td width="30%">установить точку останова <strong>(не рекомендовано)</strong></td><td width="30%"><code>B</code><var>адрес</var>,<var>режим</var></td><td width="40%">Установить (<var>режим</var> &lsquo;<samp>S</samp>&rsquo;) или удалить (<var>режим</var> &lsquo;<samp>C</samp>&rsquo;)
+точку останова по адресу <var>адрес</var>.  <em>Это было замещено пакетами
+&lsquo;<samp>Z</samp>&rsquo; и &lsquo;<samp>z</samp>&rsquo;.</em></td></tr>
+<tr><td width="30%">продолжить</td><td width="30%"><code>c</code><var>адрес</var></td><td width="40%"><var>Адрес</var> &mdash; это адрес для возобновления выполнения.  Если он
+опущен, возобновить с текущего адреса.</td></tr>
+<tr><td width="30%"></td><td width="30%">ответ</td><td width="40%">смотрите ниже</td></tr>
+<tr><td width="30%">продолжить с сигналом</td><td width="30%"><code>C</code><var>сиг</var><code>;</code><var>адрес</var></td><td width="40%">Продолжить с сигналом <var>сиг</var> (шестнадцатеричный номер сигнала).  Если
+&lsquo;<code>;</code><var>адрес</var>&rsquo; опущено, выполнение возобновляется с прежнего
+адреса.</td></tr>
+<tr><td width="30%"></td><td width="30%">ответ</td><td width="40%">смотрите ниже</td></tr>
+<tr><td width="30%">переключить режим отладки <strong>(не рекомендовано)</strong></td><td width="30%"><code>d</code></td><td width="40%">переключить флаг отладки.</td></tr>
+<tr><td width="30%">отсоединиться</td><td width="30%"><code>D</code></td><td width="40%">Отсоединить GDB от удаленной системы.  Посылается удаленной
+системе перед тем, как GDB отсоединится.</td></tr>
+<tr><td width="30%"></td><td width="30%">ответ <em>нет ответа</em></td><td width="40%">GDB не ждет никакого ответа после посылки этого пакета.</td></tr>
+<tr><td width="30%">зарезервировано</td><td width="30%"><code>e</code></td><td width="40%">Зарезервировано для использования в будущем</td></tr>
+<tr><td width="30%">зарезервировано</td><td width="30%"><code>E</code></td><td width="40%">Зарезервировано для использования в будущем</td></tr>
+<tr><td width="30%">зарезервировано</td><td width="30%"><code>f</code></td><td width="40%">Зарезервировано для использования в будущем</td></tr>
+<tr><td width="30%">зарезервировано</td><td width="30%"><code>F</code></td><td width="40%">Зарезервировано для использования в будущем</td></tr>
+<tr><td width="30%">чтение регистров</td><td width="30%"><code>g</code></td><td width="40%">Чтение регистров общего назначения.</td></tr>
+<tr><td width="30%"></td><td width="30%">ответ <var>XX...</var></td><td width="40%">Каждый байт данных регистра описывается двумя шестнадцатеричными
+цифрами.  Они передаются с целевым порядком байтов.  Размер каждого
+регистра и его позиция внутри <var>пакета</var> &lsquo;<samp>g</samp>&rsquo; определяются
+внутренними макросами GDB <var>REGISTER_RAW_SIZE</var> и
+<var>REGISTER_NAME</var>.  Спецификация нескольких стандартных пакетов
+&lsquo;<samp>g</samp>&rsquo; приведена ниже.</td></tr>
+<tr><td width="30%"></td><td width="30%"><code>E</code><var>NN</var></td><td width="40%">в случае ошибки.</td></tr>
+<tr><td width="30%">запись в регистры</td><td width="30%"><code>G</code><var>XX...</var></td><td width="40%">Смотрите &lsquo;<samp>g</samp>&rsquo; для описания данных <var>XX...</var> .</td></tr>
+<tr><td width="30%"></td><td width="30%">ответ <code>OK</code></td><td width="40%">в случае успеха</td></tr>
+<tr><td width="30%"></td><td width="30%">ответ <code>E</code><var>NN</var></td><td width="40%">в случае ошибки</td></tr>
+<tr><td width="30%">зарезервировано</td><td width="30%"><code>h</code></td><td width="40%">Зарезервировано для использования в будущем</td></tr>
+<tr><td width="30%">выбрать нить</td><td width="30%"><code>H</code><var>c</var><var>t...</var></td><td width="40%">Установить нить для последующих операций (&lsquo;<samp>m</samp>&rsquo;, &lsquo;<samp>M</samp>&rsquo;, &lsquo;<samp>g</samp>&rsquo;,
+&lsquo;<samp>G</samp>&rsquo; и других).  <var>c</var> = &lsquo;<samp>c</samp>&rsquo; для нитей, используемых при
+пошаговом выполнении и продолжении; <var>t...</var> может быть -1 для всех
+нитей.  <var>c</var> = &lsquo;<samp>g</samp>&rsquo; для нитей, используемых в других операциях.
+Если ноль &mdash; выбрать любую нить.</td></tr>
+<tr><td width="30%"></td><td width="30%">ответ <code>OK</code></td><td width="40%">в случае успеха</td></tr>
+<tr><td width="30%"></td><td width="30%">ответ <code>E</code><var>NN</var></td><td width="40%">в случае ошибки</td></tr>
+<tr><td width="30%">пошаговое выполнение по тактовому циклу <strong>(черновик)</strong></td><td width="30%"><code>i</code><var>адрес</var><code>,</code><var>nnn</var></td><td width="40%">Выполнить один тактовый цикл на удаленной машине.  Если
+&lsquo;<code>,</code><var>nnn</var>&rsquo; указано, выполнить <var>nnn</var> циклов.  Если
+указан <var>адрес</var>, пошаговое выполнение по одному тактовому циклу
+начинается этого адреса.</td></tr>
+<tr><td width="30%">сигнал, затем выполнение по тактовым циклам <strong>(зарезервировано)</strong></td><td width="30%"><code>I</code></td><td width="40%">Смотрите &lsquo;<samp>i</samp>&rsquo; и &lsquo;<samp>S</samp>&rsquo;, там аналогичный синтаксис и семантика.</td></tr>
+<tr><td width="30%">зарезервировано</td><td width="30%"><code>j</code></td><td width="40%">Зарезервировано для использования в будущем</td></tr>
+<tr><td width="30%">зарезервировано</td><td width="30%"><code>J</code></td><td width="40%">Зарезервировано для использования в будущем</td></tr>
+<tr><td width="30%">убить</td><td width="30%"><code>k</code></td><td width="40%">FIXME: <em>Нет описания, как действовать в случае, если был выбран
+контекст определенной нити (то есть &lsquo;<samp>k</samp>&rsquo; убивает только эту нить?)</em>.</td></tr>
+<tr><td width="30%">зарезервировано</td><td width="30%"><code>l</code></td><td width="40%">Зарезервировано для использования в будущем</td></tr>
+<tr><td width="30%">зарезервировано</td><td width="30%"><code>L</code></td><td width="40%">Зарезервировано для использования в будущем</td></tr>
+<tr><td width="30%">чтение памяти</td><td width="30%"><code>m</code><var>адрес</var><code>,</code><var>длина</var></td><td width="40%">Прочитать <var>длину</var> байт памяти, начиная с адреса <var>адрес</var>.  Ни
+GDB, ни заглушка не предполагают, что передача области памяти
+происходит по адресам, выровненным по границе слова.  FIXME: <em>Нужен
+механизм передачи области памяти, выровненной по границе слова.</em></td></tr>
+<tr><td width="30%"></td><td width="30%">ответ <var>XX...</var></td><td width="40%"><var>XX...</var> представляет собой содержимое памяти.  Может содержать
+меньше запрошенного числа байт, если удалось прочитать только часть
+данных.  Ни GDB, ни заглушка не предполагают, что передача
+области памяти происходит по адресам, выровненным по границе слова.
+FIXME: <em>Нужен механизм передачи области памяти, выровненной по
+границе слова.</em></td></tr>
+<tr><td width="30%"></td><td width="30%">ответ <code>E</code><var>NN</var></td><td width="40%"><var>NN</var> представляет номер ошибки</td></tr>
+<tr><td width="30%">запись в память</td><td width="30%"><code>M</code><var>адрес</var>,<var>длина</var><code>:</code><var>XX...</var></td><td width="40%">Записать <var>длину</var> байт памяти, начиная с адреса <var>адрес</var>.
+<var>XX...</var> &mdash; это данные.</td></tr>
+<tr><td width="30%"></td><td width="30%">ответ <code>OK</code></td><td width="40%">при успехе</td></tr>
+<tr><td width="30%"></td><td width="30%">ответ <code>E</code><var>NN</var></td><td width="40%">при ошибке (это включает случай, когда была записана только часть
+данных).</td></tr>
+<tr><td width="30%">зарезервировано</td><td width="30%"><code>n</code></td><td width="40%">Зарезервировано для использования в будущем</td></tr>
+<tr><td width="30%">зарезервировано</td><td width="30%"><code>N</code></td><td width="40%">Зарезервировано для использования в будущем</td></tr>
+<tr><td width="30%">зарезервировано</td><td width="30%"><code>o</code></td><td width="40%">Зарезервировано для использования в будущем</td></tr>
+<tr><td width="30%">зарезервировано</td><td width="30%"><code>O</code></td><td width="40%">Зарезервировано для использования в будущем</td></tr>
+<tr><td width="30%">чтение регистров <strong>(зарезервировано)</strong></td><td width="30%"><code>p</code><var>n...</var></td><td width="40%">Смотрите запись регистров.</td></tr>
+<tr><td width="30%"></td><td width="30%">возврат <var>r....</var></td><td width="40%">Значение регистра в целевом порядке байт, закодированное в
+шестнадцатеричном виде.</td></tr>
+<tr><td width="30%">запись регистров</td><td width="30%"><code>P</code><var>n...</var><code>=</code><var>r...</var></td><td width="40%">Записать в регистр <var>n...</var> значение <var>r...</var>, которое содержит две
+шестнадцатеричные цифры для каждого байта в регистре (целевой порядок
+байтов).</td></tr>
+<tr><td width="30%"></td><td width="30%">ответ <code>OK</code></td><td width="40%">в случае успеха</td></tr>
+<tr><td width="30%"></td><td width="30%">ответ <code>E</code><var>NN</var></td><td width="40%">при ошибке</td></tr>
+<tr><td width="30%">общий запрос</td><td width="30%"><code>q</code><var>запрос</var></td><td width="40%">Запросить информацию о <var>запросе</var>.  Вообще, запросы
+GDB начинаются с заглавной буквы.  Специальные запросы от
+производителей должны использовать приставку компании (из маленьких
+букв).  Например: &lsquo;<samp>qfsf.var</samp>&rsquo;.  За <var>запросом</var> может следовать
+необязательный список, разделенный &lsquo;<samp>,</samp>&rsquo; или &lsquo;<samp>;</samp>&rsquo;.  Заглушки
+должны проверять, что они производят сравнение с полным именем
+<var>запроса</var>.</td></tr>
+<tr><td width="30%"></td><td width="30%">ответ <code>XX...</code></td><td width="40%">Данные от запроса, закодированные шестнадцатеричными цифрами.
+Ответ не может быть пустым.</td></tr>
+<tr><td width="30%"></td><td width="30%">ответ <code>E</code><var>NN</var></td><td width="40%">ответ при ошибке</td></tr>
+<tr><td width="30%"></td><td width="30%">ответ &lsquo;<samp></samp>&rsquo;</td><td width="40%">Указывает на нераспознанный <var>запрос</var>.</td></tr>
+<tr><td width="30%">общая установка</td><td width="30%"><code>Q</code><var>перем</var><code>=</code><var>знач</var></td><td width="40%">Установить значение <var>перем</var> в <var>знач</var>.  Смотрите &lsquo;<samp>q</samp>&rsquo; для
+обсуждения соглашений, касающихся имен.</td></tr>
+<tr><td width="30%">сброс <strong>(не рекомендовано)</strong></td><td width="30%"><code>r</code></td><td width="40%">Установка всей системы в исходное состояние.</td></tr>
+<tr><td width="30%">удаленная перезагрузка</td><td width="30%"><code>R</code><var>XX</var></td><td width="40%">Перезапустить удаленный сервер.  <var>XX</var> не имеет ясного определения,
+хотя оно нужно.  FIXME: <em>Нужен пример взаимодействия,
+объясняющий как эти пакеты используются в расширенном удаленном режиме</em>.</td></tr>
+<tr><td width="30%">пошаговое выполнение</td><td width="30%"><code>s</code><var>адрес</var></td><td width="40%"><var>Адрес</var> &mdash; это адрес для возобновления выполнения.  Если <var>адрес</var>
+опущен, возобновить выполнение с того же адреса.</td></tr>
+<tr><td width="30%"></td><td width="30%">ответ</td><td width="40%">смотрите ниже</td></tr>
+<tr><td width="30%">пошаговое выполнение с сигналом</td><td width="30%"><code>S</code><var>сиг</var><code>;</code><var>адрес</var></td><td width="40%">Как <code>C</code>, но разница такая же, как между <code>step</code> и
+<code>continue</code>.</td></tr>
+<tr><td width="30%"></td><td width="30%">ответ</td><td width="40%">смотрите ниже</td></tr>
+<tr><td width="30%">поиск</td><td width="30%"><code>t</code><var>адрес</var><code>:</code><var>PP</var><code>,</code><var>MM</var></td><td width="40%">Поиск совпадения с шаблоном <var>PP</var> и маской <var>MM</var> в обратном
+направлении, начиная с <var>адреса</var>.  <var>PP</var> и <var>MM</var> &mdash; 4 байта.
+В <var>адресе</var> должно быть не менее трех цифр.</td></tr>
+<tr><td width="30%">жива ли нить</td><td width="30%"><code>T</code><var>XX</var></td><td width="40%">Определить, жива ли нить <var>XX</var>.</td></tr>
+<tr><td width="30%"></td><td width="30%">ответ <code>OK</code></td><td width="40%">нить все еще жива</td></tr>
+<tr><td width="30%"></td><td width="30%">ответ <code>E</code><var>NN</var></td><td width="40%">нить мертва</td></tr>
+<tr><td width="30%">зарезервировано</td><td width="30%"><code>u</code></td><td width="40%">Зарезервировано для использования в будущем</td></tr>
+<tr><td width="30%">зарезервировано</td><td width="30%"><code>U</code></td><td width="40%">Зарезервировано для использования в будущем</td></tr>
+<tr><td width="30%">зарезервировано</td><td width="30%"><code>v</code></td><td width="40%">Зарезервировано для использования в будущем</td></tr>
+<tr><td width="30%">зарезервировано</td><td width="30%"><code>V</code></td><td width="40%">Зарезервировано для использования в будущем</td></tr>
+<tr><td width="30%">зарезервировано</td><td width="30%"><code>w</code></td><td width="40%">Зарезервировано для использования в будущем</td></tr>
+<tr><td width="30%">зарезервировано</td><td width="30%"><code>W</code></td><td width="40%">Зарезервировано для использования в будущем</td></tr>
+<tr><td width="30%">зарезервировано</td><td width="30%"><code>x</code></td><td width="40%">Зарезервировано для использования в будущем</td></tr>
+<tr><td width="30%">запись в память (двоичная)</td><td width="30%"><code>X</code><var>адрес</var><code>,</code><var>длина</var><var>:</var><var>XX...</var></td><td width="40%"><var>Адрес</var> &mdash; это адрес, <var>длина</var> &mdash; это число байт, <var>XX...</var> &mdash; это
+двоичные данные.  Знаки <code>$</code>, <code>#</code> и <code>0x7d</code> экранируются
+с помощью <code>0x7d</code>.</td></tr>
+<tr><td width="30%"></td><td width="30%">ответ <code>OK</code></td><td width="40%">в случае успеха</td></tr>
+<tr><td width="30%"></td><td width="30%">ответ <code>E</code><var>NN</var></td><td width="40%">в случае ошибки</td></tr>
+<tr><td width="30%">зарезервировано</td><td width="30%"><code>y</code></td><td width="40%">Зарезервировано для использования в будущем</td></tr>
+<tr><td width="30%">зарезервировано</td><td width="30%"><code>Y</code></td><td width="40%">Зарезервировано для использования в будущем</td></tr>
+<tr><td width="30%">удалить точку останова или наблюдения <strong>(черновик)</strong></td><td width="30%"><code>z</code><var>t</var><code>,</code><var>адрес</var><code>,</code><var>длина</var></td><td width="40%">Смотрите &lsquo;<samp>Z</samp>&rsquo;.</td></tr>
+<tr><td width="30%">поместить точку останова или наблюдения <strong>(черновик)</strong></td><td width="30%"><code>Z</code><var>t</var><code>,</code><var>адрес</var><code>,</code><var>длина</var></td><td width="40%"><var>t</var> представляет тип: &lsquo;<samp>0</samp>&rsquo; в случае программной точки останова,
+&lsquo;<samp>1</samp>&rsquo; &mdash; аппаратная точка останова, &lsquo;<samp>2</samp>&rsquo; &mdash; точка наблюдения за
+записью, &lsquo;<samp>3</samp>&rsquo; &mdash; точка наблюдения за чтением, &lsquo;<samp>4</samp>&rsquo; &mdash; точка
+наблюдения за доступом; <var>адрес</var> &mdash; это адрес; <var>длина</var> задается в
+байтах.  Для программной точки останова, <var>длина</var> задает размер
+инструкции, на которую надо поместить заплату.  Для аппаратных точек
+останова и наблюдения, <var>длина</var> указывает размер области памяти
+для наблюдения.  Чтобы избежать потенциальных проблем с повторными
+пакетами, операции должны быть реализованы идемпотентным образом.</td></tr>
+<tr><td width="30%"></td><td width="30%">ответ <code>E</code><var>NN</var></td><td width="40%">в случае ошибки</td></tr>
+<tr><td width="30%"></td><td width="30%">ответ <code>OK</code></td><td width="40%">в случае успеха</td></tr>
+<tr><td width="30%"></td><td width="30%">&lsquo;<samp></samp>&rsquo;</td><td width="40%">Если не поддерживается.</td></tr>
+<tr><td width="30%">зарезервировано</td><td width="30%">&lt;другое&gt;</td><td width="40%">Зарезервировано для использования в будущем</td></tr>
+</table>
+
+<p>Пакеты &lsquo;<samp>C</samp>&rsquo;, &lsquo;<samp>c</samp>&rsquo;, &lsquo;<samp>S</samp>&rsquo;, &lsquo;<samp>s</samp>&rsquo; и &lsquo;<samp>?</samp>&rsquo; могут получить
+в качестве ответа все нижеперечисленное.  В случае пакетов &lsquo;<samp>C</samp>&rsquo;,
+&lsquo;<samp>c</samp>&rsquo;, &lsquo;<samp>S</samp>&rsquo; и &lsquo;<samp>s</samp>&rsquo;, этот ответ возвращается только тогда,
+когда цель останавливается.  Ниже, точное значение &lsquo;<samp>номера сигнала</samp>&rsquo;
+определено нечетко.  Вообще, используется одно из соглашений
+UNIX о номерах сигналов.
+</p>
+<table>
+<tr><td width="40%"><code>S</code><var>AA</var></td><td width="60%"><var>AA</var> &mdash; это номер сигнала</td></tr>
+<tr><td width="40%"><code>T</code><var>AA</var><var>n...</var><code>:</code><var>r...</var><code>;</code><var>n...</var><code>:</code><var>r...</var><code>;</code><var>n...</var><code>:</code><var>r...</var><code>;</code></td><td width="60%"><var>AA</var> = две шестнадцатеричные цифры номера сигнала; <var>n...</var> =
+(шестнадцатеричный) номер регистра, <var>r...</var> = содержимое регистра в
+целевом порядке байт, размер определяется <code>REGISTER_RAW_SIZE</code>;
+<var>n...</var> = &lsquo;<samp>thread</samp>&rsquo;, <var>r...</var> = идентификатор процесса нити, это
+шестнадцатеричное целое; <var>n...</var> = другая строка, не начинающаяся с
+шестнадцатеричной цифры.  GDB должен игнорировать эту пару
+<var>n...</var>, <var>r...</var> и переходить к следующей.  Таким образом мы можем
+расширять протокол.</td></tr>
+<tr><td width="40%"><code>W</code><var>AA</var></td><td width="60%">Процесс завершается с кодом выхода <var>AA</var>.  Это применимо только к
+определенным типам целей.</td></tr>
+<tr><td width="40%"><code>X</code><var>AA</var></td><td width="60%">Процесс завершается с сигналом <var>AA</var>.</td></tr>
+<tr><td width="40%"><code>N</code><var>AA</var><code>;</code><var>t...</var><code>;</code><var>d...</var><code>;</code><var>b...</var> <strong>(устарело)</strong></td><td width="60%"><var>AA</var> = номер сигнала; <var>t...</var> = адрес символа &quot;_start&quot;;
+<var>d...</var> = база раздела данных; <var>b...</var> = база раздела bss.
+<em>Примечание: используется только целями Cisco Systems.  Разница
+между этим ответом и запросом &quot;qOffsets&quot; заключается в том, что пакет
+&rsquo;N&rsquo; может прибыть самопроизвольно, тогда как запрос &rsquo;qOffsets&rsquo;
+инициируется рабочим отладчиком.</em></td></tr>
+<tr><td width="40%"><code>O</code><var>XX...</var></td><td width="60%"><var>XX...</var> &mdash; шестнадцатеричное представление <small>ASCII</small>-данных.  Это
+может произойти в любой момент, пока программа выполняется и отладчик
+должен продолжать ждать &rsquo;W&rsquo;, &rsquo;T&rsquo; и тому подобное.</td></tr>
+</table>
+
+<p>Следующие пакеты для установок и запросов уже были определены.
+</p>
+<table>
+<tr><td width="20%">текущая нить</td><td width="20%"><code>q</code><code>C</code></td><td width="60%">Возвратить идентификатор текущей нити.</td></tr>
+<tr><td width="20%"></td><td width="20%">ответ <code>QC</code><var>идент-проц</var></td><td width="60%">Где <var>идент-проц</var> &mdash; 16-битный идентификатор процесса, представленный
+шестнадцатеричными цифрами.</td></tr>
+<tr><td width="20%"></td><td width="20%">ответ *</td><td width="60%">Любой другой ответ подразумевает старый идентификатор процесса.</td></tr>
+<tr><td width="20%">идентификаторы всех нитей</td><td width="20%"><code>q</code><code>fThreadInfo</code></td></tr>
+<tr><td width="20%"></td><td width="20%"><code>q</code><code>sThreadInfo</code></td><td width="60%">Получить список идентификаторов активных нитей от целевой ОС.  Так как
+число активных нитей может оказаться слишком большим и не поместиться в
+пакет ответа, этот запрос работает итерациями: для получения полного
+списка нитей может потребоваться более
+одной последовательности запрос/ответ.  Первым запросом последовательности будет
+<code>qf</code><code>ThreadInfo</code>; последующими запросами последовательности
+будут запросы <code>qs</code><code>ThreadInfo</code>.</td></tr>
+<tr><td width="20%"></td><td width="20%"></td><td width="60%">Замечание: замещает запрос <code>qL</code> (смотрите ниже).</td></tr>
+<tr><td width="20%"></td><td width="20%">ответ <code>m</code><var>&lt;ид&gt;</var></td><td width="60%">Идентификатор одной нити</td></tr>
+<tr><td width="20%"></td><td width="20%">ответ <code>m</code><var>&lt;ид&gt;</var>,<var>&lt;ид&gt;...</var></td><td width="60%">список идентификаторов нитей, разделенных запятыми</td></tr>
+<tr><td width="20%"></td><td width="20%">ответ <code>l</code></td><td width="60%">(буква &rsquo;l&rsquo; в нижнем регистре) обозначает конец списка.</td></tr>
+<tr><td width="20%"></td><td width="20%"></td><td width="60%">В ответ на каждый запрос, цель будет отвечать списком из разделенных
+запятыми идентификаторов нитей, в шестнадцатеричном представлении, с
+порядком байт от старшего.  GDB будет отвечать на каждый ответ
+запросом других идентификаторов (используя форму <code>qs</code> запроса),
+пока цель не ответит <code>l</code> (буква &rsquo;l&rsquo; в нижнем регистре, от
+английского слова <code>'last'</code>).</td></tr>
+<tr><td width="20%">дополнительная информация о нити</td><td width="20%"><code>q</code><code>ThreadExtraInfo</code><code>,</code><var>ид</var></td><td width="60%"></td></tr>
+<tr><td width="20%"></td><td width="20%"></td><td width="60%">Здесь <var>ид</var> является идентификатором нити в шестнадцатеричном
+представлении, в порядке байт от старшего.  Получает печатаемое описание
+строки атрибутов нити от целевой ОС.  Эта строка может содержать
+все что угодно, что целевая ОС сочтет интересным для
+GDB сообщить пользователю о нити.  Эта строка выводится в
+отображении GDB &lsquo;<samp>info threads</samp>&rsquo;.  Примерами возможной
+дополнительной информации являются &quot;Runnable&quot; или &quot;Blocked on Mutex&quot;.</td></tr>
+<tr><td width="20%"></td><td width="20%">ответ <var>XX...</var></td><td width="60%">Где <var>XX...</var> &mdash; <small>ASCII</small>-данные в шестнадцатеричном представлении,
+содержащие печатную строку с дополнительной информацией об атрибутах
+нити.</td></tr>
+<tr><td width="20%">запрос <var>список</var> или <var>список-нитей</var> <strong>(не рекомендовано)</strong></td><td width="20%"><code>q</code><code>L</code><var>нач-флаг</var><var>число-нитей</var><var>след-нить</var></td><td width="60%"></td></tr>
+<tr><td width="20%"></td><td width="20%"></td><td width="60%">Получить информацию о нити от операционной системы, где происходит
+выполнение.  Здесь: <var>нач-флаг</var> (одна шестнадцатеричная цифра) есть
+единица, что указывает на первый запрос, или ноль, что определяет
+последующий запрос; <var>число-нитей</var> (две шестнадцатеричные
+цифры) &mdash; максимальное число нитей, которое может содержать пакет ответа;
+и <var>след-нить</var> (восемь шестнадцатеричных цифр), для последующих
+запросов (<var>нач-флаг</var> равен нулю), возвращается в ответ как
+<var>арг-нить</var>.</td></tr>
+<tr><td width="20%"></td><td width="20%"></td><td width="60%">Замечание: этот запрос был замещен запросом
+<code>q</code><code>fThreadInfo</code> (смотрите выше).</td></tr>
+<tr><td width="20%"></td><td width="20%">ответ <code>q</code><code>M</code><var>число</var><var>конец</var><var>арг-нить</var><var>нить...</var></td><td width="60%"></td></tr>
+<tr><td width="20%"></td><td width="20%"></td><td width="60%">Здесь: <var>число</var> (две шестнадцатеричные цифры) &mdash; число возвращаемых
+нитей; <var>конец</var> (одна шестнадцатеричная цифра), есть ноль, который
+определяет, что есть еще нити, и единица, определяющая, что
+больше нитей нет; <var>арг-нить</var> (восемь шестнадцатеричных цифр)
+представляет собой <var>след-нить</var> из пакета запроса;
+<var>нить...</var> &mdash; это последовательность идентификаторов нитей от цели.
+<var>Идент-нити</var> (восемь шестнадцатеричных цифр).  Смотрите
+<code>remote.c:parse_threadlist_response()</code>.</td></tr>
+<tr><td width="20%">вычислить CRC блока памяти</td><td width="20%"><code>q</code><code>CRC:</code><var>адрес</var><code>,</code><var>длина</var></td><td width="60%"></td></tr>
+<tr><td width="20%"></td><td width="20%">ответ <code>E</code><var>NN</var></td><td width="60%">Ошибка (например, ошибка доступа к памяти)</td></tr>
+<tr><td width="20%"></td><td width="20%">ответ <code>C</code><var>CRC32</var></td><td width="60%">Лишняя 32-битная циклическая проверка указанной области памяти.</td></tr>
+<tr><td width="20%">запросить смещения разделов</td><td width="20%"><code>q</code><code>Offsets</code></td><td width="60%">Получить смещения разделов, которые целевая машина использовала при
+повторном размещении загруженного образа.  <em>Замечание: если
+смещение <code>Bss</code> включено в ответ, GDB это игнорирует и
+вместо этого применяет  к разделу <code>Bss</code> смещение <code>Data</code>.</em></td></tr>
+<tr><td width="20%"></td><td width="20%">ответ <code>Text=</code><var>xxx</var><code>;Data=</code><var>yyy</var><code>;Bss=</code><var>zzz</var></td></tr>
+<tr><td width="20%">запросить информацию о нити</td><td width="20%"><code>q</code><code>P</code><var>режим</var><var>идент-нити</var></td><td width="60%"></td></tr>
+<tr><td width="20%"></td><td width="20%"></td><td width="60%">Возвращает информацию об <var>идент-нити</var>.  Здесь: <var>режим</var> является
+32-битным режимом в шестнадцатеричном представлении;
+<var>идент-нити</var> &mdash; 64-битный идентификатор нити в шестнадцатеричном
+представлении.</td></tr>
+<tr><td width="20%"></td><td width="20%">ответ *</td><td width="60%">Смотрите <code>remote.c:remote_unpack_thread_info_response()</code>.</td></tr>
+<tr><td width="20%">удаленная команда</td><td width="20%"><code>q</code><code>Rcmd,</code><var>КОМАНДА</var></td><td width="60%"></td></tr>
+<tr><td width="20%"></td><td width="20%"></td><td width="60%"><var>КОМАНДА</var> (в шестнадцатеричном представлении) передается для
+выполнения локальному интерпретатору.  Неверные команды должны
+сообщаться при помощи выходной строки.  Перед конечным результирующим
+пакетом, целевая машина может также ответить некоторым количеством
+промежуточных <code>O</code><var>ВЫВОД</var> пакетов вывода на консоль.
+<em>Разработчики должны учесть, что предоставление доступа к
+интерпретатору заглушки может иметь последствия для безопасности</em>.</td></tr>
+<tr><td width="20%"></td><td width="20%">ответ <code>OK</code></td><td width="60%">Ответ на команду без вывода.</td></tr>
+<tr><td width="20%"></td><td width="20%">ответ <var>ВЫВОД</var></td><td width="60%">Ответ на команду со строкой вывода <var>ВЫВОД</var>, в шестнадцатеричном
+представлении.</td></tr>
+<tr><td width="20%"></td><td width="20%">ответ <code>E</code><var>NN</var></td><td width="60%">Указывает на неправильно сформированный запрос.</td></tr>
+<tr><td width="20%"></td><td width="20%">reply &lsquo;<samp></samp>&rsquo;</td><td width="60%">Когда &lsquo;<samp>q</samp>&rsquo;&lsquo;<samp>Rcmd</samp>&rsquo; не распознана.</td></tr>
+</table>
+
+<p>Следующие пакеты &lsquo;<samp>g</samp>&rsquo;/&lsquo;<samp>G</samp>&rsquo; были определены раньше.  Ниже,
+некоторые 32-битные регистры передаются в виде 64 бит.  Эти регистры
+должны быть расширены нулем/знаком (как?), чтобы заполнять выделенное
+место.  Байты регистра передаются в целевом порядке байтов.  Две части в
+байте регистра передаются от более значимого к менее значимому.
+</p>
+<table>
+<tr><td width="50%">MIPS32</td><td width="50%">Все регистры передаются как 32-битные величины в таком порядке: 32 общего
+назначения; sr; lo; hi; bad; cause; pc; 32 регистра с плавающей точкой;
+fsr; fir; fp.</td></tr>
+<tr><td width="50%">MIPS64</td><td width="50%">Все регистры передаются как 64-битные величины (включая такие 32-битные
+регистры, как <code>sr</code>).  Порядок такой же, как для <code>MIPS32</code>.</td></tr>
+</table>
+
+<p>Вот пример последовательности для перезапускаемой цели.  Заметьте, что
+перезапуск не получает никакого непосредственного вывода:
+</p>
+<div class="example">
+<pre class="example">&lt;- <code>R00</code>
+-&gt; <code>+</code>
+<em>target restarts</em>
+&lt;- <code>?</code>
+-&gt; <code>+</code>
+-&gt; <code>T001:1234123412341234</code>
+&lt;- <code>+</code>
+</pre></div>
+
+<p>Пример последовательности при при пошаговом выполнении цели по одной
+инструкции:
+</p>
+<div class="example">
+<pre class="example">&lt;- <code>G1445...</code>
+-&gt; <code>+</code>
+&lt;- <code>s</code>
+-&gt; <code>+</code>
+<em>time passes</em>
+-&gt; <code>T001:1234123412341234</code>
+&lt;- <code>+</code>
+&lt;- <code>g</code>
+-&gt; <code>+</code>
+-&gt; <code>1455...</code>
+&lt;- <code>+</code>
+</pre></div>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Server.html" accesskey="n" rel="next">Сервер</a>, Previous: <a href="Seans-otladki.html" accesskey="p" rel="prev">Сеанс отладки</a>, Up: <a href="Udalennyi.html" accesskey="u" rel="up">Удаленный</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Emacs (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Emacs (Отладка с помощью GDB)">
+<meta name="keywords" content="Emacs (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="index.html" rel="up" title="Top">
+<link href="Primechaniya.html" rel="next" title="Примечания">
+<link href="Vyvod.html" rel="prev" title="Вывод">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="Emacs"></span><div class="header">
+<p>
+Next: <a href="Primechaniya.html" accesskey="n" rel="next">Примечания</a>, Previous: <a href="Posledovatelxnosti.html" accesskey="p" rel="prev">Последовательности</a>, Up: <a href="index.html" accesskey="u" rel="up">Top</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Ispolxzovanie-GDB-pod-upravleniem-GNU-Emacs"></span><h2 class="chapter">17 Использование GDB под управлением <small>GNU</small> Emacs</h2>
+
+<span id="index-Emacs"></span>
+<span id="index-GNU-Emacs"></span>
+<p>Специальный интерфейс позволяет вам использовать <small>GNU</small> Emacs для
+просмотра (и редактирования) исходных файлов программы, которую вы
+отлаживаете с помощью GDB.
+</p>
+<p>Чтобы использовать этот интерфейс, используйте команду <kbd>M-x gdb</kbd> в
+Emacs.  В качестве аргумента задайте выполняемый файл, который вы хотите
+отладить.  Эта команда вызывает GDB как подпроцесс Emacs с
+вводом и выводом через заново созданный буфер.
+</p>
+<p>Под управлением Emacs, GDB используется точно так же, как обычно,
+за исключением двух моментов:
+</p>
+<ul>
+<li> Весь &ldquo;терминальный&rdquo; ввод и вывод происходит через буфер Emacs.
+</li></ul>
+
+<p>Это относится как к командам GDB и их выводу, так и к вводу и
+выводу, производимыми отлаживаемой программой.
+</p>
+<p>Это полезно, потому что вы можете копировать текст предыдущих команд и
+вводить их снова; вы даже можете использовать таким образом части
+вывода.
+</p>
+<p>Все средства режима оболочки Emacs доступны для взаимодействия с
+вашей программой.  В частности, вы можете посылать сигналы обычным путем
+&mdash; например, <kbd>C-c C-c</kbd> для прерывания, <kbd>C-c C-z</kbd> для остановки.
+</p>
+<ul>
+<li> GDB отображает исходный код через Emacs.
+</li></ul>
+
+<p>Каждый раз, когда GDB отображает кадр стека, Emacs
+автоматически находит исходный файл для него и помещает стрелку
+(&lsquo;<samp>=&gt;</samp>&rsquo;) с левого края текущей строки.  Emacs использует отдельный
+буфер для отображения исходного текста и разделяет экран, чтобы
+отобразить как сеанс GDB, так и исходный текст.
+</p>
+<p>Тем не менее, явные команды GDB <code>list</code> и <code>search</code>
+производят вывод как обычно, но у вас, скорее всего, не будет причин
+использовать их из Emacs.
+</p>
+<blockquote>
+<p><em>Предупреждение:</em> Если каталог, в котором находится ваша программа, не
+является текущим, Emacs легко может ошибиться при определении
+местонахождения исходных файлов; в этом случае вспомогательный буфер с
+исходным текстом не появляется.  GDB может искать программы, используя
+переменную среды <code>PATH</code>, так что сеансы ввода и вывода
+происходят нормально; но Emacs не получает достаточно информации
+от GDB, чтобы найти исходные файлы в такой ситуации.  Чтобы
+избежать этой проблемы, либо запускайте режим GDB из каталога,
+где находится ваша программа, либо укажите абсолютное имя файла, когда будет
+запрошен параметр для <kbd>M-x gdb</kbd>.
+</p>
+<p>Подобная путаница может возникнуть, если вы используете команду
+GDB <code>file</code>, чтобы переключиться к отладке программы,
+находящейся в каком-нибудь другом месте, из существующего буфера
+GDB в Emacs.
+</p></blockquote>
+
+<p>По умолчанию, <kbd>M-x gdb</kbd> вызывает программу с именем <samp>gdb</samp>.  Если вам
+нужно вызвать GDB под другим именем (например, если вы храните
+несколько конфигураций под различными именами), вы можете установить переменную
+Emacs <code>gdb-command-name</code>; например, установка
+</p>
+<div class="example">
+<pre class="example">(setq gdb-command-name &quot;mygdb&quot;)
+</pre></div>
+
+<p>(которой предшествует <kbd>M-:</kbd> или <kbd>ESC :</kbd>, или если она введена в буфер
+<code>*scratch*</code> или в вашем файле <samp>.emacs</samp>), заставит Emacs вызвать
+программу &ldquo;<code>mygdb</code>&rdquo;.
+</p>
+<p>В буфере ввода-вывода GDB, вы можете использовать следующие
+специальные команды Emacs в дополнение к стандартным командам режима
+оболочки:
+</p>
+<dl compact="compact">
+<dt><kbd>C-h m</kbd></dt>
+<dd><p>Описывает возможности режима GDB Emacs.
+</p>
+</dd>
+<dt><kbd>M-s</kbd></dt>
+<dd><p>Выполнить до другой строки исходного текста, подобно команде GDB
+<code>step</code>; также обновляет окно отображения для показа текущего файла и
+положения в нем.
+</p>
+</dd>
+<dt><kbd>M-n</kbd></dt>
+<dd><p>Выполнить до следующей строки исходного текста в этой функции,
+пропуская все вызовы функций, подобно команде GDB <code>next</code>.
+Затем обновить окно отображения, чтобы показать текущий файл и положение
+в нем.
+</p>
+</dd>
+<dt><kbd>M-i</kbd></dt>
+<dd><p>Выполнить одну инструкцию, подобно команде GDB <code>stepi</code>;
+обновляет окно отображения.
+</p>
+</dd>
+<dt><kbd>M-x gdb-nexti</kbd></dt>
+<dd><p>Выполнить до следующей инструкции, используя команду GDB
+<code>nexti</code>; обновляет окно отображения.
+</p>
+</dd>
+<dt><kbd>C-c C-f</kbd></dt>
+<dd><p>Выполнить до выхода из выбранного кадра стека, подобно команде
+GDB <code>finish</code>.
+</p>
+</dd>
+<dt><kbd>M-c</kbd></dt>
+<dd><p>Продолжить выполнение вашей программы, подобно команде GDB
+<code>continue</code>.
+</p>
+<p><em>Предупреждение:</em> В Emacs версии 19, эта команда вызывается
+посредством <kbd>C-c C-p</kbd>.
+</p>
+</dd>
+<dt><kbd>M-u</kbd></dt>
+<dd><p>Подняться вверх по стеку на число кадров, заданное числовым параметром,
+подобно команде GDB <code>up</code>
+(see <a href="../Emacs/_0410_0440_0433_0443_043c_0435_043d_0442_044b.html#g_t_0410_0440_0433_0443_043c_0435_043d_0442_044b">Числовые аргументы</a> in <cite>Руководство по <small>GNU</small>
+Emacs</cite>).
+</p>
+<p><em>Предупреждение:</em> В Emacs версии 19, эта команда вызывается
+посредством <kbd>C-c C-u</kbd>.
+</p>
+</dd>
+<dt><kbd>M-d</kbd></dt>
+<dd><p>Спуститься вниз по стеку на число кадров, заданное числовым параметром,
+аналогично команде GDB <code>down</code>.
+</p>
+<p><em>Предупреждение:</em> В Emacs версии 19, эта команда вызывается
+посредством <kbd>C-c C-d</kbd>.
+</p>
+</dd>
+<dt><kbd>C-x &amp;</kbd></dt>
+<dd><p>Прочитать число в позиции курсора и вставить его в конец буфера
+ввода-вывода GDB.  Например, если вы хотите дисассемблировать код
+по адресу, отображенному ранее, наберите <kbd>disassemble</kbd>; затем
+переместите курсор на изображение адреса и задайте аргумент для
+<code>disassemble</code>, набрав <kbd>C-x &amp;</kbd>.
+</p>
+<p>Вы можете и дальше настраивать это, определяя элементы списка
+<code>gdb-print-command</code>; если он определен, вы можете форматировать или
+как-либо иначе обрабатывать числа, задаваемые <kbd>C-x &amp;</kbd>, перед их вставкой
+в буфер.  Числовой аргумент к <kbd>C-x &amp;</kbd> показывает, что вам нужно
+специальное форматирование, а также действует как индекс для выбора
+элемента из списка.  Если элемент списка является строкой, то вставляемое
+число форматируется с использованием функции Emacs <code>format</code>; в
+противном случае, число передается как параметр соответствующему
+элементу списка.
+</p></dd>
+</dl>
+
+<p>В любом исходном файле, команда Emacs <kbd>C-x SPC</kbd> (<code>gdb-break</code>)
+велит GDB установить точку останова на строке исходного текста,
+в которой находится точка.
+</p>
+<p>Если вы случайно удалите буфер отображения исходного текста, его можно легко
+вернуть обратно, введя команду <code>f</code> в буфере GDB, чтобы запросить
+отображение кадра; когда выполнение происходит под управлением Emacs,
+это при необходимости создает исходный буфер заново, чтобы показать вам
+текущий кадр.
+</p>
+<p>Исходные файлы, отображаемые в Emacs, находятся в обычных буферах
+Emacs, которые получают доступ к исходным файлам обычным способом.  При
+желании вы можете редактировать файлы в этих буферах; но помните,
+что GDB взаимодействует с Emacs в терминах номеров строк.
+Если вы добавите или удалите строки из текста, известные GDB
+номера строк больше не будут соответствовать коду.
+</p>
+
+
+
+
+
+
+
+
+
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Primechaniya.html" accesskey="n" rel="next">Примечания</a>, Previous: <a href="Posledovatelxnosti.html" accesskey="p" rel="prev">Последовательности</a>, Up: <a href="index.html" accesskey="u" rel="up">Top</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

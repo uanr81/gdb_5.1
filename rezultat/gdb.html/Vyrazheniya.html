@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Выражения (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Выражения (Отладка с помощью GDB)">
+<meta name="keywords" content="Выражения (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Dannye.html" rel="up" title="Данные">
+<link href="Peremennye.html" rel="next" title="Переменные">
+<link href="Dannye.html" rel="prev" title="Данные">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0412_044b_0440_0430_0436_0435_043d_0438_044f"></span><div class="header">
+<p>
+Next: <a href="Peremennye.html" accesskey="n" rel="next">Переменные</a>, Up: <a href="Dannye.html" accesskey="u" rel="up">Данные</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Vyrazheniya"></span><h3 class="section">8.1 Выражения</h3>
+
+<span id="index-vyrazheniya"></span>
+<p><code>print</code> и многие другие команды GDB принимают в качестве
+параметра выражение и вычисляют его значение.  В выражении GDB
+допустимо использование любого типа констант, переменных или операторов,
+определенных в используемом вами языке программирования, включая
+условные выражения, вызовы функций, приведение типов и строковые
+постоянные.  К сожалению, исключением являются символы, определенные
+командами препроцессора <code>#define</code>.
+</p>
+<p>GDB поддерживает константы-массивы в выражениях, введенных
+пользователем.  Синтаксис следующий: {<var>элемент</var>,
+<var>элемент</var>&hellip;}.  Например, вы можете использовать команду
+<code>print {1, 2, 3}</code>, чтобы создать в памяти массив,
+который будет доступен в программе так же, как выделенный функцией
+<code>malloc</code>.
+</p>
+<p>По причине широкого распространения Си, большинство выражений в
+примерах этого руководства написаны на Си.  See <a href="YAzyki.html">Использование
+GDB с различными языками</a>, для информации об использовании
+выражений в других языках.
+</p>
+<p>В этом разделе мы обсуждаем операторы, которые вы можете использовать
+в выражениях GDB независимо от используемого вами языка
+программирования.
+</p>
+<p>Приведения типов поддерживается во всех языках, а не только в Си,
+так как бывает очень полезно преобразовать число в указатель, чтобы
+исследовать структуру, расположенную по этому адресу в памяти.
+</p>
+<p>GDB поддерживает эти операторы, в дополнении к следующим,
+являющимися общими для языков программирования:
+</p>
+<dl compact="compact">
+<dt><code>@</code></dt>
+<dd><p>&lsquo;<samp>@</samp>&rsquo; является бинарным оператором, позволяющим рассматривать
+области памяти как массивы.
+See <a href="Massivy.html">Исскуственные массивы</a>, для дополнительной информации.
+</p>
+</dd>
+<dt><code>::</code></dt>
+<dd><p>&lsquo;<samp>::</samp>&rsquo; позволяет вам указывать переменную в терминах файла или функции,
+где она определена.  See <a href="Peremennye.html">Переменные программы</a>.
+</p>
+<span id="index-_007btip_007d"></span>
+<span id="index-privedenie-oblasti-pamyati-k-tipu"></span>
+<span id="index-pamyatx_002c-prosmotr-v-vide-tipizirovannogo-obwekta"></span>
+<span id="index-privedenie_002c-dlya-prosmotra-pamyati"></span>
+</dd>
+<dt><code>{<var>тип</var>} <var>адрес</var></code></dt>
+<dd><p>Ссылается на объект типа <var>тип</var>, хранящийся в памяти по адресу
+<var>адрес</var>.  <var>Адрес</var> может быть любым выражением, значением которого
+является целое число или указатель (но вокруг бинарных операторов, также
+как и вокруг оператора приведения типа, требуются скобки).  Эта
+конструкция допустима вне зависимости от того, какого типа данные
+предположительно расположены по <var>адресу</var>.
+</p></dd>
+</dl>
+
+<hr>
+<div class="header">
+<p>
+Next: <a href="Peremennye.html" accesskey="n" rel="next">Переменные</a>, Up: <a href="Dannye.html" accesskey="u" rel="up">Данные</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+
+
+
+</body>
+</html>

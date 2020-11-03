@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Примечания (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Примечания (Отладка с помощью GDB)">
+<meta name="keywords" content="Примечания (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="index.html" rel="up" title="Top">
+<link href="Obzor-primechanii.html" rel="next" title="Обзор примечаний">
+<link href="Emacs.html" rel="prev" title="Emacs">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_041f_0440_0438_043c_0435_0447_0430_043d_0438_044f"></span><div class="header">
+<p>
+Next: <a href="GDB_002fMI.html" accesskey="n" rel="next">GDB/MI</a>, Previous: <a href="Emacs.html" accesskey="p" rel="prev">Emacs</a>, Up: <a href="index.html" accesskey="u" rel="up">Top</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Primechaniya-GDB"></span><h2 class="chapter">18 Примечания GDB</h2>
+
+<p>Эта глава описывает примечания в GDB.
+Примечания разработаны для согласования GDB с
+графическими интерфейсами пользователя или другими аналогичными
+программами, которые хотят взаимодействовать с GDB на
+относительно высоком уровне.
+</p>
+
+<table class="menu" border="0" cellspacing="0">
+<tr><td align="left" valign="top">&bull; <a href="Obzor-primechanii.html" accesskey="1">Обзор примечаний</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Что такое примечания; общий синтаксис.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Prefiks-server.html" accesskey="2">Префикс server</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Подача команды без воздействия на состояние пользователя.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Primechaniya-k-znacheniyam.html" accesskey="3">Примечания к значениям</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Значения явно помечаются.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Primechaniya-k-kadram.html" accesskey="4">Примечания к кадрам</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Примечания к кадрам стека.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Otobrazheniya.html" accesskey="5">Отображения</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">GDB может отображать что-то периодически.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Priglasheniya.html" accesskey="6">Приглашения</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Примечания, отмечающие потребность GDB во вводе.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Oshibki.html" accesskey="7">Ошибки</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Примечания к сообщениям об ошибках.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Informaciya-o-tochke-ostanova.html" accesskey="8">Информация о точке останова</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Информация о точках останова.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Nedostovernostx.html" accesskey="9">Недостоверность</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Некоторые примечания, описывающие недостоверные вещи.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Primechaniya-k-vypolneniiu.html">Примечания к выполнению</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">
+                        Выполняется ли программа, как она остановилась, и т.д.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Primechaniya-k-iskhodnomu-tekstu.html">Примечания к исходному тексту</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Примечания, описывающие исходный код.
+</td></tr>
+<tr><td align="left" valign="top">&bull; <a href="Dalxneishie-plany.html">Дальнейшие планы</a></td><td>&nbsp;&nbsp;</td><td align="left" valign="top">Примечания, которые могут понадобиться в будущем.
+</td></tr>
+</table>
+
+
+
+
+</body>
+</html>

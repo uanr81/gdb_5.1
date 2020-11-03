@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<!-- Created by GNU Texinfo 6.7, http://www.gnu.org/software/texinfo/ -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=koi8-r">
+<title>Числовые параметры (Отладка с помощью GDB)</title>
+
+<meta name="description" content="Числовые параметры (Отладка с помощью GDB)">
+<meta name="keywords" content="Числовые параметры (Отладка с помощью GDB)">
+<meta name="resource-type" content="document">
+<meta name="distribution" content="global">
+<meta name="Generator" content="texi2any">
+<link href="index.html" rel="start" title="Top">
+<link href="Alfavitnyi-ukazatelx.html" rel="index" title="Алфавитный указатель">
+<link href="Alfavitnyi-ukazatelx.html#SEC_Contents" rel="contents" title="Table of Contents">
+<link href="Privyazyvaemye-komandy-Readline.html" rel="up" title="Привязываемые команды Readline">
+<link href="Komandy-dlya-zaversheniya.html" rel="next" title="Команды для завершения">
+<link href="Komandy-dlya-unichtozheniya.html" rel="prev" title="Команды для уничтожения">
+<style type="text/css">
+<!--
+a.summary-letter {text-decoration: none}
+blockquote.indentedblock {margin-right: 0em}
+div.display {margin-left: 3.2em}
+div.example {margin-left: 3.2em}
+div.lisp {margin-left: 3.2em}
+kbd {font-style: oblique}
+pre.display {font-family: inherit}
+pre.format {font-family: inherit}
+pre.menu-comment {font-family: serif}
+pre.menu-preformatted {font-family: serif}
+span.nolinebreak {white-space: nowrap}
+span.roman {font-family: initial; font-weight: normal}
+span.sansserif {font-family: sans-serif; font-weight: normal}
+ul.no-bullet {list-style: none}
+-->
+</style>
+
+
+</head>
+
+<body lang="ru">
+<span id="g_t_0427_0438_0441_043b_043e_0432_044b_0435-_043f_0430_0440_0430_043c_0435_0442_0440_044b"></span><div class="header">
+<p>
+Next: <a href="Komandy-dlya-zaversheniya.html" accesskey="n" rel="next">Команды для завершения</a>, Previous: <a href="Komandy-dlya-unichtozheniya.html" accesskey="p" rel="prev">Команды для уничтожения</a>, Up: <a href="Privyazyvaemye-komandy-Readline.html" accesskey="u" rel="up">Привязываемые команды Readline</a> &nbsp; [<a href="Alfavitnyi-ukazatelx.html#SEC_Contents" title="Table of contents" rel="contents">Contents</a>][<a href="Alfavitnyi-ukazatelx.html" title="Index" rel="index">Index</a>]</p>
+</div>
+<hr>
+<span id="Opredelenie-chislovykh-parametrov"></span><h4 class="subsection">21.4.5 Определение числовых параметров</h4>
+<dl compact="compact">
+<dt><code>digit-argument (<kbd>M-0</kbd>, <kbd>M-1</kbd>, &hellip; <kbd>M--</kbd>)</code>
+<span id="index-digit_002dargument-_0028M_002d0_002c-M_002d1_002c-_2026-M_002d_002d_0029"></span>
+</dt>
+<dd><p>Добавить эту цифру к вводимому аргументу или начать новый
+аргумент.  <kbd>M--</kbd> начинает отрицательный аргумент.
+</p>
+</dd>
+<dt><code>universal-argument ()</code>
+<span id="index-universal_002dargument-_0028_0029"></span>
+</dt>
+<dd><p>Это другой способ задать аргумент.  Если за этой командой следуют одна
+или несколько цифр, возможно со знаком минус в начале, то они
+определяют аргумент.  Если за командой следуют цифры, повторное
+выполнение <code>universal-argument</code> заканчивает числовой аргумент, а в
+противном случае он игнорируется.
+В особом случае, если непосредственно за этой командой следует или
+цифра, или знак минус, аргумент для следующей команды умножается на
+четыре.  Изначально аргумент равен единице, так что выполнение этой
+функции первый раз делает его равным четырем, второй раз &mdash; шестнадцати,
+и так далее.  По умолчанию эта функция не привязана к клавише.
+</p></dd>
+</dl>
+
+
+
+
+</body>
+</html>
